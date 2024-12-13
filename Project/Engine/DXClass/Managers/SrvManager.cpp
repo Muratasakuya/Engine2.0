@@ -10,7 +10,7 @@
 //	SrvManager classMethods
 //============================================================================*/
 
-const uint32_t SrvManager::kMaxSrvCount_ = 512;
+const uint32_t SrvManager::kMaxSrvCount_ = 256;
 
 void SrvManager::MakeDescriptorHeap() {
 
@@ -79,6 +79,20 @@ void SrvManager::CreateSRVForTexture2D(
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = mipLevels;
+
+	GraphicsEngine::Device()->Get()->CreateShaderResourceView(pResource, &srvDesc, GetCPUHandle(srvIndex));
+}
+
+void SrvManager::CreateSRVForStructureBuffer(uint32_t srvIndex, ID3D12Resource* pResource, UINT numElements, UINT structureByteStride) {
+
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
+	srvDesc.Format = DXGI_FORMAT_UNKNOWN;
+	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
+	srvDesc.Buffer.FirstElement = 0;
+	srvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
+	srvDesc.Buffer.NumElements = numElements;
+	srvDesc.Buffer.StructureByteStride = structureByteStride;
 
 	GraphicsEngine::Device()->Get()->CreateShaderResourceView(pResource, &srvDesc, GetCPUHandle(srvIndex));
 }

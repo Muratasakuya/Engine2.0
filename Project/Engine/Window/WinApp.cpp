@@ -29,6 +29,8 @@ void WinApp::Init() {
 
 	UINT windowStyle = WS_OVERLAPPEDWINDOW;
 
+	AdjustWindowRect(&wrc, windowStyle, false);
+
 	hwnd_ = CreateWindow(
 		L"WindowClass", kWindowTitle, windowStyle,
 		CW_USEDEFAULT, CW_USEDEFAULT,

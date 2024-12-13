@@ -32,6 +32,8 @@ void DXSwapChain::Init(HWND hwnd, ID3D12CommandQueue* commandQueue) {
 
 		hr = swapChain_->GetBuffer(index, IID_PPV_ARGS(&resources_[index]));
 		assert(SUCCEEDED(hr));
+
+		resources_[index]->SetName(L"buckBufferResource");
 	}
 
 }

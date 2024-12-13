@@ -4,6 +4,8 @@
 //	include
 //============================================================================*/
 #include <Engine/Utility/Environment.h>
+#include <Engine/Asset/AssetManager.h>
+#include <Engine/Window/ImGuiRenderer.h>
 
 //============================================================================*/
 //	GraphicsEngine classMethods
@@ -14,14 +16,17 @@ std::unique_ptr<DXCommon> GraphicsEngine::dxCommon_ = nullptr;
 std::unique_ptr<RtvManager> GraphicsEngine::rtvManager_ = nullptr;
 std::unique_ptr<DsvManager> GraphicsEngine::dsvManager_ = nullptr;
 std::unique_ptr<SrvManager> GraphicsEngine::srvManager_ = nullptr;
+std::unique_ptr<PipelineManager> GraphicsEngine::pipelineManager_ = nullptr;
 std::unique_ptr<DXDevice> GraphicsEngine::device_ = nullptr;
 std::unique_ptr<DXSwapChain> GraphicsEngine::swapChain_ = nullptr;
+UINT GraphicsEngine::backBufferIndex_ = 0;
 std::unique_ptr<OffscreenRenderer> GraphicsEngine::offscreenRenderer_ = nullptr;
+std::unique_ptr<ImGuiManager> GraphicsEngine::imguiManager_ = nullptr;
 
 void GraphicsEngine::TransitionBarrier(
 	ID3D12Resource* resource, D3D12_RESOURCE_STATES stateBefore, D3D12_RESOURCE_STATES stateAfter) {
 
-	D3D12_RESOURCE_BARRIER barrier;
+	D3D12_RESOURCE_BARRIER barrier{};
 
 	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
 	barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
@@ -60,6 +65,8 @@ void GraphicsEngine::Init() {
 	swapChain_ = std::make_unique<DXSwapChain>();
 	swapChain_->Init(winApp_->GetHwnd(), dxCommon_->GetCommandQueue());
 
+	dxCommon_->SetSwapChain(swapChain_->Get());
+
 	rtvManager_ = std::make_unique<RtvManager>();
 	rtvManager_->Init();
 	for (uint32_t index = 0; index < kBufferCount; ++index) {
@@ -73,15 +80,36 @@ void GraphicsEngine::Init() {
 	srvManager_ = std::make_unique<SrvManager>();
 	srvManager_->Init();
 
+#ifdef _DEBUG
+	imguiManager_ = std::make_unique<ImGuiManager>();
+	imguiManager_->Init(winApp_->GetHwnd(), swapChain_->GetDesc().BufferCount, srvManager_.get());
+#endif
+
 	// RenderTexture作成
 	offscreenRenderer_ = std::make_unique<OffscreenRenderer>();
 	offscreenRenderer_->Init(srvManager_.get(), rtvManager_.get());
 
+	pipelineManager_ = std::make_unique<PipelineManager>();
+	pipelineManager_->Create(dxCommon_.get());
+
 	rtvManager_->Reset();
+
+	// Assetの初期化
+	AssetManager::Init(dxCommon_.get(), srvManager_.get());
+
+#ifdef _DEBUG
+
+	// ImGuiRendererの初期化
+	ImGuiRenderer::Init(offscreenRenderer_->GetRenderTextureGPUHandle());
+#endif
 
 }
 
 void GraphicsEngine::Finalize() {
+
+#ifdef _DEBUG
+	imguiManager_->Finalize();
+#endif
 
 	dxCommon_->Finalize(winApp_->GetHwnd());
 
@@ -95,6 +123,10 @@ bool GraphicsEngine::ProcessMessage() {
 }
 
 void GraphicsEngine::BeginRenderFrame() {
+
+#ifdef _DEBUG
+	imguiManager_->Begin();
+#endif
 
 	srvManager_->SetDescriptorHeaps(dxCommon_->GetCommandList());
 }
@@ -124,34 +156,43 @@ void GraphicsEngine::RenderOffscreen() {
 
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvCPUHandle = dsvManager_->GetNoramlCPUHandle();
-	UINT backBufferIndex = swapChain_->Get()->GetCurrentBackBufferIndex();
+	backBufferIndex_ = swapChain_->Get()->GetCurrentBackBufferIndex();
 
 	TransitionBarrier(
-		swapChain_->GetResource(backBufferIndex),
+		swapChain_->GetResource(backBufferIndex_),
 		D3D12_RESOURCE_STATE_PRESENT,
 		D3D12_RESOURCE_STATE_RENDER_TARGET);
 
-	rtvManager_->SetRenderTargets(commandList, dsvCPUHandle, backBufferIndex);
+	rtvManager_->SetRenderTargets(commandList, dsvCPUHandle, backBufferIndex_);
 	dxCommon_->SetViewportAndScissor();
 
 	// Offscreen描画
+	const UINT vertexCount = 3;
+
+	pipelineManager_->SetPostProcessPipeline(commandList, PostProcessPipelineType::CopyTexture);
+	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	commandList->SetGraphicsRootDescriptorTable(0, offscreenRenderer_->GetRenderTextureGPUHandle());
+	commandList->DrawInstanced(vertexCount, 1, 0, 0);
 
 }
 
 void GraphicsEngine::EndRenderFrame() {
 
-	UINT backBufferIndex = swapChain_->Get()->GetCurrentBackBufferIndex();
+#ifdef _DEBUG
+	imguiManager_->End();
+	imguiManager_->Draw(dxCommon_->GetCommandList());
+#endif
 
 	// D3D12_RESOURCE_STATE_COPY_SOURCE -> D3D12_RESOURCE_STATE_RENDER_TARGET
 	TransitionBarrier(offscreenRenderer_->GetRenderTexture(),
 		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
 		D3D12_RESOURCE_STATE_RENDER_TARGET);
 
-	TransitionBarrier(swapChain_->GetResource(backBufferIndex),
+	TransitionBarrier(swapChain_->GetResource(backBufferIndex_),
 		D3D12_RESOURCE_STATE_RENDER_TARGET,
 		D3D12_RESOURCE_STATE_PRESENT);
 
-	dxCommon_->Execute(swapChain_->Get());
+	dxCommon_->Execute();
 
 	rtvManager_->Reset();
 

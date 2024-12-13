@@ -41,13 +41,25 @@ public:
 
 	void SetViewportAndScissor();
 
-	void Execute(IDXGISwapChain4* swapChain);
+	void Execute();
+
+	void WaitForGPU();
 
 	//* getter *//
 
 	ID3D12CommandQueue* GetCommandQueue() const { return commandQueue_.Get(); }
 
 	ID3D12GraphicsCommandList* GetCommandList() const { return commandList_.Get(); }
+
+	IDxcUtils* GetDxcUtils() const { return dxcUtils_.Get(); }
+
+	IDxcCompiler3* GetDxcCompiler() const { return dxcCompiler_.Get(); }
+
+	IDxcIncludeHandler* GetIncludeHandler() const { return includeHandler_.Get(); }
+
+	//* setter *//
+
+	void SetSwapChain(IDXGISwapChain4* swapChain) { swapChain_ = swapChain; };
 
 private:
 	//========================================================================*/
@@ -74,6 +86,8 @@ private:
 
 	ComPtr<ID3D12CommandAllocator> commandAllocator_;
 	ComPtr<ID3D12GraphicsCommandList> commandList_;
+
+	IDXGISwapChain4* swapChain_;
 
 	D3D12_VIEWPORT viewport_;
 	D3D12_RECT scissorRect_;

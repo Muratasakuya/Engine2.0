@@ -4,13 +4,15 @@
 //	include
 //============================================================================*/
 #include <Engine/DXClass/ComPtr.h>
-#include <Engine/Process/OffscreenRenderer.h>
 #include <Engine/DXClass/DXSwapChain.h>
 #include <Engine/DXClass/DXDevice.h>
 #include <Engine/DXClass/Managers/RtvManager.h>
 #include <Engine/DXClass/Managers/DsvManager.h>
 #include <Engine/DXClass/Managers/SrvManager.h>
+#include <Engine/DXClass/Managers/PipelineManager.h>
 #include <Engine/DXClass/DXCommon.h>
+#include <Engine/Process/OffscreenRenderer.h>
+#include <Engine/External/ImGuiManager.h>
 #include <Engine/Window/WinApp.h>
 
 // directX
@@ -72,11 +74,16 @@ private:
 	static std::unique_ptr<DsvManager> dsvManager_;
 	static std::unique_ptr<SrvManager> srvManager_;
 
+	static std::unique_ptr<PipelineManager> pipelineManager_;
+
 	static std::unique_ptr<DXDevice> device_;
 
 	static std::unique_ptr<DXSwapChain> swapChain_;
+	static UINT backBufferIndex_;
 
 	static std::unique_ptr<OffscreenRenderer> offscreenRenderer_;
+
+	static std::unique_ptr<ImGuiManager> imguiManager_;
 
 	//============================================================================*/
 	// LeakChecker

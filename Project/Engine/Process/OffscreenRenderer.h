@@ -28,7 +28,9 @@ public:
 
 	//* getter *//
 
-	ID3D12Resource* GetRenderTexture() { return renderTextureResource_.Get(); }
+	ID3D12Resource* GetRenderTexture() const { return renderTextureResource_.Get(); }
+
+	D3D12_GPU_DESCRIPTOR_HANDLE GetRenderTextureGPUHandle() const { return renderTextureGpuHandle_; }
 
 private:
 	//========================================================================*/

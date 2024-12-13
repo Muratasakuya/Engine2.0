@@ -30,11 +30,14 @@ public:
 	void SetDescriptorHeaps(ID3D12GraphicsCommandList* commandList);
 
 	void CreateSRVForTexture2D(uint32_t srvIndex, ID3D12Resource* pResource, DXGI_FORMAT format, UINT mipLevels);
+	void CreateSRVForStructureBuffer(uint32_t srvIndex, ID3D12Resource* pResource, UINT numElements, UINT structureByteStride);
 
 	//* getter *//
 
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUHandle(uint32_t index);
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUHandle(uint32_t index);
+
+	ID3D12DescriptorHeap* GetDescriptorHeap() const { return descriptorHeap_.Get(); }
 
 private:
 	//========================================================================*/

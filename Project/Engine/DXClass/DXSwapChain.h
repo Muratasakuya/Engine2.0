@@ -33,6 +33,8 @@ public:
 
 	IDXGISwapChain4* Get() const { return swapChain_.Get(); }
 
+	DXGI_SWAP_CHAIN_DESC1& GetDesc() { return desc_; }
+
 private:
 	//========================================================================*/
 	//	private Methods

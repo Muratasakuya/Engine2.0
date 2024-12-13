@@ -3,21 +3,15 @@
 //	include
 //===================================================================*/
 #include <Engine/Base/GraphicsEngine.h>
+#include <Game/System/RigidBodySystem.h>
+#include <Game/Scenes/Manager/SceneManager.h>
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	GraphicsEngine::Init();
+	RigidBodySystem::Init();
 
-	while (!GraphicsEngine::ProcessMessage()) {
-		GraphicsEngine::BeginRenderFrame();
-
-		GraphicsEngine::BeginPreOffscreen();
-		GraphicsEngine::EndPostOffscreen();
-
-		GraphicsEngine::RenderOffscreen();
-
-		GraphicsEngine::EndRenderFrame();
-	}
+	SceneManager::GetInstance()->Run();
 
 	GraphicsEngine::Finalize();
 

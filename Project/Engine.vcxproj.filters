@@ -54,6 +54,28 @@
     <ClCompile Include="Engine\DXClass\Managers\DsvManager.cpp" />
     <ClCompile Include="Engine\DXClass\Managers\SrvManager.cpp" />
     <ClCompile Include="Engine\Process\OffscreenRenderer.cpp" />
+    <ClCompile Include="Game\Scenes\Manager\SceneManager.cpp" />
+    <ClCompile Include="Game\Scenes\Methods\IScene.cpp" />
+    <ClCompile Include="Game\Scenes\Methods\SceneFactory.cpp" />
+    <ClCompile Include="Game\Scenes\GameScene.cpp" />
+    <ClCompile Include="Engine\External\ImGuiManager.cpp" />
+    <ClCompile Include="Engine\DXClass\Managers\PipelineManager.cpp" />
+    <ClCompile Include="Engine\DXClass\Pipeline\DXShaderCompiler.cpp" />
+    <ClCompile Include="Engine\DXClass\Pipeline\DXRootSignature.cpp" />
+    <ClCompile Include="Engine\DXClass\Pipeline\DXDepthRaster.cpp" />
+    <ClCompile Include="Engine\Asset\AssetManager.cpp" />
+    <ClCompile Include="Engine\Asset\TextureManager.cpp" />
+    <ClCompile Include="Engine\Asset\ModelManager.cpp" />
+    <ClCompile Include="Lib\MathUtils\Vector2.cpp" />
+    <ClCompile Include="Lib\MathUtils\Matrix4x4.cpp" />
+    <ClCompile Include="Lib\MathUtils\Quaternion.cpp" />
+    <ClCompile Include="Engine\Window\ImGuiRenderer.cpp" />
+    <ClCompile Include="Game\3D\Collision\Collider.cpp" />
+    <ClCompile Include="Game\3D\Collision\Managers\CollisionManager.cpp" />
+    <ClCompile Include="Game\System\RigidBodySystem.cpp" />
+    <ClCompile Include="Engine\CBuffer\Base\DXConstBuffer.cpp" />
+    <ClCompile Include="Engine\CBuffer\VertexBuffer.cpp" />
+    <ClCompile Include="Engine\CBuffer\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Utility\Environment.h" />
@@ -69,5 +91,31 @@
     <ClInclude Include="Engine\DXClass\Managers\DsvManager.h" />
     <ClInclude Include="Engine\DXClass\Managers\SrvManager.h" />
     <ClInclude Include="Engine\Process\OffscreenRenderer.h" />
+    <ClInclude Include="Game\Scenes\Manager\SceneManager.h" />
+    <ClInclude Include="Game\Scenes\Methods\IScene.h" />
+    <ClInclude Include="Game\Scenes\Methods\SceneFactory.h" />
+    <ClInclude Include="Game\Scenes\GameScene.h" />
+    <ClInclude Include="Engine\External\ImGuiManager.h" />
+    <ClInclude Include="Engine\DXClass\Managers\PipelineManager.h" />
+    <ClInclude Include="Engine\DXClass\Pipeline\PipelineTypes.h" />
+    <ClInclude Include="Engine\DXClass\Pipeline\DXShaderCompiler.h" />
+    <ClInclude Include="Engine\DXClass\Pipeline\DXRootSignature.h" />
+    <ClInclude Include="Engine\DXClass\Pipeline\DXDepthRaster.h" />
+    <ClInclude Include="Engine\Asset\AssetManager.h" />
+    <ClInclude Include="Engine\Asset\TextureManager.h" />
+    <ClInclude Include="Engine\Asset\ModelManager.h" />
+    <ClInclude Include="Engine\Utility\AssetStructure.h" />
+    <ClInclude Include="Lib\MathUtils\Vector2.h" />
+    <ClInclude Include="Lib\MathUtils\Matrix4x4.h" />
+    <ClInclude Include="Lib\MathUtils\Quaternion.h" />
+    <ClInclude Include="Engine\Window\ImGuiRenderer.h" />
+    <ClInclude Include="Game\3D\Collision\Collider.h" />
+    <ClInclude Include="Game\3D\Collision\CollisionShape.h" />
+    <ClInclude Include="Game\3D\Collision\Managers\CollisionManager.h" />
+    <ClInclude Include="Game\Utility\Direction.h" />
+    <ClInclude Include="Game\System\RigidBodySystem.h" />
+    <ClInclude Include="Engine\CBuffer\Base\DXConstBuffer.h" />
+    <ClInclude Include="Engine\CBuffer\VertexBuffer.h" />
+    <ClInclude Include="Engine\CBuffer\Transform.h" />
   </ItemGroup>
 </Project>

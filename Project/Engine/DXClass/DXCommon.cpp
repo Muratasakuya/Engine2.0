@@ -134,7 +134,7 @@ void DXCommon::SetViewportAndScissor() {
 
 }
 
-void DXCommon::Execute(IDXGISwapChain4* swapChain) {
+void DXCommon::Execute() {
 
 	HRESULT hr = commandList_->Close();
 	assert(SUCCEEDED(hr));
@@ -144,7 +144,7 @@ void DXCommon::Execute(IDXGISwapChain4* swapChain) {
 	commandQueue_->ExecuteCommandLists(1, commandLists);
 
 	// GPUとOSに画面の交換を行うように通知する
-	swapChain->Present(1, 0);
+	swapChain_->Present(1, 0);
 
 	// Feneceの値を更新
 	fenceValue_++;
@@ -162,6 +162,35 @@ void DXCommon::Execute(IDXGISwapChain4* swapChain) {
 	UpdateFixFPS();
 
 	// 次のフレーム用のコマンドリストを準備
+	hr = commandAllocator_->Reset();
+	assert(SUCCEEDED(hr));
+	hr = commandList_->Reset(commandAllocator_.Get(), nullptr);
+	assert(SUCCEEDED(hr));
+
+}
+
+void DXCommon::WaitForGPU() {
+
+	// コマンドリストの内容を確定させる。すべてのコマンドを積んでからCloseする
+	HRESULT hr = commandList_->Close();
+	assert(SUCCEEDED(hr));
+
+	// GPUにコマンドリストの実行を行わせる
+	ID3D12CommandList* commandLists[] = { commandList_.Get() };
+	commandQueue_->ExecuteCommandLists(1, commandLists);
+
+	// Feneceの値を更新
+	fenceValue_++;
+	commandQueue_->Signal(fence_.Get(), fenceValue_);
+
+	// Fenceの値が指定したSignal値にたどり着いているか確認する
+	if (fence_->GetCompletedValue() < fenceValue_) {
+
+		fence_->SetEventOnCompletion(fenceValue_, fenceEvent_);
+		// イベントを待つ
+		WaitForSingleObject(fenceEvent_, INFINITE);
+	}
+
 	hr = commandAllocator_->Reset();
 	assert(SUCCEEDED(hr));
 	hr = commandList_->Reset(commandAllocator_.Get(), nullptr);
