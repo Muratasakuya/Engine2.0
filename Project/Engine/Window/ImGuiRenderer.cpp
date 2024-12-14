@@ -5,7 +5,9 @@
 //============================================================================*/
 #include <Engine/Utility/Environment.h>
 #include <Engine/Asset/AssetManager.h>
+#include <Engine/Process/MeshRenderer.h>
 #include <Game/System/RigidBodySystem.h>
+#include <Game/System/EnvironmentSystem.h>
 
 //============================================================================*/
 //	ImGuiRenderer classMethods
@@ -124,7 +126,7 @@ void ImGuiRenderer::GameObjectList(const ImVec2& mainWindowPos) {
 
 	ImGui::SameLine();
 	ImGui::SetCursorPos(ImVec2(48.0f, mainWindowPos.y + 2.0f));
-	ImGui::Text("No GameObject");
+	MeshRenderer::SelectGameObject(mainWindowPos);
 
 }
 
@@ -189,6 +191,17 @@ void ImGuiRenderer::SelectedInfo(const ImVec2& mainWindowPos, const ImVec2& main
 
 	ImGui::SetCursorPos(ImVec2(mainWindowPos.x + mainWindowSize.x + 6.0f, mainWindowPos.y - 32.0f));
 	ImGui::BeginChild("RightPanelChild", ImVec2(288.0f, mainWindowSize.y + 32.0f), true, ImGuiWindowFlags_AlwaysUseWindowPadding);
+
+	if (MeshRenderer::GetRenderObject()) {
+
+		MeshRenderer::SelectedImGui();
+
+	} else if (cameraInfoEnable_) {
+
+		ImGui::Separator();
+		EnvironmentSystem::Inforamtion();
+
+	}
 
 	ImGui::EndChild();
 

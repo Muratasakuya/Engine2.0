@@ -42,8 +42,6 @@ void DebugCamera::Update(const Vector3& translate, const Vector3& rotation, cons
 	Vector3 offset = { 0.0f, 2.0f, -25.0f };
 	offset = Vector3::TransferNormal(offset, rotateMatrix_);
 
-	matrix_ = Matrix4x4::MakeIdentity4x4();
-
 	Matrix4x4 translateMatrix = Matrix4x4::MakeTranslateMatrix(translation_);
 	Matrix4x4 scaleMatrix = Matrix4x4::MakeScaleMatrix({ 1.0f,1.0f,1.0f });
 	matrix_ = Matrix4x4::Multiply(scaleMatrix, rotateMatrix_);

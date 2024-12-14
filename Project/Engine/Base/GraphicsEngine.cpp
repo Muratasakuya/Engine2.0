@@ -7,6 +7,7 @@
 #include <Engine/Asset/AssetManager.h>
 #include <Engine/Window/ImGuiRenderer.h>
 #include <Engine/Process/Input.h>
+#include <Engine/Process/MeshRenderer.h>
 
 //============================================================================*/
 //	GraphicsEngine classMethods
@@ -75,13 +76,11 @@ void GraphicsEngine::Init() {
 	dxCommon_->DebugInfo();
 
 	// directX初期化
-	dxCommon_->Init(winApp_->GetHwnd());
+	dxCommon_->Init();
 
 	// 画面描画設定
 	swapChain_ = std::make_unique<DXSwapChain>();
 	swapChain_->Init(winApp_->GetHwnd(), dxCommon_->GetCommandQueue());
-
-	dxCommon_->SetSwapChain(swapChain_->Get());
 
 	rtvManager_ = std::make_unique<RtvManager>();
 	rtvManager_->Init();
@@ -153,6 +152,18 @@ void GraphicsEngine::BeginRenderFrame() {
 
 }
 
+void GraphicsEngine::Render() {
+
+	BeginPreOffscreen();
+
+	MeshRenderer::Render();
+
+	EndPostOffscreen();
+
+	RenderOffscreen();
+
+}
+
 void GraphicsEngine::BeginPreOffscreen() {
 
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
@@ -177,7 +188,6 @@ void GraphicsEngine::EndPostOffscreen() {
 void GraphicsEngine::RenderOffscreen() {
 
 	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
-	D3D12_CPU_DESCRIPTOR_HANDLE dsvCPUHandle = dsvManager_->GetNoramlCPUHandle();
 	backBufferIndex_ = swapChain_->Get()->GetCurrentBackBufferIndex();
 
 	TransitionBarrier(
@@ -185,7 +195,7 @@ void GraphicsEngine::RenderOffscreen() {
 		D3D12_RESOURCE_STATE_PRESENT,
 		D3D12_RESOURCE_STATE_RENDER_TARGET);
 
-	rtvManager_->SetRenderTargets(commandList, dsvCPUHandle, backBufferIndex_);
+	rtvManager_->SetRenderTargets(commandList, backBufferIndex_);
 	dxCommon_->SetViewportAndScissor();
 
 	// Offscreen描画
@@ -214,7 +224,7 @@ void GraphicsEngine::EndRenderFrame() {
 		D3D12_RESOURCE_STATE_RENDER_TARGET,
 		D3D12_RESOURCE_STATE_PRESENT);
 
-	dxCommon_->Execute();
+	dxCommon_->Execute(swapChain_->Get());
 
 	rtvManager_->Reset();
 

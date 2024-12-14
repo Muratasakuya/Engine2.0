@@ -1,10 +1,17 @@
 #include "CameraManager.h"
 
 //============================================================================*/
+//	include
+//============================================================================*/
+#include <imgui.h>
+
+//============================================================================*/
 //	CameraManager classMethhods
 //============================================================================*/
 
 void CameraManager::Init() {
+
+	debugCameraEnable_ = false;
 
 	// 3D
 	camera3D_ = std::make_unique<Camera3D>();
@@ -17,7 +24,7 @@ void CameraManager::Init() {
 
 void CameraManager::Update() {
 
-	debugCamera_->Update(camera3D_->GetTranslate(), camera3D_->GetRotate(), camera3D_->GetViewProjectionMatrix());
+	debugCamera_->Update(camera3D_->GetTranslate(), camera3D_->GetRotate(), camera3D_->GetProjectionMatrix());
 	if (debugCamera_->Enable()) {
 
 		camera3D_->SetCamera(debugCamera_->GetViewProjectionMatrix(), debugCamera_->GetTranslate());
@@ -28,13 +35,15 @@ void CameraManager::Update() {
 
 }
 
-void CameraManager::ImGui(bool debugCameraEnable) {
+void CameraManager::ImGui() {
 
-	if (debugCameraEnable) {
+	ImGui::Checkbox("debugCameraEnable", &debugCameraEnable_);
+
+	if (debugCameraEnable_) {
 
 		debugCamera_->ImGui();
 	}
-	debugCamera_->SetEnable(debugCameraEnable);
+	debugCamera_->SetEnable(debugCameraEnable_);
 
 	camera3D_->ImGui();
 

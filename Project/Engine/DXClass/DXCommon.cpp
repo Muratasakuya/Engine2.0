@@ -105,7 +105,7 @@ void DXCommon::CreateCommand() {
 	assert(SUCCEEDED(hr));
 }
 
-void DXCommon::Init(HWND hwnd) {
+void DXCommon::Init() {
 
 	reference_ = std::chrono::steady_clock::now();
 
@@ -134,7 +134,7 @@ void DXCommon::SetViewportAndScissor() {
 
 }
 
-void DXCommon::Execute() {
+void DXCommon::Execute(IDXGISwapChain4* swapChain) {
 
 	HRESULT hr = commandList_->Close();
 	assert(SUCCEEDED(hr));
@@ -144,7 +144,7 @@ void DXCommon::Execute() {
 	commandQueue_->ExecuteCommandLists(1, commandLists);
 
 	// GPUとOSに画面の交換を行うように通知する
-	swapChain_->Present(1, 0);
+	swapChain->Present(1, 0);
 
 	// Feneceの値を更新
 	fenceValue_++;

@@ -25,7 +25,7 @@ public:
 
 	void Update();
 
-	void ImGui(bool debugCameraEnable);
+	void ImGui();
 
 	//* getter *//
 
@@ -42,5 +42,7 @@ private:
 	std::unique_ptr<Camera3D> camera3D_;
 
 	std::unique_ptr<DebugCamera> debugCamera_;
+
+	bool debugCameraEnable_;
 
 };

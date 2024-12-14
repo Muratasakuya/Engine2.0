@@ -100,6 +100,7 @@
     <ClCompile Include="Engine\DXClass\Pipeline\DXInputLayout.cpp" />
     <ClCompile Include="Engine\DXClass\Pipeline\DXBlendState.cpp" />
     <ClCompile Include="Engine\Process\MeshRenderer.cpp" />
+    <ClCompile Include="Game\Object\Test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Utility\Environment.h" />
@@ -166,5 +167,6 @@
     <ClInclude Include="Engine\DXClass\Pipeline\DXInputLayout.h" />
     <ClInclude Include="Engine\DXClass\Pipeline\DXBlendState.h" />
     <ClInclude Include="Engine\Process\MeshRenderer.h" />
+    <ClInclude Include="Game\Object\Test.h" />
   </ItemGroup>
 </Project>

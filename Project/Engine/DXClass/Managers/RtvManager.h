@@ -32,8 +32,7 @@ public:
 	void Reset();
 
 	void BeginOffscreenSetRenderTargets(ID3D12GraphicsCommandList* commandList, D3D12_CPU_DESCRIPTOR_HANDLE dsvCPUHandle);
-	void SetRenderTargets(
-		ID3D12GraphicsCommandList* commandList, D3D12_CPU_DESCRIPTOR_HANDLE dsvCPUHandle, UINT backBufferIndex);
+	void SetRenderTargets(ID3D12GraphicsCommandList* commandList, UINT backBufferIndex);
 
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUHandle(uint32_t index);
 

@@ -11,15 +11,21 @@
 
 void PipelineManager::CreatePostProcessPipeline(const PostProcessPipelineType& pipelineType) {
 
+	// BlendState
+	D3D12_RENDER_TARGET_BLEND_DESC blendState = blendState_.Create(kBlendModeNormal);
+
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
 
 	graphicsPipelineStateDesc.pRootSignature = rootSignature_->GetPostProcess(pipelineType);
+	graphicsPipelineStateDesc.InputLayout.pInputElementDescs = nullptr;
+	graphicsPipelineStateDesc.InputLayout.NumElements = 0;
 	graphicsPipelineStateDesc.VS =
 	{ shaderCompiler_->GetPostProcessVSBlob(pipelineType)->GetBufferPointer(),
 		shaderCompiler_->GetPostProcessVSBlob(pipelineType)->GetBufferSize() };
 	graphicsPipelineStateDesc.PS =
 	{ shaderCompiler_->GetPostProcessPSBlob(pipelineType)->GetBufferPointer(),
 		shaderCompiler_->GetPostProcessPSBlob(pipelineType)->GetBufferSize() };
+	graphicsPipelineStateDesc.BlendState.RenderTarget[0] = blendState;
 	graphicsPipelineStateDesc.RasterizerState = depthRaster_->GetRasterizerDesc();
 	graphicsPipelineStateDesc.DepthStencilState = depthRaster_->GetDepthStencilDesc();
 	graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -104,7 +110,7 @@ void PipelineManager::Create(DXCommon* dxCommon) {
 
 		rootSignature_->Create(postProcessPipelineType);
 
-		depthRaster_->Create(postProcessPipelineType);
+		depthRaster_->Create();
 
 		CreatePostProcessPipeline(postProcessPipelineType);
 

@@ -45,10 +45,7 @@ public:
 	static void BeginRenderFrame();
 	static void EndRenderFrame();
 
-	static void BeginPreOffscreen();
-	static void EndPostOffscreen();
-
-	static void RenderOffscreen();
+	static void Render();
 
 	//* process *//
 
@@ -96,6 +93,14 @@ private:
 	static std::unique_ptr<OffscreenRenderer> offscreenRenderer_;
 
 	static std::unique_ptr<ImGuiManager> imguiManager_;
+
+	//========================================================================*/
+	//* functoins
+
+	static void BeginPreOffscreen();
+	static void EndPostOffscreen();
+
+	static void RenderOffscreen();
 
 	//============================================================================*/
 	// LeakChecker

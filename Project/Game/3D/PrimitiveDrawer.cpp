@@ -22,16 +22,16 @@ void PrimitiveDrawer::Init(const ViewProjectionBuffer& viewProBuffer) {
 	vertexBuffer_.CreateVertexBuffer(GraphicsEngine::Device()->Get(), kMaxLineCount_ * kVertexCountLine_);
 
 	lineMaterials_[LineColor::White].Init();
-	lineMaterials_[LineColor::White].color.White();
+	lineMaterials_[LineColor::White].color = Color::White();
 
 	lineMaterials_[LineColor::Red].Init();
-	lineMaterials_[LineColor::Red].color.Red();
+	lineMaterials_[LineColor::Red].color = Color::Red();
 
 	lineMaterials_[LineColor::Green].Init();
-	lineMaterials_[LineColor::Green].color.Green();
+	lineMaterials_[LineColor::Green].color = Color::Green();
 
 	lineMaterials_[LineColor::Blue].Init();
-	lineMaterials_[LineColor::Blue].color.Blue();
+	lineMaterials_[LineColor::Blue].color = Color::Blue();
 
 	// 転送用の頂点数でresize
 	vertexBuffer_.pos.resize(kMaxLineCount_ * kVertexCountLine_);

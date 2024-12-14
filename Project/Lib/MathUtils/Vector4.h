@@ -59,13 +59,13 @@ public:
 	Color() : r(0.0f), g(0.0f), b(0.0f), a(0.0f) {}
 	Color(float r, float g, float b, float a) : r(r), g(g), b(b), a(a) {}
 
-	Color Convert(int color) const;
+	static Color Convert(int color);
 
-	Color White(float alpha = 1.0f);
-	Color Black(float alpha = 1.0f);
+	static Color White(float alpha = 1.0f);
+	static Color Black(float alpha = 1.0f);
 
-	Color Red(float alpha = 1.0f);
-	Color Green(float alpha = 1.0f);
-	Color Blue(float alpha = 1.0f);
+	static	Color Red(float alpha = 1.0f);
+	static Color Green(float alpha = 1.0f);
+	static Color Blue(float alpha = 1.0f);
 
 };

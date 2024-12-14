@@ -151,7 +151,6 @@ ModelData ModelManager::LoadModelFile(const std::string& directoryPath, const st
 			for (uint32_t element = 0; element < face.mNumIndices; ++element) {
 
 				uint32_t vertexIndex = face.mIndices[element];
-				const auto& vertex = meshModelData.vertices[vertexIndex];
 
 				meshModelData.indices.push_back(vertexIndex);
 			}

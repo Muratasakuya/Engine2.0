@@ -43,8 +43,10 @@ void IBaseGameObject::ImGui() {
 
 			if (ImGui::TreeNode(materialLabel.c_str())) {
 
-				ImGui::ColorEdit4("", &color_.r);
-				ImGui::Text("R:%4.2f G:%4.2f B:%4.2f A:%4.2f", color_.r, color_.g, color_.b, color_.a);
+				ImGui::ColorEdit4("", &materials_[i].properties.color.r);
+				ImGui::Text("R:%4.2f G:%4.2f B:%4.2f A:%4.2f",
+					materials_[i].properties.color.r, materials_[i].properties.color.g,
+					materials_[i].properties.color.b, materials_[i].properties.color.a);
 				ImGui::TreePop();
 			}
 		}
@@ -64,13 +66,13 @@ void IBaseGameObject::ApplyJsonForColor() {
 	std::string jsonPath = parentFolderName_.value_or("") + name_ + "Color.json";
 	Json data = JsonAdapter::Load(jsonPath);
 
-	color_ = JsonAdapter::ToColor(data["color"]);
+	materials_.front().properties.color = JsonAdapter::ToColor(data["color"]);
 }
 
 void IBaseGameObject::SaveJsonForColor() {
 
 	Json data;
-	data["color"] = JsonAdapter::FromColor(color_);
+	data["color"] = JsonAdapter::FromColor(materials_.front().properties.color);
 
 	std::string jsonPath = parentFolderName_.value_or("") + name_ + "Color.json";
 	JsonAdapter::Save(jsonPath, data);

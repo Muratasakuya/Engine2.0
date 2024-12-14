@@ -26,7 +26,7 @@ void EnvironmentSystem::Update() {
 
 void EnvironmentSystem::Inforamtion() {
 
-	cameraManager_->ImGui(false);
+	cameraManager_->ImGui();
 
 }
 

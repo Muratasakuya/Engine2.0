@@ -14,15 +14,16 @@
 
 void Camera3D::Init() {
 
-	rotation_.Init();
-	translation_ = Vector3(0.0f, 2.0f, -32.0f);
+	rotation_ = { 0.13f,0.0f,0.0f };
+	translation_ = Vector3(0.0f, 5.4f, -35.0f);
 
 	matrix_ =
 		Matrix4x4::MakeAffineMatrix(Vector3(1.0f, 1.0f, 1.0f), rotation_, translation_);
 	viewMatrix_ = Matrix4x4::Inverse(matrix_);
 
+	float aspectRatio = static_cast<float>(kWindowWidth) / static_cast<float>(kWindowHeight);
 	projectionMatrix_ =
-		Matrix4x4::MakePerspectiveFovMatrix(0.45f, kWindowWidth / kWindowHeight, 0.1f, 100.0f);
+		Matrix4x4::MakePerspectiveFovMatrix(0.45f, aspectRatio, 0.1f, 100.0f);
 	projectionInverseMatrix_ = Matrix4x4::Inverse(projectionMatrix_);
 
 	viewProjectionMatrix_ = viewMatrix_ * projectionMatrix_;

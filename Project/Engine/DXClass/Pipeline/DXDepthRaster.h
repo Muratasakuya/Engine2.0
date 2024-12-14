@@ -20,7 +20,7 @@ public:
 	DXDepthRaster() = default;
 	~DXDepthRaster() = default;
 
-	void Create(const PostProcessPipelineType& pipelineType);
+	void Create();
 	void Create(const RendererPipelineType& pipelineType);
 
 	//* getter *//

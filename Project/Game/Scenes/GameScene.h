@@ -5,6 +5,13 @@
 //============================================================================*/
 #include <Game/Scenes/Methods/IScene.h>
 
+//* test *//
+#include <Game/Object/Test.h>
+
+// c++
+#include <string>
+#include <memory>
+
 //============================================================================*/
 //	GameScene class
 //============================================================================*/
@@ -33,5 +40,9 @@ private:
 
 	//========================================================================*/
 	//* variables
+
+	const std::string& baseModelDirectory_ = "./Resources/Model/Obj";
+
+	std::unique_ptr<Test> test_;
 
 };

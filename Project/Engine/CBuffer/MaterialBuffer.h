@@ -22,17 +22,18 @@ struct Material {
 	int32_t enableBlinnPhongReflection;
 	float phongRefShininess;
 	Color specularColor;
+	float padding[4];
 	Matrix4x4 uvTransform;
 
 	void Init() {
 
-		color.White();
+		color = Color::White();
 		enableLighting = false;
 		enableHalfLambert = false;
 		enablePhongReflection = false;
 		enableBlinnPhongReflection = false;
 		phongRefShininess = 1.0f;
-		specularColor.White();
+		specularColor = Color::White();
 		uvTransform = Matrix4x4::MakeIdentity4x4();
 	}
 
@@ -56,7 +57,7 @@ struct SpiteMaterial {
 
 	void Init() {
 
-		color.White();
+		color = Color::White();;
 		uvTransform = Matrix4x4::MakeIdentity4x4();
 	}
 };

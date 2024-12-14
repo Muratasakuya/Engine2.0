@@ -21,7 +21,7 @@ struct DirectionalLight {
 
 	void Init() {
 
-		color.White();
+		color = Color::White();
 		direction = { 0.0f,-1.0f,0.0f };
 		intensity = 1.0f;
 	};
@@ -38,7 +38,7 @@ struct PointLight {
 
 	void Init() {
 
-		color.White();
+		color = Color::White();
 		pos = { 0.0f,0.0f,0.0f };
 		radius = 5.0f;
 		intensity = 1.0f;
@@ -61,7 +61,7 @@ struct SpotLight {
 	// DefaultInitialize
 	void Init() {
 
-		color.White();
+		color = Color::White();
 		pos = { 0.0f,0.0f,0.0f };
 		distance = 10.0f;
 		intensity = 1.0f;
@@ -72,7 +72,7 @@ struct SpotLight {
 	};
 };
 
-struct PunctualLight{
+struct PunctualLight {
 
 	DirectionalLight directional;
 	PointLight point;

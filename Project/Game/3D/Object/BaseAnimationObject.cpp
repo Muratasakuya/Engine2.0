@@ -17,13 +17,12 @@ void BaseAnimationObject::Init(const std::string& modelName, const std::string& 
 	model_->Init(modelName, animationName);
 
 	transform_.Init(modelName, animationName);
-	color_.White();
 
 	materials_.emplace_back();
 	for (auto& material : materials_) {
 
 		material.Init();
-		material.properties.color = color_;
+		material.properties.color = Color::White();
 		material.properties.enableLighting = true;
 		material.properties.enableHalfLambert = true;
 	}
@@ -34,7 +33,6 @@ void BaseAnimationObject::Update() {
 	transform_.Update();
 	for (auto& material : materials_) {
 
-		material.properties.color = color_;
 		material.Update();
 	}
 }

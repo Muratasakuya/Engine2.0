@@ -12,7 +12,7 @@
 
 void DXSwapChain::Init(HWND hwnd, ID3D12CommandQueue* commandQueue) {
 
-	resources_.resize(kBufferCount);
+	resources_.resize(kBufferCount, nullptr);
 
 	swapChain_ = nullptr;
 	desc_.Width = kWindowWidth;
@@ -33,7 +33,7 @@ void DXSwapChain::Init(HWND hwnd, ID3D12CommandQueue* commandQueue) {
 		hr = swapChain_->GetBuffer(index, IID_PPV_ARGS(&resources_[index]));
 		assert(SUCCEEDED(hr));
 
-		resources_[index]->SetName(L"buckBufferResource");
+		resources_[index]->SetName((L"backBufferResource" + std::to_wstring(index)).c_str());
 	}
 
 }

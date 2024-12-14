@@ -78,6 +78,7 @@ void DsvManager::CreateDSV() {
 void DsvManager::Init() {
 
 	useIndex_ = 0;
+	descriptorSize_ = GraphicsEngine::Device()->Get()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 
 	// descripptorHeapの作成
 	MakeDescriptorHeap();

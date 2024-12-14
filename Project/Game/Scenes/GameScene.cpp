@@ -4,6 +4,7 @@
 //	include
 //============================================================================*/
 #include <Engine/Base/GraphicsEngine.h>
+#include <Engine/Asset/AssetManager.h>
 #include <Game/System/GameSystem.h>
 
 //============================================================================*/
@@ -20,10 +21,7 @@ void GameScene::Run() {
 
 		Update();
 
-		GraphicsEngine::BeginPreOffscreen();
-		GraphicsEngine::EndPostOffscreen();
-
-		GraphicsEngine::RenderOffscreen();
+		GraphicsEngine::Render();
 
 		GameSystem::Reset();
 		GraphicsEngine::EndRenderFrame();
@@ -35,9 +33,16 @@ void GameScene::Run() {
 
 void GameScene::Init() {
 
+	AssetManager::LoadModel(baseModelDirectory_, "teapot.obj");
+
+	test_ = std::make_unique<Test>();
+	test_->Init("teapot.obj");
+
 }
 
 void GameScene::Update() {
+
+	test_->Update();
 
 }
 

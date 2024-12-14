@@ -10,7 +10,7 @@
 //	RtvManager classMethods
 //============================================================================*/
 
-const uint32_t RtvManager::kMaxRtvCount_ = 16;
+const uint32_t RtvManager::kMaxRtvCount_ = 6;
 
 void RtvManager::MakeDescriptorHeap() {
 
@@ -66,7 +66,8 @@ void RtvManager::Reset() {
 void RtvManager::BeginOffscreenSetRenderTargets(
 	ID3D12GraphicsCommandList* commandList, D3D12_CPU_DESCRIPTOR_HANDLE dsvCPUHandle) {
 
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = GetCPUHandle(Allocate());
+	uint32_t rtvIndex = Allocate();
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = GetCPUHandle(rtvIndex);
 	commandList->OMSetRenderTargets(1, &rtvHandle, false, &dsvCPUHandle);
 	float kRenderTargetClearColor[] =
 	{ kWindowClearColor.r, kWindowClearColor.g, kWindowClearColor.b, kWindowClearColor.a };
@@ -75,10 +76,10 @@ void RtvManager::BeginOffscreenSetRenderTargets(
 }
 
 void RtvManager::SetRenderTargets(
-	ID3D12GraphicsCommandList* commandList, D3D12_CPU_DESCRIPTOR_HANDLE dsvCPUHandle, UINT backBufferIndex) {
+	ID3D12GraphicsCommandList* commandList, UINT backBufferIndex) {
 
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = GetCPUHandle(backBufferIndex);
-	commandList->OMSetRenderTargets(1, &rtvHandle, false, &dsvCPUHandle);
+	commandList->OMSetRenderTargets(1, &rtvHandle, false, nullptr);
 	float kRenderTargetClearColor[] =
 	{ kWindowClearColor.r, kWindowClearColor.g, kWindowClearColor.b, kWindowClearColor.a };
 	commandList->ClearRenderTargetView(rtvHandle, kRenderTargetClearColor, 0, nullptr);

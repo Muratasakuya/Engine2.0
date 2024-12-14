@@ -25,7 +25,9 @@ void GameSystem::Init() {
 
 void GameSystem::Update() {
 
+#ifdef _DEBUG
 	ImGuiRenderer::Render();
+#endif // _DEBUG
 
 	Input::GetInstance()->Update();
 

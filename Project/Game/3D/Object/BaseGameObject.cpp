@@ -17,16 +17,18 @@ void BaseGameObject::Init(const std::string& modelName) {
 	model_->Init(modelName);
 
 	transform_.Init();
-	color_.White();
+
+	IBaseGameObject::SetMeshRenderer(modelName);
 
 	materials_.resize(model_->GetMeshNum());
 	for (auto& material : materials_) {
 
 		material.Init();
-		material.properties.color = color_;
+		material.properties.color = Color::White();
 		material.properties.enableLighting = true;
 		material.properties.enableHalfLambert = true;
 	}
+
 }
 
 void BaseGameObject::Update() {
@@ -34,7 +36,6 @@ void BaseGameObject::Update() {
 	transform_.Update();
 	for (auto& material : materials_) {
 
-		material.properties.color = color_;
 		material.Update();
 	}
 }

@@ -63,7 +63,7 @@ void Vector4::Init() {
 //	Color classMethods
 //============================================================================*/
 
-Color Color::Convert(int color) const {
+Color Color::Convert(int color) {
 
 	int r = (color >> 16) & 0xFF;
 	int g = (color >> 8) & 0xFF;

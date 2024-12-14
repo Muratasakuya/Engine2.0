@@ -30,6 +30,7 @@ public:
 
 	Matrix4x4 GetCameraMatrix() const { return matrix_; }
 	Matrix4x4 GetViewProjectionMatrix() const { return viewProjectionMatrix_; }
+	Matrix4x4 GetProjectionMatrix() const { return projectionMatrix_; }
 
 	CameraBuffer GetCameraBuffer() const { return cameraBuffer_; }
 	ViewProjectionBuffer GetViewProBuffer() const { return viewProBuffer_; }

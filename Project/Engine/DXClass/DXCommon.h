@@ -32,7 +32,7 @@ public:
 	DXCommon() = default;
 	~DXCommon() = default;
 
-	void Init(HWND hwnd);
+	void Init();
 
 	void Finalize(HWND hwnd);
 
@@ -41,7 +41,7 @@ public:
 
 	void SetViewportAndScissor();
 
-	void Execute();
+	void Execute(IDXGISwapChain4* swapChain);
 
 	void WaitForGPU();
 
@@ -56,10 +56,6 @@ public:
 	IDxcCompiler3* GetDxcCompiler() const { return dxcCompiler_.Get(); }
 
 	IDxcIncludeHandler* GetIncludeHandler() const { return includeHandler_.Get(); }
-
-	//* setter *//
-
-	void SetSwapChain(IDXGISwapChain4* swapChain) { swapChain_ = swapChain; };
 
 private:
 	//========================================================================*/

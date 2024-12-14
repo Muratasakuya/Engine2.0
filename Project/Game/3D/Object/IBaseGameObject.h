@@ -62,8 +62,6 @@ protected:
 	//===================================================================*/
 	///* variables
 
-	Color color_;
-
 	std::optional<std::string> parentFolderName_;
 
 	std::vector<MaterialBuffer> materials_;
