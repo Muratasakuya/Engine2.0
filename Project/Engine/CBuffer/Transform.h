@@ -7,10 +7,13 @@
 #include <Lib/MathUtils/Matrix4x4.h>
 #include <Lib/MathUtils/Vector3.h>
 #include <Lib/MathUtils/Quaternion.h>
+#include <Engine/Utility/AssetStructure.h>
 
 // c++
 #include <utility>
 #include <cstdint>
+#include <unordered_map>
+#include <optional>
 
 //============================================================================*/
 //	bufferSize
@@ -76,10 +79,44 @@ public:
 
 };
 
-// AnimationTransformの作成
-// CameraManagerの作成
-// DeltaTimeなどを管理するクラスの作成
-// Particleの作成
-// MeshRendererの作成 ここで一緒にBaseGameObjectも作る
-// 足りないBufferの作成
-// DrawLineの作成
+//============================================================================*/
+//	AnimationTransform class
+//============================================================================*/
+class AnimationTransform :
+	public BaseTransform {
+public:
+	//========================================================================*/
+	//	public Methods
+	//========================================================================*/
+
+	AnimationTransform() = default;
+	~AnimationTransform() = default;
+
+	void Init(const std::string& modelName, const std::string& animationName);
+
+	void Update() override;
+
+	//* setter *//
+
+	void SetPlayAnimation(bool isPlayAnimation, const std::string& animationName);
+
+	void SetNewAnimationData(const std::string& animationName);
+
+private:
+	//========================================================================*/
+	//	private Methods
+	//========================================================================*/
+
+	//========================================================================*/
+	//* variables
+
+	ModelData modelData_;
+
+	std::unordered_map<std::string, AnimationData> animationData_;
+	std::unordered_map<std::string, std::optional<Skeleton>> skeleton_;
+	std::unordered_map<std::string, SkinCluster> skinCluster_;
+
+	std::pair<bool, std::string> animationController_;
+	float animationTime_;
+
+};

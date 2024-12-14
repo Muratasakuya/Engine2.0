@@ -3,7 +3,6 @@
 //============================================================================*/
 //	include
 //============================================================================*/
-#include <Engine/DXClass/ComPtr.h>
 #include <Engine/DXClass/Pipeline/PipelineTypes.h>
 
 // directX
@@ -22,6 +21,7 @@ public:
 	~DXDepthRaster() = default;
 
 	void Create(const PostProcessPipelineType& pipelineType);
+	void Create(const RendererPipelineType& pipelineType);
 
 	//* getter *//
 

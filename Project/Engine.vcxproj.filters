@@ -76,6 +76,30 @@
     <ClCompile Include="Engine\CBuffer\Base\DXConstBuffer.cpp" />
     <ClCompile Include="Engine\CBuffer\VertexBuffer.cpp" />
     <ClCompile Include="Engine\CBuffer\Transform.cpp" />
+    <ClCompile Include="Game\Camera\Camera3D.cpp" />
+    <ClCompile Include="Game\Camera\DebugCamera.cpp" />
+    <ClCompile Include="Game\Camera\FollowCamera.cpp" />
+    <ClCompile Include="Game\Camera\Manager\CameraManager.cpp" />
+    <ClCompile Include="Game\System\EnvironmentSystem.cpp" />
+    <ClCompile Include="Engine\Process\Input.cpp" />
+    <ClCompile Include="Engine\Process\Audio.cpp" />
+    <ClCompile Include="Engine\CBuffer\CameraBuffer.cpp" />
+    <ClCompile Include="Engine\CBuffer\InputAssembler.cpp" />
+    <ClCompile Include="Game\3D\PrimitiveDrawer.cpp" />
+    <ClCompile Include="Engine\CBuffer\MaterialBuffer.cpp" />
+    <ClCompile Include="Game\System\GameSystem.cpp" />
+    <ClCompile Include="Game\Light\Manager\LightManager.cpp" />
+    <ClCompile Include="Engine\CBuffer\LightBuffer.cpp" />
+    <ClCompile Include="Game\3D\Model\Base\BaseModel.cpp" />
+    <ClCompile Include="Game\3D\Model\Model.cpp" />
+    <ClCompile Include="Game\3D\Model\AnimationModel.cpp" />
+    <ClCompile Include="Lib\Adapter\JsonAdapter.cpp" />
+    <ClCompile Include="Game\3D\Object\BaseAnimationObject.cpp" />
+    <ClCompile Include="Game\3D\Object\BaseGameObject.cpp" />
+    <ClCompile Include="Game\3D\Object\IBaseGameObject.cpp" />
+    <ClCompile Include="Engine\DXClass\Pipeline\DXInputLayout.cpp" />
+    <ClCompile Include="Engine\DXClass\Pipeline\DXBlendState.cpp" />
+    <ClCompile Include="Engine\Process\MeshRenderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Utility\Environment.h" />
@@ -117,5 +141,30 @@
     <ClInclude Include="Engine\CBuffer\Base\DXConstBuffer.h" />
     <ClInclude Include="Engine\CBuffer\VertexBuffer.h" />
     <ClInclude Include="Engine\CBuffer\Transform.h" />
+    <ClInclude Include="Game\Camera\Camera3D.h" />
+    <ClInclude Include="Game\Camera\DebugCamera.h" />
+    <ClInclude Include="Game\Camera\FollowCamera.h" />
+    <ClInclude Include="Game\Camera\Manager\CameraManager.h" />
+    <ClInclude Include="Game\System\EnvironmentSystem.h" />
+    <ClInclude Include="Engine\Process\Input.h" />
+    <ClInclude Include="Engine\Process\Audio.h" />
+    <ClInclude Include="Engine\CBuffer\CameraBuffer.h" />
+    <ClInclude Include="Engine\CBuffer\InputAssembler.h" />
+    <ClInclude Include="Game\3D\PrimitiveDrawer.h" />
+    <ClInclude Include="Engine\CBuffer\MaterialBuffer.h" />
+    <ClInclude Include="Game\System\GameSystem.h" />
+    <ClInclude Include="Game\Light\PunctualLight.h" />
+    <ClInclude Include="Game\Light\Manager\LightManager.h" />
+    <ClInclude Include="Engine\CBuffer\LightBuffer.h" />
+    <ClInclude Include="Game\3D\Model\Base\BaseModel.h" />
+    <ClInclude Include="Game\3D\Model\Model.h" />
+    <ClInclude Include="Game\3D\Model\AnimationModel.h" />
+    <ClInclude Include="Lib\Adapter\JsonAdapter.h" />
+    <ClInclude Include="Game\3D\Object\BaseAnimationObject.h" />
+    <ClInclude Include="Game\3D\Object\BaseGameObject.h" />
+    <ClInclude Include="Game\3D\Object\IBaseGameObject.h" />
+    <ClInclude Include="Engine\DXClass\Pipeline\DXInputLayout.h" />
+    <ClInclude Include="Engine\DXClass\Pipeline\DXBlendState.h" />
+    <ClInclude Include="Engine\Process\MeshRenderer.h" />
   </ItemGroup>
 </Project>

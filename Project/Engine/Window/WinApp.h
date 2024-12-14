@@ -27,6 +27,8 @@ public:
 
 	HWND GetHwnd() const { return hwnd_; }
 
+	WNDCLASS GetWindowClass() const { return windowClass_; }
+
 private:
 	//========================================================================*/
 	//	private Methods

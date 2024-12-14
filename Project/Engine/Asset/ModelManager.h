@@ -41,6 +41,14 @@ public:
 
 	void SkinClusterUpdate(const std::string& animationName);
 
+	//* getter *//
+
+	ModelData GetModelData(const std::string& modelName);
+
+	AnimationData GetAnimationData(const std::string& animationName);
+	Skeleton GetSkeletonData(const std::string& animationName);
+	SkinCluster GetSkinClusterData(const std::string& animationName);
+
 private:
 	//========================================================================*/
 	//	private Methods

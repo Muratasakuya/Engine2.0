@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -333,6 +333,20 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\DXClass\Pipeline\DXBlendState.cpp" />
+    <ClCompile Include="Engine\DXClass\Pipeline\DXInputLayout.cpp" />
+    <ClCompile Include="Engine\Process\MeshRenderer.cpp" />
+    <ClCompile Include="Game\3D\Object\BaseAnimationObject.cpp" />
+    <ClCompile Include="Game\3D\Object\BaseGameObject.cpp" />
+    <ClCompile Include="Game\3D\Model\AnimationModel.cpp" />
+    <ClCompile Include="Game\3D\Model\Base\BaseModel.cpp" />
+    <ClCompile Include="Engine\CBuffer\CameraBuffer.cpp" />
+    <ClCompile Include="Engine\Process\Audio.cpp" />
+    <ClCompile Include="Game\System\EnvironmentSystem.cpp" />
+    <ClCompile Include="Game\Camera\Manager\CameraManager.cpp" />
+    <ClCompile Include="Game\Camera\FollowCamera.cpp" />
+    <ClCompile Include="Game\Camera\DebugCamera.cpp" />
+    <ClCompile Include="Game\Camera\Camera3D.cpp" />
     <ClCompile Include="Engine\CBuffer\Base\DXConstBuffer.cpp" />
     <ClCompile Include="Game\3D\Collision\Managers\CollisionManager.cpp" />
     <ClCompile Include="Game\3D\Collision\Collider.cpp" />
@@ -347,6 +361,13 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\Scenes\Methods\IScene.cpp" />
     <ClCompile Include="Engine\External\ImGuiManager.cpp" />
     <ClCompile Include="Engine\Window\ImGuiRenderer.cpp" />
+    <ClCompile Include="Engine\Process\Input.cpp" />
+    <ClCompile Include="Engine\CBuffer\InputAssembler.cpp" />
+    <ClCompile Include="Game\System\GameSystem.cpp" />
+    <ClCompile Include="Game\Light\Manager\LightManager.cpp" />
+    <ClCompile Include="Engine\CBuffer\LightBuffer.cpp" />
+    <ClCompile Include="Game\3D\Object\IBaseGameObject.cpp" />
+    <ClCompile Include="Lib\Adapter\JsonAdapter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Engine\Base\GraphicsEngine.cpp" />
     <ClCompile Include="Engine\Window\WinApp.cpp" />
@@ -367,8 +388,25 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\System\RigidBodySystem.cpp" />
     <ClCompile Include="Engine\CBuffer\VertexBuffer.cpp" />
     <ClCompile Include="Engine\CBuffer\Transform.cpp" />
+    <ClCompile Include="Game\3D\PrimitiveDrawer.cpp" />
+    <ClCompile Include="Engine\CBuffer\MaterialBuffer.cpp" />
+    <ClCompile Include="Game\3D\Model\Model.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\DXClass\Pipeline\DXBlendState.h" />
+    <ClInclude Include="Engine\DXClass\Pipeline\DXInputLayout.h" />
+    <ClInclude Include="Engine\Process\MeshRenderer.h" />
+    <ClInclude Include="Game\3D\Object\BaseAnimationObject.h" />
+    <ClInclude Include="Game\3D\Object\BaseGameObject.h" />
+    <ClInclude Include="Game\3D\Model\AnimationModel.h" />
+    <ClInclude Include="Game\3D\Model\Base\BaseModel.h" />
+    <ClInclude Include="Engine\CBuffer\CameraBuffer.h" />
+    <ClInclude Include="Engine\Process\Audio.h" />
+    <ClInclude Include="Game\System\EnvironmentSystem.h" />
+    <ClInclude Include="Game\Camera\Manager\CameraManager.h" />
+    <ClInclude Include="Game\Camera\FollowCamera.h" />
+    <ClInclude Include="Game\Camera\DebugCamera.h" />
+    <ClInclude Include="Game\Camera\Camera3D.h" />
     <ClInclude Include="Engine\CBuffer\Base\DXConstBuffer.h" />
     <ClInclude Include="Game\3D\Collision\Managers\CollisionManager.h" />
     <ClInclude Include="Game\3D\Collision\Collider.h" />
@@ -392,6 +430,11 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\External\ImGuiManager.h" />
     <ClInclude Include="Engine\Window\ImGuiRenderer.h" />
     <ClInclude Include="Game\Utility\Direction.h" />
+    <ClInclude Include="Engine\Process\Input.h" />
+    <ClInclude Include="Engine\CBuffer\InputAssembler.h" />
+    <ClInclude Include="Game\System\GameSystem.h" />
+    <ClInclude Include="Game\3D\Object\IBaseGameObject.h" />
+    <ClInclude Include="Lib\Adapter\JsonAdapter.h" />
     <ClInclude Include="Lib\MathUtils\Vector3.h" />
     <ClInclude Include="Lib\MathUtils\Vector4.h" />
     <ClInclude Include="Engine\DXClass\Managers\SrvManager.h" />
@@ -408,6 +451,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Game\System\RigidBodySystem.h" />
     <ClInclude Include="Engine\CBuffer\VertexBuffer.h" />
     <ClInclude Include="Engine\CBuffer\Transform.h" />
+    <ClInclude Include="Game\3D\PrimitiveDrawer.h" />
+    <ClInclude Include="Engine\CBuffer\MaterialBuffer.h" />
+    <ClInclude Include="Game\Light\PunctualLight.h" />
+    <ClInclude Include="Game\Light\Manager\LightManager.h" />
+    <ClInclude Include="Engine\CBuffer\LightBuffer.h" />
+    <ClInclude Include="Game\3D\Model\Model.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

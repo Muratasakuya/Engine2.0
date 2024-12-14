@@ -90,3 +90,61 @@ void DXShaderCompiler::Compile(
 	assert(postProcessPSBlob_[pipelineType] != nullptr);
 
 }
+
+void DXShaderCompiler::Compile(DXCommon* dxCommon, const RendererPipelineType& pipelineType) {
+
+	const wchar_t* vsShaderPath = nullptr;
+	const wchar_t* psShaderPath = nullptr;
+	switch (pipelineType) {
+	case RendererPipelineType::Object2D:
+		vsShaderPath = L"./Resources/Engine/Shaders/Object2D.VS.hlsl";
+		psShaderPath = L"./Resources/Engine/Shaders/Object2D.PS.hlsl";
+		break;
+	case RendererPipelineType::NormalObject3D:
+		vsShaderPath = L"./Resources/Engine/Shaders/Object3D.VS.hlsl";
+		psShaderPath = L"./Resources/Engine/Shaders/Object3D.PS.hlsl";
+		break;
+	case RendererPipelineType::SkinningObject3D:
+		vsShaderPath = L"./Resources/Engine/Shaders/SkinningObject3D.VS.hlsl";
+		psShaderPath = L"./Resources/Engine/Shaders/Object3D.PS.hlsl";
+		break;
+	case RendererPipelineType::PrimitiveLine:
+		vsShaderPath = L"./Resources/Engine/Shaders/PrimitiveLine.VS.hlsl";
+		psShaderPath = L"./Resources/Engine/Shaders/PrimitiveLine.PS.hlsl";
+		break;
+	case RendererPipelineType::NormalParticle:
+		vsShaderPath = L"./Resources/Engine/Shaders/Particle.VS.hlsl";
+		psShaderPath = L"./Resources/Engine/Shaders/Particle.PS.hlsl";
+		break;
+	default:
+		assert(false && "Unsupported pipeline type");
+		return;
+	}
+
+	rendererVSBlob_[pipelineType] = CompileShader(vsShaderPath, L"vs_6_0",
+		dxCommon->GetDxcUtils(), dxCommon->GetDxcCompiler(), dxCommon->GetIncludeHandler());
+	assert(rendererVSBlob_[pipelineType] != nullptr);
+
+	rendererPSBlob_[pipelineType] = CompileShader(psShaderPath, L"ps_6_0",
+		dxCommon->GetDxcUtils(), dxCommon->GetDxcCompiler(), dxCommon->GetIncludeHandler());
+	assert(rendererPSBlob_[pipelineType] != nullptr);
+
+}
+
+void DXShaderCompiler::Compile(DXCommon* dxCommon, const ComputePipelineType& pipelineType) {
+
+	const wchar_t* csShaderPath = nullptr;
+	switch (pipelineType) {
+	case ComputePipelineType::SkinningCS:
+		csShaderPath = L"./Resources/Engine/Shaders/Skinning.CS.hlsl";
+		break;
+	default:
+		assert(false && "Unsupported pipeline type");
+		return;
+	}
+
+	computeBlob_[pipelineType] = CompileShader(csShaderPath, L"cs_6_0",
+		dxCommon->GetDxcUtils(), dxCommon->GetDxcCompiler(), dxCommon->GetIncludeHandler());
+	assert(computeBlob_[pipelineType] != nullptr);
+
+}

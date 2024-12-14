@@ -3,13 +3,13 @@
 //	include
 //===================================================================*/
 #include <Engine/Base/GraphicsEngine.h>
-#include <Game/System/RigidBodySystem.h>
+#include <Game/System/GameSystem.h>
 #include <Game/Scenes/Manager/SceneManager.h>
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	GraphicsEngine::Init();
-	RigidBodySystem::Init();
+	GameSystem::Init();
 
 	SceneManager::GetInstance()->Run();
 

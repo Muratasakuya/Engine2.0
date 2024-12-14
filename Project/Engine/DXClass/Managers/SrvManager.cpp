@@ -96,3 +96,17 @@ void SrvManager::CreateSRVForStructureBuffer(uint32_t srvIndex, ID3D12Resource* 
 
 	GraphicsEngine::Device()->Get()->CreateShaderResourceView(pResource, &srvDesc, GetCPUHandle(srvIndex));
 }
+
+void SrvManager::CreateUAVForStructureBuffer(uint32_t uavIndex, ID3D12Resource* pResource, UINT numElements, UINT structureByteStride) {
+
+	D3D12_UNORDERED_ACCESS_VIEW_DESC uavDesc{};
+	uavDesc.Format = DXGI_FORMAT_UNKNOWN;
+	uavDesc.ViewDimension = D3D12_UAV_DIMENSION_BUFFER;
+	uavDesc.Buffer.FirstElement = 0;
+	uavDesc.Buffer.CounterOffsetInBytes = 0;
+	uavDesc.Buffer.Flags = D3D12_BUFFER_UAV_FLAG_NONE;
+	uavDesc.Buffer.NumElements = numElements;
+	uavDesc.Buffer.StructureByteStride = structureByteStride;
+
+	GraphicsEngine::Device()->Get()->CreateUnorderedAccessView(pResource, nullptr, &uavDesc, GetCPUHandle(uavIndex));
+}

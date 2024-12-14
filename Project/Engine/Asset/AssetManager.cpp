@@ -36,3 +36,8 @@ D3D12_GPU_DESCRIPTOR_HANDLE& AssetManager::GetTextureGPUHandle(const std::string
 
 	return textureManager_->GetTextureGPUHandle(textureName);
 }
+
+ModelManager* AssetManager::GetModel() {
+
+	return modelManager_.get();
+}

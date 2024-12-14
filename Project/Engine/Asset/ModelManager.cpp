@@ -412,6 +412,29 @@ SkinCluster ModelManager::CreateSkinCluster(const std::string& modelName, const 
 	return skinCluster;
 }
 
+ModelData ModelManager::GetModelData(const std::string& modelName) {
+
+	assert(models_.find(modelName) != models_.end());
+	return models_[modelName];
+}
+AnimationData ModelManager::GetAnimationData(const std::string& animationName) {
+
+	assert(animations_.find(animationName) != animations_.end());
+	return animations_[animationName];
+}
+
+Skeleton ModelManager::GetSkeletonData(const std::string& animationName) {
+
+	assert(skeletons_.find(animationName) != skeletons_.end());
+	return skeletons_[animationName];
+}
+
+SkinCluster ModelManager::GetSkinClusterData(const std::string& animationName) {
+
+	assert(skinClusters_.find(animationName) != skinClusters_.end());
+	return skinClusters_[animationName];
+}
+
 ComPtr<ID3D12Resource> ModelManager::CreateBufferResource(ID3D12Device* device, size_t sizeInBytes) {
 
 	HRESULT hr;

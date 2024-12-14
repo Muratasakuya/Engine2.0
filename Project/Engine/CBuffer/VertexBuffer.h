@@ -4,6 +4,7 @@
 //	include
 //============================================================================*/
 #include <Engine/CBuffer/Base/DXConstBuffer.h>
+#include <Engine/Utility/AssetStructure.h>
 #include <Lib/MathUtils/Vector2.h>
 #include <Lib/MathUtils/Vector3.h>
 #include <Lib/MathUtils/Vector4.h>
@@ -11,16 +12,6 @@
 // c++
 #include <utility>
 #include <cstdint>
-
-//============================================================================*/
-//	bufferSize
-//============================================================================*/
-struct VertexData3D {
-
-	Vector4 pos;
-	Vector2 texcoord;
-	Vector3 normal;
-};
 
 //============================================================================*/
 //	PrimitiveVertexBuffer class
@@ -56,6 +47,8 @@ public:
 	VertexBuffer() = default;
 	~VertexBuffer() = default;
 
+	void Update();
+
 	//========================================================================*/
 	//* variables
 
@@ -64,10 +57,32 @@ public:
 };
 
 //============================================================================*/
+//	VertexBuffer class
+//============================================================================*/
+class IndexBuffer :
+	public DXConstBuffer<uint32_t> {
+public:
+	//========================================================================*/
+	//	public Methods
+	//========================================================================*/
+
+	IndexBuffer() = default;
+	~IndexBuffer() = default;
+
+	void Update();
+
+	//========================================================================*/
+	//* variables
+
+	std::vector<uint32_t> data;
+
+};
+
+//============================================================================*/
 //	InputVertexBuffer class
 //============================================================================*/
 class InputVertexBuffer :
-	public DXConstBuffer<VertexData3D> {
+	public DXConstBuffer<ModelVertexData> {
 private:
 	//========================================================================*/
 	//	private Methods
@@ -78,7 +93,7 @@ private:
 
 	struct InputVertex {
 
-		std::vector<VertexData3D> data;
+		std::vector<ModelVertexData> data;
 		uint32_t srvIndex;
 		std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> srvHandle;
 	};
@@ -90,6 +105,8 @@ public:
 
 	InputVertexBuffer() = default;
 	~InputVertexBuffer() = default;
+
+	void Init(UINT vertexNum, ID3D12Resource* vertexResource);
 
 	//* getter *//
 
@@ -106,7 +123,7 @@ public:
 //	OutputVertexBuffer class
 //============================================================================*/
 class OutputVertexBuffer :
-	public DXConstBuffer<VertexData3D> {
+	public DXConstBuffer<ModelVertexData> {
 private:
 	//========================================================================*/
 	//	private Methods
@@ -117,7 +134,7 @@ private:
 
 	struct OutputVertex {
 
-		std::vector<VertexData3D> data;
+		std::vector<ModelVertexData> data;
 		uint32_t uavIndex;
 		std::pair<D3D12_CPU_DESCRIPTOR_HANDLE, D3D12_GPU_DESCRIPTOR_HANDLE> uavHandle;
 	};
@@ -129,6 +146,8 @@ public:
 
 	OutputVertexBuffer() = default;
 	~OutputVertexBuffer() = default;
+
+	void Init(UINT vertexNum);
 
 	//* getter *//
 

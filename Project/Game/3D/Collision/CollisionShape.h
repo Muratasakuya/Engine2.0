@@ -52,3 +52,12 @@ enum class ShapeType {
 	Type_Sphere,
 	Type_OBB
 };
+
+struct AABB {
+
+	Vector3 center; // AABBの中心
+	Vector3 extent; // AABBの半径（各軸方向の幅/2）
+
+	Vector3 GetMin() const { return center - extent; }
+	Vector3 GetMax() const { return center + extent; }
+};

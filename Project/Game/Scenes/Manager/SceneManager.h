@@ -56,5 +56,4 @@ private:
 	SceneManager(SceneManager&&) = delete;
 	SceneManager& operator=(SceneManager&&) = delete;
 
-
 };

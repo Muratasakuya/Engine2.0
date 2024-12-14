@@ -9,6 +9,7 @@
 #include <Engine/DXClass/Managers/RtvManager.h>
 #include <Engine/DXClass/Managers/DsvManager.h>
 #include <Engine/DXClass/Managers/SrvManager.h>
+#include <Engine//DXClass/Pipeline/PipelineTypes.h>
 #include <Engine/DXClass/Managers/PipelineManager.h>
 #include <Engine/DXClass/DXCommon.h>
 #include <Engine/Process/OffscreenRenderer.h>
@@ -54,9 +55,20 @@ public:
 	static void TransitionBarrier(
 		ID3D12Resource* resource, D3D12_RESOURCE_STATES stateBefore, D3D12_RESOURCE_STATES stateAfter);
 
+	//* command *//
+
+	static void SetPostProcessPipeline(ID3D12GraphicsCommandList* commandList, PostProcessPipelineType pipelineType);
+	static void SetRendererPipeline(ID3D12GraphicsCommandList* commandList, RendererPipelineType pipelineType, BlendMode blendMode);
+
+	static void SetComputePipeline(ID3D12GraphicsCommandList* commandList, ComputePipelineType pipelineType);
+
 	//* getter *//
 
 	static DXDevice* Device() { return device_.get(); };
+
+	static ID3D12GraphicsCommandList* GetCommandList() { return dxCommon_->GetCommandList(); }
+
+	static SrvManager* SRV() { return srvManager_.get(); }
 
 private:
 	//========================================================================*/

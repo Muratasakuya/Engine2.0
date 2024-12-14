@@ -68,4 +68,6 @@ public:
 
 	static Vector3 Transform(const Vector3& v, const Matrix4x4& matrix);
 
+	static Vector3 TransferNormal(const Vector3& v, const Matrix4x4& m);
+
 };

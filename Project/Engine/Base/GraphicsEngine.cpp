@@ -6,6 +6,7 @@
 #include <Engine/Utility/Environment.h>
 #include <Engine/Asset/AssetManager.h>
 #include <Engine/Window/ImGuiRenderer.h>
+#include <Engine/Process/Input.h>
 
 //============================================================================*/
 //	GraphicsEngine classMethods
@@ -38,6 +39,21 @@ void GraphicsEngine::TransitionBarrier(
 	barrier.Transition.StateAfter = stateAfter;
 
 	dxCommon_->GetCommandList()->ResourceBarrier(1, &barrier);
+}
+
+void GraphicsEngine::SetPostProcessPipeline(ID3D12GraphicsCommandList* commandList, PostProcessPipelineType pipelineType) {
+
+	pipelineManager_->SetPostProcessPipeline(commandList, pipelineType);
+}
+
+void GraphicsEngine::SetRendererPipeline(ID3D12GraphicsCommandList* commandList, RendererPipelineType pipelineType, BlendMode blendMode) {
+
+	pipelineManager_->SetRendererPipeline(commandList, pipelineType, blendMode);
+}
+
+void GraphicsEngine::SetComputePipeline(ID3D12GraphicsCommandList* commandList, ComputePipelineType pipelineType) {
+
+	pipelineManager_->SetComputePipeline(commandList, pipelineType);
 }
 
 void GraphicsEngine::Init() {
@@ -94,6 +110,8 @@ void GraphicsEngine::Init() {
 
 	rtvManager_->Reset();
 
+	////* System *////
+
 	// Assetの初期化
 	AssetManager::Init(dxCommon_.get(), srvManager_.get());
 
@@ -102,6 +120,9 @@ void GraphicsEngine::Init() {
 	// ImGuiRendererの初期化
 	ImGuiRenderer::Init(offscreenRenderer_->GetRenderTextureGPUHandle());
 #endif
+
+	// Inputの初期化
+	Input::GetInstance()->Init(winApp_.get());
 
 }
 
@@ -129,6 +150,7 @@ void GraphicsEngine::BeginRenderFrame() {
 #endif
 
 	srvManager_->SetDescriptorHeaps(dxCommon_->GetCommandList());
+
 }
 
 void GraphicsEngine::BeginPreOffscreen() {

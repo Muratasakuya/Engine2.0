@@ -8,6 +8,8 @@
 #include <Engine/DXClass/Pipeline/DXShaderCompiler.h>
 #include <Engine/DXClass/Pipeline/DXRootSignature.h>
 #include <Engine/DXClass/Pipeline/DXDepthRaster.h>
+#include <Engine/DXClass/Pipeline/DXInputLayout.h>
+#include <Engine/DXClass/Pipeline/DXBlendState.h>
 
 // directX
 #include <d3d12.h>
@@ -37,6 +39,9 @@ public:
 	//* command *//
 
 	void SetPostProcessPipeline(ID3D12GraphicsCommandList* commandList, PostProcessPipelineType pipelineType);
+	void SetRendererPipeline(ID3D12GraphicsCommandList* commandList, RendererPipelineType pipelineType, BlendMode blendMode);
+
+	void SetComputePipeline(ID3D12GraphicsCommandList* commandList, ComputePipelineType pipelineType);
 
 private:
 	//========================================================================*/
@@ -46,19 +51,34 @@ private:
 	//========================================================================*/
 	//* variables
 
+	DXBlendState blendState_;
+
 	std::unique_ptr<DXShaderCompiler> shaderCompiler_;
 
 	std::unique_ptr<DXRootSignature> rootSignature_;
 
 	std::unique_ptr<DXDepthRaster> depthRaster_;
 
+	std::unique_ptr<DXInputLayout> inputLayout_;
+
 	//* postProcess *//
 
 	std::array<ComPtr<ID3D12PipelineState>, postProcessPipelineNum> postProcessPipeline_;
+
+	//* renderer *//
+
+	std::array<std::array<ComPtr<ID3D12PipelineState>, blendModeNum>, rendererPipelineNum> rendererPipeline_;
+
+	//* compute *//
+
+	std::array<ComPtr<ID3D12PipelineState>, computePipelineNum> computePipeline_;
 
 	//========================================================================*/
 	//* functions
 
 	void CreatePostProcessPipeline(const PostProcessPipelineType& pipelineType);
+	void CreateRendererPipeline(const RendererPipelineType& pipelineType, const BlendMode& blendMode);
+
+	void CreateComputePipeline(const ComputePipelineType& pipelineType);
 
 };

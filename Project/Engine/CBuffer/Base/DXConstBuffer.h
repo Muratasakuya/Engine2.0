@@ -11,6 +11,7 @@
 // c++
 #include <vector>
 #include <cstdint>
+#include <cassert>
 
 //============================================================================*/
 //	DXConstBuffer class

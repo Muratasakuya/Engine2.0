@@ -35,6 +35,8 @@ public:
 
 	void Load(const std::string& textureName);
 
+
+
 	//* getter *//
 
 	D3D12_GPU_DESCRIPTOR_HANDLE& GetTextureGPUHandle(const std::string textureName);

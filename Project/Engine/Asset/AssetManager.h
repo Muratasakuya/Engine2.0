@@ -8,6 +8,7 @@
 
 // c++
 #include <memory>
+#include <cassert>
 
 //============================================================================*/
 //	AssetManager class
@@ -32,6 +33,8 @@ public:
 	//* getter *//
 
 	static D3D12_GPU_DESCRIPTOR_HANDLE& GetTextureGPUHandle(const std::string textureName);
+
+	static ModelManager* GetModel();
 
 private:
 	//========================================================================*/

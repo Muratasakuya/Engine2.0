@@ -4,7 +4,7 @@
 //	include
 //============================================================================*/
 #include <Engine/Base/GraphicsEngine.h>
-#include <Engine/Window/ImGuiRenderer.h>
+#include <Game/System/GameSystem.h>
 
 //============================================================================*/
 //	GameScene classMethods
@@ -16,17 +16,16 @@ void GameScene::Run() {
 
 	while (!GraphicsEngine::ProcessMessage()) {
 		GraphicsEngine::BeginRenderFrame();
-
-		ImGuiRenderer::Render();
+		GameSystem::Update();
 
 		Update();
 
 		GraphicsEngine::BeginPreOffscreen();
-		Draw();
 		GraphicsEngine::EndPostOffscreen();
 
 		GraphicsEngine::RenderOffscreen();
 
+		GameSystem::Reset();
 		GraphicsEngine::EndRenderFrame();
 	}
 
@@ -35,12 +34,11 @@ void GameScene::Run() {
 }
 
 void GameScene::Init() {
+
 }
 
 void GameScene::Update() {
-}
 
-void GameScene::Draw() {
 }
 
 void GameScene::Finalize() {

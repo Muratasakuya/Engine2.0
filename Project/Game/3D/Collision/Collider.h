@@ -59,7 +59,9 @@ public:
 
 	void SetCollisionShapeOBB();
 
-	virtual void OBBUpdate();
+	void OBBUpdate();
+
+	void DrawCollider();
 
 	//* getter *//
 
