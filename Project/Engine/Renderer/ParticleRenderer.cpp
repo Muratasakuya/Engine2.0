@@ -5,6 +5,7 @@
 //============================================================================*/
 #include <Engine/Renderer/ImGuiRenderer.h>
 #include <Engine/Renderer/MeshRenderer.h>
+#include <Game/Editor/Manager/EditorManager.h>
 
 //============================================================================*/
 //	ParticleRenderer classMethods
@@ -46,8 +47,8 @@ void ParticleRenderer::Clear() {
 void ParticleRenderer::SelectParticle(const ImVec2& mainWindowPos) {
 
 	if (!particles.empty()) {
-		ImGui::SetCursorPos(ImVec2(44.0f, mainWindowPos.y + 69.0f));
-		ImGui::SetNextItemWidth(162.0f);
+		ImGui::SetCursorPos(ImVec2(6.0f, mainWindowPos.y + 69.0f));
+		ImGui::SetNextItemWidth(144.0f);
 		if (ImGui::BeginCombo("##ParticleCombo",
 			currentParticleIndex_ >= 0 ? particles[currentParticleIndex_]->GetName().c_str() : "ParticleList", ImGuiComboFlags_NoArrowButton)) {
 			for (int i = 0; i < particles.size(); ++i) {
@@ -72,11 +73,13 @@ void ParticleRenderer::SelectParticle(const ImVec2& mainWindowPos) {
 		}
 	} else {
 
-		ImGui::SetCursorPos(ImVec2(48.0f, mainWindowPos.y + 69.0f));
+		ImGui::SetCursorPos(ImVec2(6.0f, mainWindowPos.y + 69.0f));
 		ImGui::Text("No Particle");
 	}
 
-	if (ImGuiRenderer::cameraInfoEnable_ || MeshRenderer::GetSelectedObject()) {
+	if (ImGuiRenderer::cameraInfoEnable_ ||
+		MeshRenderer::GetSelectedObject() ||
+		EditorManager::GetSelectedEditor()) {
 
 		selectedParticle_ = nullptr;
 	}
