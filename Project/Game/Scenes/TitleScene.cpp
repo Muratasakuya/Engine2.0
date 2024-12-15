@@ -1,4 +1,4 @@
-#include "GameScene.h"
+#include "TitleScene.h"
 
 //============================================================================*/
 //	include
@@ -9,10 +9,10 @@
 #include <Game/Scenes/Manager/SceneManager.h>
 
 //============================================================================*/
-//	GameScene classMethods
+//	TitleScene classMethods
 //============================================================================*/
 
-void GameScene::Run() {
+void TitleScene::Run() {
 
 	Init();
 
@@ -37,20 +37,13 @@ void GameScene::Run() {
 
 }
 
-void GameScene::Init() {
-
-	AssetManager::LoadModel(baseModelDirectory_, "teapot.obj");
-
-	test_ = std::make_unique<Test>();
-	test_->Init("teapot.obj");
+void TitleScene::Init() {
 
 }
 
-void GameScene::Update() {
-
-	test_->Update();
+void TitleScene::Update() {
 
 }
 
-void GameScene::Finalize() {
+void TitleScene::Finalize() {
 }

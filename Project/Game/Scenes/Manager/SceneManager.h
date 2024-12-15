@@ -27,6 +27,14 @@ public:
 
 	void SetNextScene(const std::string& sceneName);
 
+	//* imgui *//
+
+	void ImGui();
+
+	//* getter *//
+
+	bool IsSceneSwitching() const { return isSceneSwitching_; }
+
 private:
 	//========================================================================*/
 	//	private Methods
@@ -41,12 +49,12 @@ private:
 	bool isSceneSwitching_;
 	bool gameLoop_;
 
+	int selectedSceneIndex_;
+
 	//===================================================================*/
 	///* functions
 
 	void LoadScene(const std::string& sceneName);
-
-	void ImGui();
 
 	SceneManager() = default;
 	~SceneManager() = default;

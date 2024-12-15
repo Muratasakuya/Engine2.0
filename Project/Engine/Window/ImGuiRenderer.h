@@ -26,6 +26,11 @@ public:
 
 	static void Render();
 
+	//========================================================================*/
+	//* variables
+
+	static bool cameraInfoEnable_;
+
 private:
 	//========================================================================*/
 	//	private Methods
@@ -35,8 +40,6 @@ private:
 	//* variables
 
 	static bool show_;
-
-	static bool cameraInfoEnable_;
 
 	static D3D12_GPU_DESCRIPTOR_HANDLE renderTextureGPUHandle_;
 

@@ -101,6 +101,16 @@
     <ClCompile Include="Engine\DXClass\Pipeline\DXBlendState.cpp" />
     <ClCompile Include="Engine\Process\MeshRenderer.cpp" />
     <ClCompile Include="Game\Object\Test.cpp" />
+    <ClCompile Include="Game\3D\Particle\BaseParticle.cpp" />
+    <ClCompile Include="Game\3D\Particle\IBaseParticle.cpp" />
+    <ClCompile Include="Game\3D\Particle\ParticleBehavior.cpp" />
+    <ClCompile Include="Game\3D\Particle\ParticleParameter.cpp" />
+    <ClCompile Include="Game\3D\Particle\ParticleSystem.cpp" />
+    <ClCompile Include="Game\3D\Particle\ParticleVisitor.cpp" />
+    <ClCompile Include="Lib\Adapter\Easing.cpp" />
+    <ClCompile Include="Engine\CBuffer\ParticleBuffer.cpp" />
+    <ClCompile Include="Engine\Process\ParticleRenderer.cpp" />
+    <ClCompile Include="Game\Scenes\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Utility\Environment.h" />
@@ -168,5 +178,18 @@
     <ClInclude Include="Engine\DXClass\Pipeline\DXBlendState.h" />
     <ClInclude Include="Engine\Process\MeshRenderer.h" />
     <ClInclude Include="Game\Object\Test.h" />
+    <ClInclude Include="Game\3D\Particle\ParticleVisitor.h" />
+    <ClInclude Include="Game\3D\Particle\BaseParticle.h" />
+    <ClInclude Include="Game\3D\Particle\IBaseParticle.h" />
+    <ClInclude Include="Game\3D\Particle\ParticleBehavior.h" />
+    <ClInclude Include="Game\3D\Particle\ParticleParameter.h" />
+    <ClInclude Include="Game\3D\Particle\ParticleSystem.h" />
+    <ClInclude Include="Game\3D\Particle\ParticleTraits.h" />
+    <ClInclude Include="Game\3D\Particle\ParticleStructure.h" />
+    <ClInclude Include="Lib\Adapter\Easing.h" />
+    <ClInclude Include="Engine\CBuffer\ParticleBuffer.h" />
+    <ClInclude Include="Lib\Adapter\Random.h" />
+    <ClInclude Include="Engine\Process\ParticleRenderer.h" />
+    <ClInclude Include="Game\Scenes\TitleScene.h" />
   </ItemGroup>
 </Project>

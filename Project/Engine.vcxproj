@@ -333,6 +333,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Lib\Adapter\Easing.cpp" />
     <ClCompile Include="Engine\DXClass\Pipeline\DXBlendState.cpp" />
     <ClCompile Include="Engine\DXClass\Pipeline\DXInputLayout.cpp" />
     <ClCompile Include="Engine\Process\MeshRenderer.cpp" />
@@ -342,6 +343,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\3D\Model\Base\BaseModel.cpp" />
     <ClCompile Include="Engine\CBuffer\CameraBuffer.cpp" />
     <ClCompile Include="Engine\Process\Audio.cpp" />
+    <ClCompile Include="Game\3D\Particle\BaseParticle.cpp" />
+    <ClCompile Include="Game\3D\Particle\IBaseParticle.cpp" />
+    <ClCompile Include="Game\3D\Particle\ParticleBehavior.cpp" />
+    <ClCompile Include="Game\3D\Particle\ParticleParameter.cpp" />
+    <ClCompile Include="Game\3D\Particle\ParticleSystem.cpp" />
+    <ClCompile Include="Game\3D\Particle\ParticleVisitor.cpp" />
     <ClCompile Include="Game\System\EnvironmentSystem.cpp" />
     <ClCompile Include="Game\Camera\Manager\CameraManager.cpp" />
     <ClCompile Include="Game\Camera\FollowCamera.cpp" />
@@ -392,8 +399,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\CBuffer\MaterialBuffer.cpp" />
     <ClCompile Include="Game\3D\Model\Model.cpp" />
     <ClCompile Include="Game\Object\Test.cpp" />
+    <ClCompile Include="Engine\CBuffer\ParticleBuffer.cpp" />
+    <ClCompile Include="Engine\Process\ParticleRenderer.cpp" />
+    <ClCompile Include="Game\Scenes\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Lib\Adapter\Easing.h" />
     <ClInclude Include="Engine\DXClass\Pipeline\DXBlendState.h" />
     <ClInclude Include="Engine\DXClass\Pipeline\DXInputLayout.h" />
     <ClInclude Include="Engine\Process\MeshRenderer.h" />
@@ -403,6 +414,14 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Game\3D\Model\Base\BaseModel.h" />
     <ClInclude Include="Engine\CBuffer\CameraBuffer.h" />
     <ClInclude Include="Engine\Process\Audio.h" />
+    <ClInclude Include="Game\3D\Particle\BaseParticle.h" />
+    <ClInclude Include="Game\3D\Particle\IBaseParticle.h" />
+    <ClInclude Include="Game\3D\Particle\ParticleBehavior.h" />
+    <ClInclude Include="Game\3D\Particle\ParticleParameter.h" />
+    <ClInclude Include="Game\3D\Particle\ParticleStructure.h" />
+    <ClInclude Include="Game\3D\Particle\ParticleSystem.h" />
+    <ClInclude Include="Game\3D\Particle\ParticleTraits.h" />
+    <ClInclude Include="Game\3D\Particle\ParticleVisitor.h" />
     <ClInclude Include="Game\System\EnvironmentSystem.h" />
     <ClInclude Include="Game\Camera\Manager\CameraManager.h" />
     <ClInclude Include="Game\Camera\FollowCamera.h" />
@@ -436,6 +455,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Game\System\GameSystem.h" />
     <ClInclude Include="Game\3D\Object\IBaseGameObject.h" />
     <ClInclude Include="Lib\Adapter\JsonAdapter.h" />
+    <ClInclude Include="Lib\Adapter\Random.h" />
     <ClInclude Include="Lib\MathUtils\Vector3.h" />
     <ClInclude Include="Lib\MathUtils\Vector4.h" />
     <ClInclude Include="Engine\DXClass\Managers\SrvManager.h" />
@@ -459,6 +479,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\CBuffer\LightBuffer.h" />
     <ClInclude Include="Game\3D\Model\Model.h" />
     <ClInclude Include="Game\Object\Test.h" />
+    <ClInclude Include="Engine\CBuffer\ParticleBuffer.h" />
+    <ClInclude Include="Engine\Process\ParticleRenderer.h" />
+    <ClInclude Include="Game\Scenes\TitleScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

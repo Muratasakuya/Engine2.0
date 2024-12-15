@@ -3,41 +3,28 @@
 //============================================================================*/
 //	include
 //============================================================================*/
-#include <Game/Camera/Manager/CameraManager.h>
-#include <Game/Light/Manager/LightManager.h>
-
-// c++
-#include <memory>
+#include <Game/Scenes/Methods/IScene.h>
 
 //============================================================================*/
-//	EnvironmentSystem class
+//	TitleScene class
 //============================================================================*/
-class EnvironmentSystem {
+class TitleScene :
+	public IScene {
 public:
 	//========================================================================*/
 	//	public Methods
 	//========================================================================*/
 
-	EnvironmentSystem() = default;
-	~EnvironmentSystem() = default;
+	TitleScene() = default;
+	~TitleScene() = default;
 
-	static void Init();
+	void Run() override;
 
-	static void Update();
+	void Init() override;
 
-	static void Inforamtion();
+	void Update() override;
 
-	//* getter *//
-
-	static Matrix4x4 GetCameraViewProjection();
-
-	static Matrix4x4 GetCameraMatrix();
-
-	static CameraBuffer GetCameraBuffer();
-
-	static ViewProjectionBuffer GetViewProBuffer();
-
-	static LightBuffer GetLightBuffer();
+	void Finalize() override;
 
 private:
 	//========================================================================*/
@@ -46,9 +33,5 @@ private:
 
 	//========================================================================*/
 	//* variables
-
-	static std::unique_ptr<CameraManager> cameraManager_;
-
-	static std::unique_ptr<LightManager> lightManager_;
 
 };

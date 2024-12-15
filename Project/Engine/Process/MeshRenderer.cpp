@@ -3,7 +3,8 @@
 //============================================================================*/
 //	include
 //============================================================================*/
-#include <Game/System/EnvironmentSystem.h>
+#include <Engine/Window/ImGuiRenderer.h>
+#include <Engine/Process/ParticleRenderer.h>
 
 //============================================================================*/
 //	MeshRenderer classMethods
@@ -42,11 +43,6 @@ void MeshRenderer::Clear() {
 	selectedGameObject_ = nullptr;
 }
 
-void MeshRenderer::EraseSelectedObject() {
-
-	selectedGameObject_ = nullptr;
-}
-
 void MeshRenderer::SelectGameObject(const ImVec2& mainWindowPos) {
 
 	if (!gameObjects_.empty()) {
@@ -61,6 +57,9 @@ void MeshRenderer::SelectGameObject(const ImVec2& mainWindowPos) {
 
 						currentObjectIndex_ = i;
 						selectedGameObject_ = gameObjects_[i];
+
+						ImGuiRenderer::cameraInfoEnable_ = false;
+
 					}
 					if (isSelected) {
 
@@ -75,6 +74,11 @@ void MeshRenderer::SelectGameObject(const ImVec2& mainWindowPos) {
 
 		ImGui::SetCursorPos(ImVec2(48.0f, mainWindowPos.y + 2.0f));
 		ImGui::Text("No GameObject");
+	}
+
+	if (ImGuiRenderer::cameraInfoEnable_ || ParticleRenderer::GetSelectedParticle()) {
+
+		selectedGameObject_ = nullptr;
 	}
 
 }

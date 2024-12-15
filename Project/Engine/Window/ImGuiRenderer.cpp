@@ -6,8 +6,11 @@
 #include <Engine/Utility/Environment.h>
 #include <Engine/Asset/AssetManager.h>
 #include <Engine/Process/MeshRenderer.h>
+#include <Engine/Process/ParticleRenderer.h>
 #include <Game/System/RigidBodySystem.h>
 #include <Game/System/EnvironmentSystem.h>
+#include <Game/System/GameSystem.h>
+#include <Game/Scenes/Manager/SceneManager.h>
 
 //============================================================================*/
 //	ImGuiRenderer classMethods
@@ -78,6 +81,8 @@ void ImGuiRenderer::Render() {
 	SelectedInfo(mainWindowPos, mainWindowSize);
 	//* CollisionLog
 	CollisionLog(mainWindowPos, mainWindowSize);
+	//* Scene
+	SceneManager::GetInstance()->ImGui();
 
 	ImGui::End();
 
@@ -138,7 +143,7 @@ void ImGuiRenderer::ParticleList(const ImVec2& mainWindowPos) {
 
 	ImGui::SameLine();
 	ImGui::SetCursorPos(ImVec2(48.0f, mainWindowPos.y + 69.0f));
-	ImGui::Text("No GameObject");
+	ParticleRenderer::SelectParticle(mainWindowPos);
 
 }
 
@@ -181,7 +186,10 @@ void ImGuiRenderer::EngineLog(const ImVec2& mainWindowPos, const ImVec2& mainWin
 
 	ImGui::Text("Engine");
 	ImGui::Separator();
-	ImGui::Text("Frame Rate: %.1f fps", ImGui::GetIO().Framerate); //* フレームレート情報
+	ImGui::Text("Frame Rate:       %.1f fps", ImGui::GetIO().Framerate);       //* フレームレート情報
+	ImGui::Text("Delta Time:       %.3f s", GameSystem::GetDeltaTime());       //* ΔTime
+	ImGui::Text("ScaledDelta Time: %.3f s", GameSystem::GetScaledDeltaTime()); //* ScaledΔTime
+	ImGui::Text("DeltaTime Scale:  %.3f", GameSystem::GetTimeScale());         //* TimeScale
 
 	ImGui::EndChild();
 
@@ -192,7 +200,7 @@ void ImGuiRenderer::SelectedInfo(const ImVec2& mainWindowPos, const ImVec2& main
 	ImGui::SetCursorPos(ImVec2(mainWindowPos.x + mainWindowSize.x + 6.0f, mainWindowPos.y - 32.0f));
 	ImGui::BeginChild("RightPanelChild", ImVec2(288.0f, mainWindowSize.y + 32.0f), true, ImGuiWindowFlags_AlwaysUseWindowPadding);
 
-	if (MeshRenderer::GetRenderObject()) {
+	if (MeshRenderer::GetSelectedObject()) {
 
 		MeshRenderer::SelectedImGui();
 
@@ -200,6 +208,9 @@ void ImGuiRenderer::SelectedInfo(const ImVec2& mainWindowPos, const ImVec2& main
 
 		ImGui::Separator();
 		EnvironmentSystem::Inforamtion();
+	} else if (ParticleRenderer::GetSelectedParticle()) {
+
+		ParticleRenderer::SelectedImGui();
 
 	}
 

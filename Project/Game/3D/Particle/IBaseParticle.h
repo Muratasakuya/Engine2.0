@@ -3,41 +3,38 @@
 //============================================================================*/
 //	include
 //============================================================================*/
-#include <Game/Camera/Manager/CameraManager.h>
-#include <Game/Light/Manager/LightManager.h>
+#include <Engine/DXClass/Pipeline/PipelineTypes.h>
 
 // c++
-#include <memory>
+#include <string>
 
 //============================================================================*/
-//	EnvironmentSystem class
+//	IBaseParticle class
 //============================================================================*/
-class EnvironmentSystem {
+class IBaseParticle {
 public:
 	//========================================================================*/
 	//	public Methods
 	//========================================================================*/
 
-	EnvironmentSystem() = default;
-	~EnvironmentSystem() = default;
+	IBaseParticle() = default;
+	virtual ~IBaseParticle();
 
-	static void Init();
+	virtual void Init() = 0;
 
-	static void Update();
+	virtual void Update() = 0;
 
-	static void Inforamtion();
+	virtual void Draw(BlendMode blendMode = BlendMode::kBlendModeNormal) = 0;
+
+	virtual void ImGui() = 0;
 
 	//* getter *//
 
-	static Matrix4x4 GetCameraViewProjection();
+	virtual std::string GetName() const { return name_; };
 
-	static Matrix4x4 GetCameraMatrix();
+	//* getter *//
 
-	static CameraBuffer GetCameraBuffer();
-
-	static ViewProjectionBuffer GetViewProBuffer();
-
-	static LightBuffer GetLightBuffer();
+	virtual void SetName(const std::string& name = "particle");
 
 private:
 	//========================================================================*/
@@ -47,8 +44,6 @@ private:
 	//========================================================================*/
 	//* variables
 
-	static std::unique_ptr<CameraManager> cameraManager_;
-
-	static std::unique_ptr<LightManager> lightManager_;
+	std::string name_;
 
 };

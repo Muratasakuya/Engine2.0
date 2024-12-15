@@ -13,6 +13,10 @@
 //	GameSystem classMethods
 //============================================================================*/
 
+std::chrono::steady_clock::time_point GameSystem::lastFrameTime_ = std::chrono::steady_clock::now();
+float GameSystem::deltaTime_ = 0.0f;
+float GameSystem::timeScale_ = 1.0f;
+
 void GameSystem::Init() {
 
 	RigidBodySystem::Init();
@@ -24,6 +28,12 @@ void GameSystem::Init() {
 }
 
 void GameSystem::Update() {
+
+	auto currentFrameTime = std::chrono::steady_clock::now();
+	std::chrono::duration<float> elapsedTime = currentFrameTime - lastFrameTime_;
+	deltaTime_ = elapsedTime.count();
+
+	lastFrameTime_ = currentFrameTime;
 
 #ifdef _DEBUG
 	ImGuiRenderer::Render();

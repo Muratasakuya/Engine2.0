@@ -52,6 +52,7 @@ public:
 	//========================================================================*/
 
 	void Init();
+	void SetInit(float value);
 
 	float Length() const;
 

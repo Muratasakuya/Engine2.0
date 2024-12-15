@@ -3,7 +3,7 @@
 //============================================================================*/
 //	include
 //============================================================================*/
-#include <Game/3D/Object/IBaseGameObject.h>
+#include <Game/3D/Particle/IBaseParticle.h>
 
 // imgui
 #include <imgui.h>
@@ -14,32 +14,32 @@
 //============================================================================*/
 //	MeshRenderer class
 //============================================================================*/
-class MeshRenderer {
+class ParticleRenderer {
 public:
 	//========================================================================*/
 	//	public Methods
 	//========================================================================*/
 
-	MeshRenderer() = default;
-	~MeshRenderer() = default;
+	ParticleRenderer() = default;
+	~ParticleRenderer() = default;
 
 	static void Render();
 
-	static void SetGameObject(IBaseGameObject* gameObject);
+	static void SetParticle(IBaseParticle* particle);
 
-	static void EraseGameObject(IBaseGameObject* gameObject);
+	static void EraseParticle(IBaseParticle* particle);
 
 	static void Clear();
 
 	//* imgui *//
 
-	static void SelectGameObject(const ImVec2& mainWindowPos);
+	static void SelectParticle(const ImVec2& mainWindowPos);
 
 	static void SelectedImGui();
 
 	//* getter *//
 
-	static IBaseGameObject* GetSelectedObject() { return selectedGameObject_; };
+	static IBaseParticle* GetSelectedParticle() { return selectedParticle_; };
 
 private:
 	//========================================================================*/
@@ -49,10 +49,10 @@ private:
 	//===================================================================*/
 	///* variables
 
-	static std::vector<IBaseGameObject*> gameObjects_;
+	static std::vector<IBaseParticle*> particles;
 
-	static IBaseGameObject* selectedGameObject_;
+	static IBaseParticle* selectedParticle_;
 
-	static int currentObjectIndex_;
+	static int currentParticleIndex_;
 
 };

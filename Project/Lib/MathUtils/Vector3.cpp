@@ -61,6 +61,13 @@ void Vector3::Init() {
 	this->z = 0.0f;
 }
 
+void Vector3::SetInit(float value) {
+
+	this->x = value;
+	this->y = value;
+	this->z = value;
+}
+
 float Vector3::Length() const {
 	return std::sqrtf(x * x + y * y + z * z);
 }
