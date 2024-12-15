@@ -40,15 +40,21 @@ void GameScene::Run() {
 void GameScene::Init() {
 
 	AssetManager::LoadModel(baseModelDirectory_, "teapot.obj");
+	AssetManager::LoadModel(baseModelDirectory_, "sphere.obj");
 
 	test_ = std::make_unique<Test>();
 	test_->Init("teapot.obj");
+	
+	field_ = std::make_unique<Field>();
+	field_->Init("sphere.obj");
 
 }
 
 void GameScene::Update() {
 
 	test_->Update();
+
+	field_->Update();
 
 }
 

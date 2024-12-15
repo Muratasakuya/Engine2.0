@@ -26,6 +26,7 @@ public:
 	virtual void Update();
 
 	virtual void Draw() override;
+	virtual void DrawShadowDepth() override;
 
 	//* imgui *//
 

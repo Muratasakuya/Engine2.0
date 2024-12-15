@@ -131,6 +131,24 @@ void DXShaderCompiler::Compile(DXCommon* dxCommon, const RendererPipelineType& p
 
 }
 
+void DXShaderCompiler::Compile(DXCommon* dxCommon, const ShadowPipelineType& pipelineType) {
+
+	const wchar_t* vsShaderPath = nullptr;
+	switch (pipelineType) {
+	case ShadowPipelineType::ShadowDepth:
+		vsShaderPath = L"./Resources/Engine/Shaders/ShadowDepth.VS.hlsl";
+		break;
+	default:
+		assert(false && "Unsupported pipeline type");
+		return;
+	}
+
+	shadowVSBlob_[pipelineType] = CompileShader(vsShaderPath, L"vs_6_0",
+		dxCommon->GetDxcUtils(), dxCommon->GetDxcCompiler(), dxCommon->GetIncludeHandler());
+	assert(shadowVSBlob_[pipelineType] != nullptr);
+
+}
+
 void DXShaderCompiler::Compile(DXCommon* dxCommon, const ComputePipelineType& pipelineType) {
 
 	const wchar_t* csShaderPath = nullptr;

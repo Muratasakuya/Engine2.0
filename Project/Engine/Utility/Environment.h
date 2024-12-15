@@ -24,3 +24,7 @@ const constexpr uint32_t kBufferCount = 2;
 
 // windowClearColor
 const Color kWindowClearColor = Color(0.016f, 0.016f, 0.016f, 1.0f);
+
+// shadowMapSize
+const constexpr uint32_t kShadowMapWidth = 1024;
+const constexpr uint32_t kShadowMaoHeight = 1024;

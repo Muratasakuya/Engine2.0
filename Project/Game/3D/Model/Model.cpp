@@ -23,10 +23,24 @@ void Model::Draw(WorldTransform transform, std::vector<MaterialBuffer>& material
 		transform.SetCommand(commandList);
 		EnvironmentSystem::GetLightBuffer().SetCommand(commandList);
 		EnvironmentSystem::GetCameraBuffer().SetCommand(commandList);
-		D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle =  AssetManager::GetTextureGPUHandle(modelData_.meshes[meshIndex].textureName.value());
+		D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle = AssetManager::GetTextureGPUHandle(modelData_.meshes[meshIndex].textureName.value());
 		commandList->SetGraphicsRootDescriptorTable(2, gpuHandle);
 		inputAssembler_.DrawCall(commandList, meshIndex);
 	}
+}
+
+void Model::DrawShadowDepth() {
+
+	auto commandList = GraphicsEngine::GetCommandList();
+
+	for (uint32_t meshIndex = 0; meshIndex < meshNum_; ++meshIndex) {
+
+		GraphicsEngine::SetShadowPipeline(commandList, ShadowDepth);
+		inputAssembler_.SetBuffer(commandList, meshIndex);
+		EnvironmentSystem::GetLightVPBuffer().SetCommand(commandList);
+		inputAssembler_.DrawCall(commandList, meshIndex);
+	}
+
 }
 
 void Model::SetTexture(const std::string& textureName) {

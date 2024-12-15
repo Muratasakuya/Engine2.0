@@ -56,6 +56,33 @@ void AnimationModel::Draw(AnimationTransform transform, MaterialBuffer material)
 
 }
 
+void AnimationModel::DrawShadowDepth() {
+
+	auto commandList = GraphicsEngine::GetCommandList();
+
+	SetComputeCommands(animationName_);
+
+	// D3D12_RESOURCE_STATE_UNORDERED_ACCESS -> D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER
+	GraphicsEngine::TransitionBarrier(
+		outputVertices_.GetResource(),
+		D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
+		D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER);
+
+	GraphicsEngine::SetShadowPipeline(commandList, ShadowDepth);
+	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	commandList->IASetVertexBuffers(0, 1, &outputVertices_.GetVertexBuffer());
+	commandList->IASetIndexBuffer(&inputAssembler_.GetIndexData().GetIndexBuffer());
+	EnvironmentSystem::GetLightVPBuffer().SetCommand(commandList);
+	inputAssembler_.DrawCall(commandList, 0);
+
+	// D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER -> D3D12_RESOURCE_STATE_UNORDERED_ACCESS
+	GraphicsEngine::TransitionBarrier(
+		outputVertices_.GetResource(),
+		D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER,
+		D3D12_RESOURCE_STATE_UNORDERED_ACCESS);
+
+}
+
 void AnimationModel::SetComputeCommands(const std::string& animationName) {
 
 	auto commandList = GraphicsEngine::GetCommandList();

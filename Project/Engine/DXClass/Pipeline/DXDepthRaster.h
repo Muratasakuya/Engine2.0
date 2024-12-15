@@ -22,6 +22,7 @@ public:
 
 	void Create();
 	void Create(const RendererPipelineType& pipelineType);
+	void Create(const ShadowPipelineType& pipelineType);
 
 	//* getter *//
 

@@ -42,6 +42,11 @@ void BaseAnimationObject::Draw() {
 	model_->Draw(transform_, materials_.front());
 }
 
+void BaseAnimationObject::DrawShadowDepth() {
+
+	model_->DrawShadowDepth();
+}
+
 void BaseAnimationObject::TransformImGui() {
 
 	if (ImGui::TreeNode("Transform")) {

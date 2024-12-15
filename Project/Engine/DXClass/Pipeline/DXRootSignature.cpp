@@ -370,6 +370,43 @@ void DXRootSignature::Create(const RendererPipelineType& pipelineType) {
 
 }
 
+void DXRootSignature::Create(const ShadowPipelineType& pipelineType) {
+
+	HRESULT hr;
+
+	if (pipelineType == ShadowDepth) {
+
+		D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
+
+		descriptionRootSignature.Flags =
+			D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+
+		// RootParameter作成
+		D3D12_ROOT_PARAMETER rootParameters[1]{};
+
+		rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;     // CBVを使う
+		rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX; // VertexShaderで使う
+		rootParameters[0].Descriptor.ShaderRegister = 0;                     // レジスタ番号0とバインド
+
+
+		descriptionRootSignature.pParameters = rootParameters;
+		descriptionRootSignature.NumParameters = _countof(rootParameters);
+
+		// バイナリをもとに生成
+		hr = D3D12SerializeRootSignature(&descriptionRootSignature,
+			D3D_ROOT_SIGNATURE_VERSION_1, &signatureBlob_, &errorBlob_);
+		if (FAILED(hr)) {
+
+			assert(false);
+		}
+
+		hr = GraphicsEngine::Device()->Get()->CreateRootSignature(0, signatureBlob_->GetBufferPointer(),
+			signatureBlob_->GetBufferSize(), IID_PPV_ARGS(&shadowRootSignature_[pipelineType]));
+		assert(SUCCEEDED(hr));
+	}
+
+}
+
 void DXRootSignature::Create(const ComputePipelineType& pipelineType) {
 
 	HRESULT hr;

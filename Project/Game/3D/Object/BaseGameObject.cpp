@@ -45,6 +45,11 @@ void BaseGameObject::Draw() {
 	model_->Draw(transform_, materials_);
 }
 
+void BaseGameObject::DrawShadowDepth() {
+
+	model_->DrawShadowDepth();
+}
+
 void BaseGameObject::TransformImGui() {
 
 	if (ImGui::TreeNode("Transform")) {

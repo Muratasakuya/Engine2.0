@@ -31,6 +31,7 @@
     <FxCompile Include="Resources\Shaders\DissolveParticle.PS.hlsl" />
     <FxCompile Include="Resources\Shaders\StaticMesh.VS.hlsl" />
     <FxCompile Include="Resources\Shaders\StaticMesh.PS.hlsl" />
+    <FxCompile Include="Resources\Engine\Shaders\ShadowDepth.VS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\Fullscreen.hlsli" />
@@ -113,6 +114,9 @@
     <ClCompile Include="Game\Scenes\TitleScene.cpp" />
     <ClCompile Include="Game\Editor\Base\BaseEditor.cpp" />
     <ClCompile Include="Game\Editor\Manager\EditorManager.cpp" />
+    <ClCompile Include="Engine\Renderer\ShadowMapRenderer.cpp" />
+    <ClCompile Include="Game\Camera\SunLightCamera.cpp" />
+    <ClCompile Include="Game\Object\Field.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Utility\Environment.h" />
@@ -195,5 +199,8 @@
     <ClInclude Include="Game\Scenes\TitleScene.h" />
     <ClInclude Include="Game\Editor\Base\BaseEditor.h" />
     <ClInclude Include="Game\Editor\Manager\EditorManager.h" />
+    <ClInclude Include="Engine\Renderer\ShadowMapRenderer.h" />
+    <ClInclude Include="Game\Camera\SunLightCamera.h" />
+    <ClInclude Include="Game\Object\Field.h" />
   </ItemGroup>
 </Project>

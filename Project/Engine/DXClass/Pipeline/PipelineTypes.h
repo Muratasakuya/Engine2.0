@@ -62,6 +62,8 @@ static constexpr
 std::array<PostProcessPipelineType, static_cast<size_t>(PostProcessPipelineType::PostProcessCount)>
 postProcessPipelineTypes = CreatePostProcessPipelineTypes();
 
+//=====================================================================================================================================*/
+
 enum RendererPipelineType
 	: uint32_t {
 
@@ -86,6 +88,30 @@ static constexpr
 std::array<RendererPipelineType, static_cast<size_t>(RendererPipelineType::RendererCount)>
 rendererPipelineTypes = CreateRendererPipelineTypes();
 
+//=====================================================================================================================================*/
+
+enum ShadowPipelineType
+	: uint32_t {
+
+	ShadowDepth,
+
+	ShadowCount
+};
+constexpr std::array<ShadowPipelineType, static_cast<size_t>(ShadowPipelineType::ShadowCount)>
+CreateShadowPipelineTypes() {
+	std::array<ShadowPipelineType, static_cast<size_t>(ShadowPipelineType::ShadowCount)> types = {};
+	for (uint32_t i = 0; i < static_cast<uint32_t>(ShadowPipelineType::ShadowCount); ++i) {
+		types[i] = static_cast<ShadowPipelineType>(i);
+	}
+	return types;
+}
+static constexpr uint32_t shadowPipelineNum = static_cast<uint32_t>(ShadowPipelineType::ShadowCount);
+static constexpr
+std::array<ShadowPipelineType, static_cast<size_t>(ShadowPipelineType::ShadowCount)>
+shadowPipelineTypes = CreateShadowPipelineTypes();
+
+//=====================================================================================================================================*/
+
 // ComputeShader
 enum ComputePipelineType {
 
@@ -105,3 +131,5 @@ static constexpr uint32_t computePipelineNum = static_cast<uint32_t>(ComputePipe
 static constexpr
 std::array<ComputePipelineType, static_cast<size_t>(ComputePipelineType::ComputeCount)>
 computePipelineTypes = CreateComputePipelineTypes();
+
+//=====================================================================================================================================*/

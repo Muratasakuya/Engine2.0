@@ -39,6 +39,8 @@ public:
 
 	static LightBuffer GetLightBuffer();
 
+	static LightViewProjectionBuffer GetLightVPBuffer();
+
 private:
 	//========================================================================*/
 	//	private Methods

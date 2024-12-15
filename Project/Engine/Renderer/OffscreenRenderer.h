@@ -44,7 +44,7 @@ private:
 	D3D12_GPU_DESCRIPTOR_HANDLE renderTextureGpuHandle_;
 
 	//========================================================================*/
-	//* functions
+	//* function
 
 	void CreateRenderTextureResource();
 

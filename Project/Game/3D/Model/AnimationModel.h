@@ -21,7 +21,9 @@ public:
 	~AnimationModel() = default;
 
 	void Init(const std::string& modelName, const std::string& animationName);
+
 	void Draw(AnimationTransform transform, MaterialBuffer material);
+	void DrawShadowDepth();
 
 	void SetAnimationName(const std::string& animationName) { animationName_ = animationName; }
 

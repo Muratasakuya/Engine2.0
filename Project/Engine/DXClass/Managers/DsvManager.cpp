@@ -103,9 +103,30 @@ bool DsvManager::CanAllocate() {
 	return useIndex_ < kMaxDsvCount_;
 }
 
+void DsvManager::CreateShadow(uint32_t dsvIndex, ID3D12Resource* dsvResource, DXGI_FORMAT format) {
+
+	assert(dsvResource && "DSV resource is null.");
+
+	dsvShadowMapCPUHandle_ = GetCPUHandle(dsvIndex);
+
+	// DSVの設定
+	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc{};
+	dsvDesc.Format = format;
+	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+	dsvDesc.Flags = D3D12_DSV_FLAG_NONE;
+
+	GraphicsEngine::Device()->Get()->CreateDepthStencilView(dsvResource, &dsvDesc, dsvShadowMapCPUHandle_);
+
+}
+
 void DsvManager::ClearDepthStencilView(ID3D12GraphicsCommandList* commandList) {
 
 	commandList->ClearDepthStencilView(dsvCPUHandle_, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+}
+
+void DsvManager::ClearShadowDepthStencilView(ID3D12GraphicsCommandList* commandList) {
+
+	commandList->ClearDepthStencilView(dsvShadowMapCPUHandle_, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
 D3D12_CPU_DESCRIPTOR_HANDLE DsvManager::GetCPUHandle(uint32_t index) {

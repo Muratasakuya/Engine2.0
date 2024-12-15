@@ -54,3 +54,8 @@ LightBuffer EnvironmentSystem::GetLightBuffer() {
 
 	return lightManager_->GetLightBuffer();
 }
+
+LightViewProjectionBuffer EnvironmentSystem::GetLightVPBuffer() {
+
+	return cameraManager_->GetSunLightCamera()->GetLightVPBuffer();
+}

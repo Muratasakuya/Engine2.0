@@ -40,6 +40,7 @@ public:
 
 	void SetPostProcessPipeline(ID3D12GraphicsCommandList* commandList, PostProcessPipelineType pipelineType);
 	void SetRendererPipeline(ID3D12GraphicsCommandList* commandList, RendererPipelineType pipelineType, BlendMode blendMode);
+	void SetShadowPipeline(ID3D12GraphicsCommandList* commandList, ShadowPipelineType pipelineType);
 
 	void SetComputePipeline(ID3D12GraphicsCommandList* commandList, ComputePipelineType pipelineType);
 
@@ -69,6 +70,10 @@ private:
 
 	std::array<std::array<ComPtr<ID3D12PipelineState>, blendModeNum>, rendererPipelineNum> rendererPipeline_;
 
+	//* shadow *//
+
+	std::array<ComPtr<ID3D12PipelineState>, shadowPipelineNum> shadowPipeline_;
+
 	//* compute *//
 
 	std::array<ComPtr<ID3D12PipelineState>, computePipelineNum> computePipeline_;
@@ -77,7 +82,10 @@ private:
 	//* functions
 
 	void CreatePostProcessPipeline(const PostProcessPipelineType& pipelineType);
+
 	void CreateRendererPipeline(const RendererPipelineType& pipelineType, const BlendMode& blendMode);
+
+	void CreateShadowPipeline(const ShadowPipelineType& pipelineType);
 
 	void CreateComputePipeline(const ComputePipelineType& pipelineType);
 

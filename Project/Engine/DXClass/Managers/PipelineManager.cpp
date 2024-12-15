@@ -80,6 +80,37 @@ void PipelineManager::CreateRendererPipeline(
 	assert(SUCCEEDED(hr));
 }
 
+void PipelineManager::CreateShadowPipeline(const ShadowPipelineType& pipelineType) {
+
+	// BlendState
+	D3D12_RENDER_TARGET_BLEND_DESC blendState = blendState_.Create(kBlendModeNormal);
+
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
+
+	graphicsPipelineStateDesc.pRootSignature = rootSignature_->GetShadow(pipelineType);
+	graphicsPipelineStateDesc.InputLayout = inputLayout_->GetDesc();
+	graphicsPipelineStateDesc.VS =
+	{ shaderCompiler_->GetShadowVSBlob(pipelineType)->GetBufferPointer(),
+		shaderCompiler_->GetShadowVSBlob(pipelineType)->GetBufferSize() };
+	graphicsPipelineStateDesc.PS = { nullptr, 0 };
+	graphicsPipelineStateDesc.BlendState.RenderTarget[0] = blendState;
+	graphicsPipelineStateDesc.RasterizerState = depthRaster_->GetRasterizerDesc();
+	graphicsPipelineStateDesc.DepthStencilState = depthRaster_->GetDepthStencilDesc();
+	graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
+	graphicsPipelineStateDesc.NumRenderTargets = 0;
+	graphicsPipelineStateDesc.PrimitiveTopologyType =
+		D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+	graphicsPipelineStateDesc.SampleDesc.Count = 1;
+	graphicsPipelineStateDesc.SampleMask = UINT_MAX;
+
+	// 生成
+	shadowPipeline_[pipelineType] = nullptr;
+	HRESULT hr = GraphicsEngine::Device()->Get()->CreateGraphicsPipelineState(
+		&graphicsPipelineStateDesc,
+		IID_PPV_ARGS(&shadowPipeline_[pipelineType]));
+	assert(SUCCEEDED(hr));
+}
+
 void PipelineManager::CreateComputePipeline(const ComputePipelineType& pipelineType) {
 
 	D3D12_COMPUTE_PIPELINE_STATE_DESC computePipelineStateDesc{};
@@ -104,6 +135,8 @@ void PipelineManager::Create(DXCommon* dxCommon) {
 	depthRaster_ = std::make_unique<DXDepthRaster>();
 	inputLayout_ = std::make_unique<DXInputLayout>();
 
+	//=====================================================================================================================================*/
+
 	for (const auto& postProcessPipelineType : postProcessPipelineTypes) {
 
 		shaderCompiler_->Compile(dxCommon, postProcessPipelineType);
@@ -115,6 +148,8 @@ void PipelineManager::Create(DXCommon* dxCommon) {
 		CreatePostProcessPipeline(postProcessPipelineType);
 
 	}
+
+	//=====================================================================================================================================*/
 
 	for (const auto& rendererPipelineType : rendererPipelineTypes) {
 
@@ -131,6 +166,23 @@ void PipelineManager::Create(DXCommon* dxCommon) {
 			CreateRendererPipeline(rendererPipelineType, blendModeType);
 		}
 	}
+
+	//=====================================================================================================================================*/
+
+	for (const auto& shadowPipelineType : shadowPipelineTypes) {
+
+		shaderCompiler_->Compile(dxCommon, shadowPipelineType);
+
+		rootSignature_->Create(shadowPipelineType);
+
+		depthRaster_->Create(shadowPipelineType);
+
+		inputLayout_->Create(shadowPipelineType);
+
+		CreateShadowPipeline(shadowPipelineType);
+	}
+
+	//=====================================================================================================================================*/
 
 	for (const auto& computePipelineType : computePipelineTypes) {
 
@@ -157,6 +209,12 @@ void PipelineManager::SetRendererPipeline(
 
 	commandList->SetGraphicsRootSignature(rootSignature_->GetRenderer(pipelineType));
 	commandList->SetPipelineState(rendererPipeline_[pipelineType][blendMode].Get());
+}
+
+void PipelineManager::SetShadowPipeline(ID3D12GraphicsCommandList* commandList, ShadowPipelineType pipelineType) {
+
+	commandList->SetGraphicsRootSignature(rootSignature_->GetShadow(pipelineType));
+	commandList->SetPipelineState(shadowPipeline_[pipelineType].Get());
 }
 
 void PipelineManager::SetComputePipeline(ID3D12GraphicsCommandList* commandList, ComputePipelineType pipelineType) {

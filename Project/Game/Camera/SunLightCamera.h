@@ -3,36 +3,32 @@
 //============================================================================*/
 //	include
 //============================================================================*/
-#include <Game/Scenes/Methods/IScene.h>
-
-//* test *//
-#include <Game/Object/Test.h>
-#include <Game/Object/Field.h>
-
-// c++
-#include <string>
-#include <memory>
+#include <Lib/MathUtils/Vector3.h>
+#include <Lib/MathUtils/Matrix4x4.h>
+#include <Game/Utility/Direction.h>
+#include <Engine/CBuffer/CameraBuffer.h>
 
 //============================================================================*/
-//	GameScene class
+//	SunLightCamera class
 //============================================================================*/
-class GameScene :
-	public IScene {
+class SunLightCamera {
 public:
 	//========================================================================*/
 	//	public Methods
 	//========================================================================*/
 
-	GameScene() = default;
-	~GameScene() = default;
+	SunLightCamera() = default;
+	~SunLightCamera() = default;
 
-	void Run() override;
+	void Init();
 
-	void Init() override;
+	void Update();
 
-	void Update() override;
+	void ImGui();
 
-	void Finalize() override;
+	//* getter *//
+
+	LightViewProjectionBuffer GetLightVPBuffer() const { return buffer_; }
 
 private:
 	//========================================================================*/
@@ -42,10 +38,22 @@ private:
 	//========================================================================*/
 	//* variables
 
-	const std::string& baseModelDirectory_ = "./Resources/Model/Obj";
+	Vector3 translation_; //* ライトの位置
 
-	std::unique_ptr<Test> test_;
+	Vector3 target_;      //* 注視点
 
-	std::unique_ptr<Field> field_;
+	Vector3 upDirection_; //* 上方向
+
+	float nearPlane_;
+	float farPlane_;
+
+	Matrix4x4 viewMatrix_;
+	Matrix4x4 projectionMatrix_;
+
+	Matrix4x4 viewProjectionMatrix_;
+
+	//* buffer *//
+
+	LightViewProjectionBuffer buffer_;
 
 };

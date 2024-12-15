@@ -39,7 +39,7 @@ public:
 	void DebugLayer();
 	void DebugInfo();
 
-	void SetViewportAndScissor();
+	void SetViewportAndScissor(uint32_t width, uint32_t height);
 
 	void Execute(IDXGISwapChain4* swapChain);
 

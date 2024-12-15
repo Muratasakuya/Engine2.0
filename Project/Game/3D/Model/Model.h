@@ -25,6 +25,8 @@ public:
 
 	void Draw(WorldTransform transform, std::vector<MaterialBuffer>& materials);
 
+	void DrawShadowDepth();
+
 	//* getter *//
 
 	size_t GetMeshNum() const { return meshNum_; }

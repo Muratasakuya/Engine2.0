@@ -123,13 +123,13 @@ void DXCommon::Finalize(HWND hwnd) {
 	CloseWindow(hwnd);
 }
 
-void DXCommon::SetViewportAndScissor() {
+void DXCommon::SetViewportAndScissor(uint32_t width, uint32_t height) {
 
 	viewport_ =
-		D3D12_VIEWPORT(0.0f, 0.0f, float(kWindowWidth), float(kWindowHeight), 0.0f, 1.0f);
+		D3D12_VIEWPORT(0.0f, 0.0f, float(width), float(height), 0.0f, 1.0f);
 	commandList_->RSSetViewports(1, &viewport_);
 
-	scissorRect_ = D3D12_RECT(0, 0, kWindowWidth, kWindowHeight);
+	scissorRect_ = D3D12_RECT(0, 0, width, height);
 	commandList_->RSSetScissorRects(1, &scissorRect_);
 
 }

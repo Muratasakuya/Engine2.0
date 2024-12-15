@@ -3,36 +3,36 @@
 //============================================================================*/
 //	include
 //============================================================================*/
-#include <Game/Scenes/Methods/IScene.h>
+#include <Engine/DXClass/ComPtr.h>
 
-//* test *//
-#include <Game/Object/Test.h>
-#include <Game/Object/Field.h>
+// directX
+#include <d3d12.h>
 
 // c++
-#include <string>
-#include <memory>
+#include <cstdint>
+
+// front
+class SrvManager;
+class RtvManager;
+class DsvManager;
 
 //============================================================================*/
-//	GameScene class
+//	ShadowMapRenderer class
 //============================================================================*/
-class GameScene :
-	public IScene {
+class ShadowMapRenderer {
 public:
 	//========================================================================*/
 	//	public Methods
 	//========================================================================*/
 
-	GameScene() = default;
-	~GameScene() = default;
+	ShadowMapRenderer() = default;
+	~ShadowMapRenderer() = default;
 
-	void Run() override;
+	void Init(SrvManager* srvManager, DsvManager* dsvManager);
 
-	void Init() override;
+	//* getter *//
 
-	void Update() override;
-
-	void Finalize() override;
+	ID3D12Resource* GetShadowResource() const { return shadowMapResource_.Get(); }
 
 private:
 	//========================================================================*/
@@ -42,10 +42,12 @@ private:
 	//========================================================================*/
 	//* variables
 
-	const std::string& baseModelDirectory_ = "./Resources/Model/Obj";
+	ComPtr<ID3D12Resource> shadowMapResource_;
+	D3D12_GPU_DESCRIPTOR_HANDLE shadowMapGpuHandle_;
 
-	std::unique_ptr<Test> test_;
+	//========================================================================*/
+	//* function
 
-	std::unique_ptr<Field> field_;
+	void CreateShadowMapResource();
 
 };

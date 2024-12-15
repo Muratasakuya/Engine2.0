@@ -27,6 +27,7 @@ public:
 
 	void Create(const PostProcessPipelineType& pipelineType);
 	void Create(const RendererPipelineType& pipelineType);
+	void Create(const ShadowPipelineType& pipelineType);
 	void Create(const ComputePipelineType& pipelineType);
 
 	//* getter *//
@@ -34,6 +35,8 @@ public:
 	ID3D12RootSignature* GetPostProcess(PostProcessPipelineType pipelineType) const { return postProcessRootSignature_[pipelineType].Get(); }
 
 	ID3D12RootSignature* GetRenderer(RendererPipelineType pipelineType) const { return rendererRootSignature_[pipelineType].Get(); }
+
+	ID3D12RootSignature* GetShadow(ShadowPipelineType pipelineType) const { return shadowRootSignature_[pipelineType].Get(); }
 
 	ID3D12RootSignature* GetCompute(ComputePipelineType pipelineType) const { return computeRootSignature_[pipelineType].Get(); }
 
@@ -55,6 +58,10 @@ private:
 	//* renderer *//
 
 	std::array<ComPtr<ID3D12RootSignature>, rendererPipelineNum> rendererRootSignature_;
+
+	//* shadow *//
+
+	std::array<ComPtr<ID3D12RootSignature>, shadowPipelineNum> shadowRootSignature_;
 
 	//* compute *//
 

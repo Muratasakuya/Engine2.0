@@ -15,6 +15,15 @@ std::vector<IBaseGameObject*> MeshRenderer::gameObjects_ = {};
 IBaseGameObject* MeshRenderer::selectedGameObject_ = nullptr;
 int MeshRenderer::currentObjectIndex_ = 0;
 
+void MeshRenderer::RenderShadowDepth() {
+
+	for (const auto& gameObject : gameObjects_) {
+
+		gameObject->DrawShadowDepth();
+	}
+
+}
+
 void MeshRenderer::Render() {
 
 	for (const auto& gameObject : gameObjects_) {

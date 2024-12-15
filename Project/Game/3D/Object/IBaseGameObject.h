@@ -19,6 +19,7 @@ public:
 	virtual ~IBaseGameObject();
 
 	virtual void Draw() = 0;
+	virtual void DrawShadowDepth() = 0;
 
 	//* imgui *//
 

@@ -40,3 +40,21 @@ void ViewProjectionBuffer::Update(const Matrix4x4& viewProjection) {
 	DXConstBuffer::TransferData(viewProjection);
 
 }
+
+//============================================================================*/
+//	LightViewProjectionBuffer classMethods
+//============================================================================*/
+
+void LightViewProjectionBuffer::Init() {
+
+	rootParameterIndex = 0;
+
+	DXConstBuffer::CreateConstBuffer(GraphicsEngine::Device()->Get());
+
+}
+
+void LightViewProjectionBuffer::Update(const Matrix4x4& viewProjection) {
+
+	DXConstBuffer::TransferData(viewProjection);
+
+}
