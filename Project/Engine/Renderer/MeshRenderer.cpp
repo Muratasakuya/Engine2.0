@@ -5,6 +5,7 @@
 //============================================================================*/
 #include <Engine/Renderer/ImGuiRenderer.h>
 #include <Engine/Renderer/ParticleRenderer.h>
+#include <Game/Editor/Manager/EditorManager.h>
 
 //============================================================================*/
 //	MeshRenderer classMethods
@@ -46,8 +47,8 @@ void MeshRenderer::Clear() {
 void MeshRenderer::SelectGameObject(const ImVec2& mainWindowPos) {
 
 	if (!gameObjects_.empty()) {
-		ImGui::SetCursorPos(ImVec2(44.0f, mainWindowPos.y + 2.0f));
-		ImGui::SetNextItemWidth(162.0f);
+		ImGui::SetCursorPos(ImVec2(6.0f, mainWindowPos.y + 2.0f));
+		ImGui::SetNextItemWidth(144.0f);
 		if (ImGui::BeginCombo("##GameObjectsCombo",
 			currentObjectIndex_ >= 0 ? gameObjects_[currentObjectIndex_]->GetName().c_str() : "GameObjectList", ImGuiComboFlags_NoArrowButton)) {
 			for (int i = 0; i < gameObjects_.size(); ++i) {
@@ -72,11 +73,13 @@ void MeshRenderer::SelectGameObject(const ImVec2& mainWindowPos) {
 		}
 	} else {
 
-		ImGui::SetCursorPos(ImVec2(48.0f, mainWindowPos.y + 2.0f));
+		ImGui::SetCursorPos(ImVec2(6.0f, mainWindowPos.y + 2.0f));
 		ImGui::Text("No GameObject");
 	}
 
-	if (ImGuiRenderer::cameraInfoEnable_ || ParticleRenderer::GetSelectedParticle()) {
+	if (ImGuiRenderer::cameraInfoEnable_ ||
+		ParticleRenderer::GetSelectedParticle() ||
+		EditorManager::GetSelectedEditor()) {
 
 		selectedGameObject_ = nullptr;
 	}

@@ -333,6 +333,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Editor\Manager\EditorManager.cpp" />
+    <ClCompile Include="Game\Editor\Base\BaseEditor.cpp" />
     <ClCompile Include="Lib\Adapter\Easing.cpp" />
     <ClCompile Include="Engine\DXClass\Pipeline\DXBlendState.cpp" />
     <ClCompile Include="Engine\DXClass\Pipeline\DXInputLayout.cpp" />
@@ -404,6 +406,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\Scenes\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Editor\Manager\EditorManager.h" />
+    <ClInclude Include="Game\Editor\Base\BaseEditor.h" />
     <ClInclude Include="Lib\Adapter\Easing.h" />
     <ClInclude Include="Engine\DXClass\Pipeline\DXBlendState.h" />
     <ClInclude Include="Engine\DXClass\Pipeline\DXInputLayout.h" />
