@@ -7,7 +7,7 @@
 #include <Game/System/EnvironmentSystem.h>
 #include <Game/3D/PrimitiveDrawer.h>
 #include <Engine/Process/Input.h>
-#include <Engine/Window/ImGuiRenderer.h>
+#include <Engine/Renderer/ImGuiRenderer.h>
 
 //============================================================================*/
 //	GameSystem classMethods
