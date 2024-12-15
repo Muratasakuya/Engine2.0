@@ -1,0 +1,26 @@
+#pragma once
+
+//============================================================================*/
+//	include
+//============================================================================*/
+#include <Lib/MathUtils/Vector4.h>
+
+// c++
+#include <cstdint>
+
+//============================================================================*/
+//	utilityEnvironment
+//============================================================================*/
+
+// windowSize
+const constexpr uint32_t kWindowWidth = 1280;
+const constexpr uint32_t kWindowHeight = 720;
+
+// windowTitle
+const constexpr wchar_t* kWindowTitle = L"Engine2.0";
+
+// doubleBuffer
+const constexpr uint32_t kBufferCount = 2;
+
+// windowClearColor
+const Color kWindowClearColor = Color(0.016f, 0.016f, 0.016f, 1.0f);
