@@ -12,7 +12,7 @@
 #include <Engine//DXClass/Pipeline/PipelineTypes.h>
 #include <Engine/DXClass/Managers/PipelineManager.h>
 #include <Engine/DXClass/DXCommon.h>
-#include <Engine/Process/OffscreenRenderer.h>
+#include <Engine/Renderer/OffscreenRenderer.h>
 #include <Engine/External/ImGuiManager.h>
 #include <Engine/Window/WinApp.h>
 

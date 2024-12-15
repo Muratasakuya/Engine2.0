@@ -5,9 +5,10 @@
 //============================================================================*/
 #include <Engine/Utility/Environment.h>
 #include <Engine/Asset/AssetManager.h>
-#include <Engine/Window/ImGuiRenderer.h>
+#include <Engine/Renderer/ImGuiRenderer.h>
+#include <Engine/Renderer/MeshRenderer.h>
+#include <Engine/Renderer/ParticleRenderer.h>
 #include <Engine/Process/Input.h>
-#include <Engine/Process/MeshRenderer.h>
 
 //============================================================================*/
 //	GraphicsEngine classMethods

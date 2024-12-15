@@ -53,7 +53,7 @@
     <ClCompile Include="Lib\MathUtils\Vector4.cpp" />
     <ClCompile Include="Engine\DXClass\Managers\DsvManager.cpp" />
     <ClCompile Include="Engine\DXClass\Managers\SrvManager.cpp" />
-    <ClCompile Include="Engine\Process\OffscreenRenderer.cpp" />
+    <ClCompile Include="Engine\Renderer\OffscreenRenderer.cpp" />
     <ClCompile Include="Game\Scenes\Manager\SceneManager.cpp" />
     <ClCompile Include="Game\Scenes\Methods\IScene.cpp" />
     <ClCompile Include="Game\Scenes\Methods\SceneFactory.cpp" />
@@ -69,7 +69,7 @@
     <ClCompile Include="Lib\MathUtils\Vector2.cpp" />
     <ClCompile Include="Lib\MathUtils\Matrix4x4.cpp" />
     <ClCompile Include="Lib\MathUtils\Quaternion.cpp" />
-    <ClCompile Include="Engine\Window\ImGuiRenderer.cpp" />
+    <ClCompile Include="Engine\Renderer\ImGuiRenderer.cpp" />
     <ClCompile Include="Game\3D\Collision\Collider.cpp" />
     <ClCompile Include="Game\3D\Collision\Managers\CollisionManager.cpp" />
     <ClCompile Include="Game\System\RigidBodySystem.cpp" />
@@ -99,7 +99,7 @@
     <ClCompile Include="Game\3D\Object\IBaseGameObject.cpp" />
     <ClCompile Include="Engine\DXClass\Pipeline\DXInputLayout.cpp" />
     <ClCompile Include="Engine\DXClass\Pipeline\DXBlendState.cpp" />
-    <ClCompile Include="Engine\Process\MeshRenderer.cpp" />
+    <ClCompile Include="Engine\Renderer\MeshRenderer.cpp" />
     <ClCompile Include="Game\Object\Test.cpp" />
     <ClCompile Include="Game\3D\Particle\BaseParticle.cpp" />
     <ClCompile Include="Game\3D\Particle\IBaseParticle.cpp" />
@@ -109,7 +109,7 @@
     <ClCompile Include="Game\3D\Particle\ParticleVisitor.cpp" />
     <ClCompile Include="Lib\Adapter\Easing.cpp" />
     <ClCompile Include="Engine\CBuffer\ParticleBuffer.cpp" />
-    <ClCompile Include="Engine\Process\ParticleRenderer.cpp" />
+    <ClCompile Include="Engine\Renderer\ParticleRenderer.cpp" />
     <ClCompile Include="Game\Scenes\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -125,7 +125,7 @@
     <ClInclude Include="Lib\MathUtils\Vector4.h" />
     <ClInclude Include="Engine\DXClass\Managers\DsvManager.h" />
     <ClInclude Include="Engine\DXClass\Managers\SrvManager.h" />
-    <ClInclude Include="Engine\Process\OffscreenRenderer.h" />
+    <ClInclude Include="Engine\Renderer\OffscreenRenderer.h" />
     <ClInclude Include="Game\Scenes\Manager\SceneManager.h" />
     <ClInclude Include="Game\Scenes\Methods\IScene.h" />
     <ClInclude Include="Game\Scenes\Methods\SceneFactory.h" />
@@ -143,7 +143,7 @@
     <ClInclude Include="Lib\MathUtils\Vector2.h" />
     <ClInclude Include="Lib\MathUtils\Matrix4x4.h" />
     <ClInclude Include="Lib\MathUtils\Quaternion.h" />
-    <ClInclude Include="Engine\Window\ImGuiRenderer.h" />
+    <ClInclude Include="Engine\Renderer\ImGuiRenderer.h" />
     <ClInclude Include="Game\3D\Collision\Collider.h" />
     <ClInclude Include="Game\3D\Collision\CollisionShape.h" />
     <ClInclude Include="Game\3D\Collision\Managers\CollisionManager.h" />
@@ -176,7 +176,7 @@
     <ClInclude Include="Game\3D\Object\IBaseGameObject.h" />
     <ClInclude Include="Engine\DXClass\Pipeline\DXInputLayout.h" />
     <ClInclude Include="Engine\DXClass\Pipeline\DXBlendState.h" />
-    <ClInclude Include="Engine\Process\MeshRenderer.h" />
+    <ClInclude Include="Engine\Renderer\MeshRenderer.h" />
     <ClInclude Include="Game\Object\Test.h" />
     <ClInclude Include="Game\3D\Particle\ParticleVisitor.h" />
     <ClInclude Include="Game\3D\Particle\BaseParticle.h" />
@@ -189,7 +189,7 @@
     <ClInclude Include="Lib\Adapter\Easing.h" />
     <ClInclude Include="Engine\CBuffer\ParticleBuffer.h" />
     <ClInclude Include="Lib\Adapter\Random.h" />
-    <ClInclude Include="Engine\Process\ParticleRenderer.h" />
+    <ClInclude Include="Engine\Renderer\ParticleRenderer.h" />
     <ClInclude Include="Game\Scenes\TitleScene.h" />
   </ItemGroup>
 </Project>

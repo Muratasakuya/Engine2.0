@@ -5,8 +5,8 @@
 //============================================================================*/
 #include <Engine/Utility/Environment.h>
 #include <Engine/Asset/AssetManager.h>
-#include <Engine/Process/MeshRenderer.h>
-#include <Engine/Process/ParticleRenderer.h>
+#include <Engine/Renderer/MeshRenderer.h>
+#include <Engine/Renderer/ParticleRenderer.h>
 #include <Game/System/RigidBodySystem.h>
 #include <Game/System/EnvironmentSystem.h>
 #include <Game/System/GameSystem.h>

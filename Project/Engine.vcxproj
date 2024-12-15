@@ -336,7 +336,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Lib\Adapter\Easing.cpp" />
     <ClCompile Include="Engine\DXClass\Pipeline\DXBlendState.cpp" />
     <ClCompile Include="Engine\DXClass\Pipeline\DXInputLayout.cpp" />
-    <ClCompile Include="Engine\Process\MeshRenderer.cpp" />
+    <ClCompile Include="Engine\Renderer\MeshRenderer.cpp" />
     <ClCompile Include="Game\3D\Object\BaseAnimationObject.cpp" />
     <ClCompile Include="Game\3D\Object\BaseGameObject.cpp" />
     <ClCompile Include="Game\3D\Model\AnimationModel.cpp" />
@@ -367,7 +367,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\DXClass\DXCommon.cpp" />
     <ClCompile Include="Game\Scenes\Methods\IScene.cpp" />
     <ClCompile Include="Engine\External\ImGuiManager.cpp" />
-    <ClCompile Include="Engine\Window\ImGuiRenderer.cpp" />
+    <ClCompile Include="Engine\Renderer\ImGuiRenderer.cpp" />
     <ClCompile Include="Engine\Process\Input.cpp" />
     <ClCompile Include="Engine\CBuffer\InputAssembler.cpp" />
     <ClCompile Include="Game\System\GameSystem.cpp" />
@@ -382,7 +382,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Lib\MathUtils\Vector3.cpp" />
     <ClCompile Include="Lib\MathUtils\Vector4.cpp" />
     <ClCompile Include="Engine\DXClass\Managers\SrvManager.cpp" />
-    <ClCompile Include="Engine\Process\OffscreenRenderer.cpp" />
+    <ClCompile Include="Engine\Renderer\OffscreenRenderer.cpp" />
     <ClCompile Include="Game\Scenes\Manager\SceneManager.cpp" />
     <ClCompile Include="Game\Scenes\Methods\SceneFactory.cpp" />
     <ClCompile Include="Game\Scenes\GameScene.cpp" />
@@ -400,14 +400,14 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\3D\Model\Model.cpp" />
     <ClCompile Include="Game\Object\Test.cpp" />
     <ClCompile Include="Engine\CBuffer\ParticleBuffer.cpp" />
-    <ClCompile Include="Engine\Process\ParticleRenderer.cpp" />
+    <ClCompile Include="Engine\Renderer\ParticleRenderer.cpp" />
     <ClCompile Include="Game\Scenes\TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Lib\Adapter\Easing.h" />
     <ClInclude Include="Engine\DXClass\Pipeline\DXBlendState.h" />
     <ClInclude Include="Engine\DXClass\Pipeline\DXInputLayout.h" />
-    <ClInclude Include="Engine\Process\MeshRenderer.h" />
+    <ClInclude Include="Engine\Renderer\MeshRenderer.h" />
     <ClInclude Include="Game\3D\Object\BaseAnimationObject.h" />
     <ClInclude Include="Game\3D\Object\BaseGameObject.h" />
     <ClInclude Include="Game\3D\Model\AnimationModel.h" />
@@ -448,7 +448,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Game\3D\Collision\CollisionShape.h" />
     <ClInclude Include="Game\Scenes\Methods\IScene.h" />
     <ClInclude Include="Engine\External\ImGuiManager.h" />
-    <ClInclude Include="Engine\Window\ImGuiRenderer.h" />
+    <ClInclude Include="Engine\Renderer\ImGuiRenderer.h" />
     <ClInclude Include="Game\Utility\Direction.h" />
     <ClInclude Include="Engine\Process\Input.h" />
     <ClInclude Include="Engine\CBuffer\InputAssembler.h" />
@@ -459,7 +459,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Lib\MathUtils\Vector3.h" />
     <ClInclude Include="Lib\MathUtils\Vector4.h" />
     <ClInclude Include="Engine\DXClass\Managers\SrvManager.h" />
-    <ClInclude Include="Engine\Process\OffscreenRenderer.h" />
+    <ClInclude Include="Engine\Renderer\OffscreenRenderer.h" />
     <ClInclude Include="Game\Scenes\Manager\SceneManager.h" />
     <ClInclude Include="Game\Scenes\Methods\SceneFactory.h" />
     <ClInclude Include="Game\Scenes\GameScene.h" />
@@ -480,7 +480,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Game\3D\Model\Model.h" />
     <ClInclude Include="Game\Object\Test.h" />
     <ClInclude Include="Engine\CBuffer\ParticleBuffer.h" />
-    <ClInclude Include="Engine\Process\ParticleRenderer.h" />
+    <ClInclude Include="Engine\Renderer\ParticleRenderer.h" />
     <ClInclude Include="Game\Scenes\TitleScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

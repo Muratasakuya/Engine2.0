@@ -3,8 +3,8 @@
 //============================================================================*/
 //	include
 //============================================================================*/
-#include <Engine/Window/ImGuiRenderer.h>
-#include <Engine/Process/ParticleRenderer.h>
+#include <Engine/Renderer/ImGuiRenderer.h>
+#include <Engine/Renderer/ParticleRenderer.h>
 
 //============================================================================*/
 //	MeshRenderer classMethods
