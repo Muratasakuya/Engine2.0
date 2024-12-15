@@ -52,3 +52,26 @@ private:
 	static std::unique_ptr<LightManager> lightManager_;
 
 };
+
+//============================================================================*/
+//	namespace
+//============================================================================*/
+
+namespace GameCamera {
+
+	inline Matrix4x4 GetViewProjection() {
+		return EnvironmentSystem::GetCameraViewProjection();
+	}
+
+	inline Matrix4x4 GetCameraMatrix() {
+		return EnvironmentSystem::GetCameraMatrix();
+	}
+
+	inline CameraBuffer GetCameraBuffer() {
+		return EnvironmentSystem::GetCameraBuffer();
+	}
+
+	inline ViewProjectionBuffer GetViewProBuffer() {
+		return EnvironmentSystem::GetViewProBuffer();
+	}
+}

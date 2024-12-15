@@ -48,7 +48,7 @@ void DispersionBehavior::Update(ParticleData& particle, const Matrix4x4& billboa
 		Matrix4x4::MakeTranslateMatrix(particle.transform.translate);
 
 	particle.worldMatrix = scaleMatrix * billboardMatrix * translateMatrix;
-	particle.wvpMatrix = particle.worldMatrix * EnvironmentSystem::GetCameraViewProjection();
+	particle.wvpMatrix = particle.worldMatrix * GameCamera::GetViewProjection();
 
 }
 
@@ -92,7 +92,7 @@ void ChaseBehavior::Update(ParticleData& particle, const Matrix4x4& billboardMat
 		Matrix4x4::MakeTranslateMatrix(particle.transform.translate);
 
 	particle.worldMatrix = scaleMatrix * billboardMatrix * translateMatrix;
-	particle.wvpMatrix = particle.worldMatrix * EnvironmentSystem::GetCameraViewProjection();
+	particle.wvpMatrix = particle.worldMatrix * GameCamera::GetViewProjection();
 
 }
 
@@ -136,7 +136,7 @@ void ConvergeBehavior::Update(ParticleData& particle, const Matrix4x4& billboard
 		Matrix4x4::MakeTranslateMatrix(particle.transform.translate);
 
 	particle.worldMatrix = scaleMatrix * billboardMatrix * translateMatrix;
-	particle.wvpMatrix = particle.worldMatrix * EnvironmentSystem::GetCameraViewProjection();
+	particle.wvpMatrix = particle.worldMatrix * GameCamera::GetViewProjection();
 
 }
 
@@ -203,7 +203,7 @@ void InjectionBehavior::Update(ParticleData& particle, const Matrix4x4& billboar
 		Matrix4x4::MakeTranslateMatrix(particle.transform.translate);
 
 	particle.worldMatrix = scaleMatrix * billboardMatrix * translateMatrix;
-	particle.wvpMatrix = particle.worldMatrix * EnvironmentSystem::GetCameraViewProjection();
+	particle.wvpMatrix = particle.worldMatrix * GameCamera::GetViewProjection();
 
 }
 

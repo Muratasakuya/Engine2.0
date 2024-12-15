@@ -26,7 +26,7 @@ Matrix4x4 ParticleSystem::CalBillboardMatrix() const {
 
 	Matrix4x4 backToFrontMatrix = Matrix4x4::MakeYawMatrix(std::numbers::pi_v<float>);
 	Matrix4x4 billboardMatrix =
-		Matrix4x4::Multiply(backToFrontMatrix, EnvironmentSystem::GetCameraMatrix());
+		Matrix4x4::Multiply(backToFrontMatrix, GameCamera::GetCameraMatrix());
 	billboardMatrix.m[3][0] = 0.0f;
 	billboardMatrix.m[3][1] = 0.0f;
 	billboardMatrix.m[3][2] = 0.0f;
