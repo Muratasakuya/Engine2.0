@@ -6,6 +6,7 @@
 #include <Game/3D/Model/Base/BaseModel.h>
 #include <Engine/CBuffer/Transform.h>
 #include <Engine/CBuffer/MaterialBuffer.h>
+#include <Engine/DXClass/Pipeline/PipelineTypes.h>
 
 // c++
 #include <vector>
@@ -23,7 +24,9 @@ public:
 	Model() = default;
 	~Model() = default;
 
-	void Draw(WorldTransform transform, std::vector<MaterialBuffer>& materials);
+	void Draw(WorldTransform transform, std::vector<MaterialBuffer>& materials, RendererPipelineType pipeline);
+
+	void DrawShadowDepth(WorldTransform transform);
 
 	//* getter *//
 

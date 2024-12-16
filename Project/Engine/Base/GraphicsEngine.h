@@ -13,6 +13,7 @@
 #include <Engine/DXClass/Managers/PipelineManager.h>
 #include <Engine/DXClass/DXCommon.h>
 #include <Engine/Renderer/OffscreenRenderer.h>
+#include <Engine/Renderer/ShadowMapRenderer.h>
 #include <Engine/External/ImGuiManager.h>
 #include <Engine/Window/WinApp.h>
 
@@ -56,8 +57,11 @@ public:
 
 	static void SetPostProcessPipeline(ID3D12GraphicsCommandList* commandList, PostProcessPipelineType pipelineType);
 	static void SetRendererPipeline(ID3D12GraphicsCommandList* commandList, RendererPipelineType pipelineType, BlendMode blendMode);
+	static void SetShadowPipeline(ID3D12GraphicsCommandList* commandList, ShadowPipelineType pipelineType);
 
 	static void SetComputePipeline(ID3D12GraphicsCommandList* commandList, ComputePipelineType pipelineType);
+
+	static void SetShadowTextureCommand(ID3D12GraphicsCommandList* commandList);
 
 	//* getter *//
 
@@ -91,11 +95,15 @@ private:
 	static UINT backBufferIndex_;
 
 	static std::unique_ptr<OffscreenRenderer> offscreenRenderer_;
+	static std::unique_ptr<ShadowMapRenderer> shadowMapRenderer_;
 
 	static std::unique_ptr<ImGuiManager> imguiManager_;
 
 	//========================================================================*/
 	//* functoins
+
+	static void BeginPreShadowDepth();
+	static void EndPostShadowDepth();
 
 	static void BeginPreOffscreen();
 	static void EndPostOffscreen();

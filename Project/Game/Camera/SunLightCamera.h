@@ -3,32 +3,35 @@
 //============================================================================*/
 //	include
 //============================================================================*/
-#include <Engine/DXClass/Pipeline/PipelineTypes.h>
-
-// directX
-#include <d3d12.h>
+#include <Lib/MathUtils/Vector2.h>
+#include <Lib/MathUtils/Vector3.h>
+#include <Lib/MathUtils/Matrix4x4.h>
+#include <Game/Utility/Direction.h>
+#include <Engine/CBuffer/CameraBuffer.h>
 
 //============================================================================*/
-//	DXDepthRaster class
+//	SunLightCamera class
 //============================================================================*/
-class DXDepthRaster {
+class SunLightCamera {
 public:
 	//========================================================================*/
 	//	public Methods
 	//========================================================================*/
 
-	DXDepthRaster() = default;
-	~DXDepthRaster() = default;
+	SunLightCamera() = default;
+	~SunLightCamera() = default;
 
-	void Create();
-	void Create(const RendererPipelineType& pipelineType);
-	void Create(const ShadowPipelineType& pipelineType);
+	void Init();
+
+	void Update();
+
+	void DrawDebug();
+
+	void ImGui();
 
 	//* getter *//
 
-	D3D12_RASTERIZER_DESC GetRasterizerDesc() const { return rasterizerDesc_; }
-
-	D3D12_DEPTH_STENCIL_DESC GetDepthStencilDesc() const { return depthStencilDesc_; }
+	LightViewProjectionBuffer GetLightVPBuffer() const { return buffer_; }
 
 private:
 	//========================================================================*/
@@ -38,7 +41,24 @@ private:
 	//========================================================================*/
 	//* variables
 
-	D3D12_RASTERIZER_DESC rasterizerDesc_;
-	D3D12_DEPTH_STENCIL_DESC depthStencilDesc_;
+	Vector3 translation_; //* ライトの位置
+
+	Vector3 target_;      //* 注視点
+
+	Vector3 upDirection_; //* 上方向
+
+	float orthoSize_;
+
+	float nearPlane_;
+	float farPlane_;
+
+	Matrix4x4 viewMatrix_;
+	Matrix4x4 projectionMatrix_;
+
+	Matrix4x4 viewProjectionMatrix_;
+
+	//* buffer *//
+
+	LightViewProjectionBuffer buffer_;
 
 };

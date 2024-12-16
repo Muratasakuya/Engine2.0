@@ -21,6 +21,7 @@ void Camera3D::Init() {
 		Matrix4x4::MakeAffineMatrix(Vector3(1.0f, 1.0f, 1.0f), rotation_, translation_);
 	viewMatrix_ = Matrix4x4::Inverse(matrix_);
 
+	// アスペクト比
 	float aspectRatio = static_cast<float>(kWindowWidth) / static_cast<float>(kWindowHeight);
 	projectionMatrix_ =
 		Matrix4x4::MakePerspectiveFovMatrix(0.45f, aspectRatio, 0.1f, 100.0f);

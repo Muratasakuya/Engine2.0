@@ -23,6 +23,8 @@ public:
 	MeshRenderer() = default;
 	~MeshRenderer() = default;
 
+	static void RenderShadowDepth();
+
 	static void Render();
 
 	static void SetGameObject(IBaseGameObject* gameObject);

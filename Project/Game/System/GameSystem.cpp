@@ -23,7 +23,7 @@ void GameSystem::Init() {
 
 	EnvironmentSystem::Init();
 
-	PrimitiveDrawer::GetInstance()->Init(EnvironmentSystem::GetViewProBuffer());
+	PrimitiveDrawer::GetInstance()->Init();
 
 }
 

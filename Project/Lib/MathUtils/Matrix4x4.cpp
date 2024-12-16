@@ -336,6 +336,33 @@ Matrix4x4 Matrix4x4::MakeOrthographicMatrix(float left, float top, float right, 
 	return matrix;
 }
 
+Matrix4x4 Matrix4x4::MakeShadowOrthographicMatrix(float width, float height, float nearClip, float farClip) {
+
+	Matrix4x4 matrix = {};
+
+	float left = -width * 0.5f;
+	float right = width * 0.5f;
+	float bottom = -height * 0.5f;
+	float top = height * 0.5f;
+
+	// 行列要素をゼロ初期化
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			matrix.m[i][j] = 0.0f;
+		}
+	}
+
+	matrix.m[0][0] = 2.0f / (right - left);
+	matrix.m[1][1] = 2.0f / (top - bottom);
+	matrix.m[2][2] = 1.0f / (farClip - nearClip);
+	matrix.m[3][0] = (left + right) / (left - right);
+	matrix.m[3][1] = (top + bottom) / (bottom - top);
+	matrix.m[3][2] = nearClip / (nearClip - farClip);
+	matrix.m[3][3] = 1.0f;
+
+	return matrix;
+}
+
 Matrix4x4 Matrix4x4::MakePerspectiveFovMatrix(float fovY, float aspectRatio, float nearClip, float farClip) {
 
 	Matrix4x4 matrix = {};

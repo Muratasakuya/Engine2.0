@@ -25,6 +25,8 @@ public:
 
 	static void Update();
 
+	static void DrawDebug();
+
 	static void Inforamtion();
 
 	//* getter *//
@@ -38,6 +40,8 @@ public:
 	static ViewProjectionBuffer GetViewProBuffer();
 
 	static LightBuffer GetLightBuffer();
+
+	static LightViewProjectionBuffer GetLightVPBuffer();
 
 private:
 	//========================================================================*/

@@ -45,3 +45,22 @@ public:
 	void Update(const Matrix4x4& viewProjection);
 
 };
+
+//============================================================================*/
+//	LightViewProjectionBuffer class
+//============================================================================*/
+class LightViewProjectionBuffer :
+	public DXConstBuffer<Matrix4x4> {
+public:
+	//========================================================================*/
+	//	public Methods
+	//========================================================================*/
+
+	LightViewProjectionBuffer() = default;
+	~LightViewProjectionBuffer() = default;
+
+	void Init();
+
+	void Update(const Matrix4x4& viewProjection);
+
+};

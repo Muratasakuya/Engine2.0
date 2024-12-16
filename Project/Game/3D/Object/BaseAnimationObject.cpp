@@ -37,9 +37,14 @@ void BaseAnimationObject::Update() {
 	}
 }
 
-void BaseAnimationObject::Draw() {
+void BaseAnimationObject::Draw(RendererPipelineType pipeline) {
 
-	model_->Draw(transform_, materials_.front());
+	model_->Draw(transform_, materials_.front(), pipeline);
+}
+
+void BaseAnimationObject::DrawShadowDepth() {
+
+	model_->DrawShadowDepth(transform_);
 }
 
 void BaseAnimationObject::TransformImGui() {

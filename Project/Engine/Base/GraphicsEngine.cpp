@@ -9,6 +9,7 @@
 #include <Engine/Renderer/MeshRenderer.h>
 #include <Engine/Renderer/ParticleRenderer.h>
 #include <Engine/Process/Input.h>
+#include <Game/System/EnvironmentSystem.h>
 
 //============================================================================*/
 //	GraphicsEngine classMethods
@@ -24,6 +25,7 @@ std::unique_ptr<DXDevice> GraphicsEngine::device_ = nullptr;
 std::unique_ptr<DXSwapChain> GraphicsEngine::swapChain_ = nullptr;
 UINT GraphicsEngine::backBufferIndex_ = 0;
 std::unique_ptr<OffscreenRenderer> GraphicsEngine::offscreenRenderer_ = nullptr;
+std::unique_ptr<ShadowMapRenderer> GraphicsEngine::shadowMapRenderer_ = nullptr;
 std::unique_ptr<ImGuiManager> GraphicsEngine::imguiManager_ = nullptr;
 
 void GraphicsEngine::TransitionBarrier(
@@ -53,9 +55,19 @@ void GraphicsEngine::SetRendererPipeline(ID3D12GraphicsCommandList* commandList,
 	pipelineManager_->SetRendererPipeline(commandList, pipelineType, blendMode);
 }
 
+void GraphicsEngine::SetShadowPipeline(ID3D12GraphicsCommandList* commandList, ShadowPipelineType pipelineType) {
+
+	pipelineManager_->SetShadowPipeline(commandList, pipelineType);
+}
+
 void GraphicsEngine::SetComputePipeline(ID3D12GraphicsCommandList* commandList, ComputePipelineType pipelineType) {
 
 	pipelineManager_->SetComputePipeline(commandList, pipelineType);
+}
+
+void GraphicsEngine::SetShadowTextureCommand(ID3D12GraphicsCommandList* commandList) {
+
+	commandList->SetGraphicsRootDescriptorTable(6, shadowMapRenderer_->GetShadowGPUHandle());
 }
 
 void GraphicsEngine::Init() {
@@ -104,6 +116,10 @@ void GraphicsEngine::Init() {
 	// RenderTexture作成
 	offscreenRenderer_ = std::make_unique<OffscreenRenderer>();
 	offscreenRenderer_->Init(srvManager_.get(), rtvManager_.get());
+
+	// ShadowMap作成
+	shadowMapRenderer_ = std::make_unique<ShadowMapRenderer>();
+	shadowMapRenderer_->Init(srvManager_.get(), dsvManager_.get());
 
 	pipelineManager_ = std::make_unique<PipelineManager>();
 	pipelineManager_->Create(dxCommon_.get());
@@ -155,13 +171,40 @@ void GraphicsEngine::BeginRenderFrame() {
 
 void GraphicsEngine::Render() {
 
+	// ShadowDepth
+	BeginPreShadowDepth();
+	MeshRenderer::RenderShadowDepth();
+	EndPostShadowDepth();
+
+	// RenderTexture
 	BeginPreOffscreen();
-
 	MeshRenderer::Render();
-
+	EnvironmentSystem::DrawDebug();
 	EndPostOffscreen();
 
+	// SwapChain
 	RenderOffscreen();
+
+}
+
+void GraphicsEngine::BeginPreShadowDepth() {
+
+	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvCPUHandle = dsvManager_->GetShadowMapCPUHandle();
+
+	commandList->OMSetRenderTargets(0, nullptr, FALSE, &dsvCPUHandle);
+	dsvManager_->ClearShadowDepthStencilView(commandList);
+	dxCommon_->SetViewportAndScissor(kShadowMapWidth, kShadowMapHeight);
+
+}
+
+void GraphicsEngine::EndPostShadowDepth() {
+
+	// D3D12_RESOURCE_STATE_DEPTH_WRITE -> D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE
+	TransitionBarrier(
+		shadowMapRenderer_->GetShadowResource(),
+		D3D12_RESOURCE_STATE_DEPTH_WRITE,
+		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 
 }
 
@@ -172,7 +215,7 @@ void GraphicsEngine::BeginPreOffscreen() {
 
 	rtvManager_->BeginOffscreenSetRenderTargets(commandList, dsvCPUHandle);
 	dsvManager_->ClearDepthStencilView(commandList);
-	dxCommon_->SetViewportAndScissor();
+	dxCommon_->SetViewportAndScissor(kWindowWidth, kWindowHeight);
 
 }
 
@@ -197,7 +240,7 @@ void GraphicsEngine::RenderOffscreen() {
 		D3D12_RESOURCE_STATE_RENDER_TARGET);
 
 	rtvManager_->SetRenderTargets(commandList, backBufferIndex_);
-	dxCommon_->SetViewportAndScissor();
+	dxCommon_->SetViewportAndScissor(kWindowWidth, kWindowHeight);
 
 	// Offscreen描画
 	const UINT vertexCount = 3;
@@ -220,6 +263,12 @@ void GraphicsEngine::EndRenderFrame() {
 	TransitionBarrier(offscreenRenderer_->GetRenderTexture(),
 		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
 		D3D12_RESOURCE_STATE_RENDER_TARGET);
+
+	// D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE -> D3D12_RESOURCE_STATE_DEPTH_WRITE
+	TransitionBarrier(
+		shadowMapRenderer_->GetShadowResource(),
+		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+		D3D12_RESOURCE_STATE_DEPTH_WRITE);
 
 	TransitionBarrier(swapChain_->GetResource(backBufferIndex_),
 		D3D12_RESOURCE_STATE_RENDER_TARGET,

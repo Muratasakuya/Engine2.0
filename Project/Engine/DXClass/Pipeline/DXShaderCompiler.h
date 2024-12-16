@@ -32,6 +32,7 @@ public:
 
 	void Compile(DXCommon* dxCommon, const PostProcessPipelineType& pipelineType);
 	void Compile(DXCommon* dxCommon, const RendererPipelineType& pipelineType);
+	void Compile(DXCommon* dxCommon, const ShadowPipelineType& pipelineType);
 	void Compile(DXCommon* dxCommon, const ComputePipelineType& pipelineType);
 
 	//* getter *//
@@ -41,6 +42,8 @@ public:
 
 	IDxcBlob* GetRendererVSBlob(const RendererPipelineType& pipelineType) const { return rendererVSBlob_[pipelineType].Get(); }
 	IDxcBlob* GetRendererPSBlob(const RendererPipelineType& pipelineType) const { return rendererPSBlob_[pipelineType].Get(); }
+
+	IDxcBlob* GetShadowVSBlob(const ShadowPipelineType& pipelineType) const { return shadowVSBlob_[pipelineType].Get(); }
 
 	IDxcBlob* GetComputeBlob(const ComputePipelineType& pipelineType) const { return computeBlob_[pipelineType].Get(); }
 
@@ -61,6 +64,10 @@ private:
 
 	std::array<ComPtr<IDxcBlob>, rendererPipelineNum> rendererVSBlob_;
 	std::array<ComPtr<IDxcBlob>, rendererPipelineNum> rendererPSBlob_;
+
+	//* shadow *//
+
+	std::array<ComPtr<IDxcBlob>, shadowPipelineNum> shadowVSBlob_;
 
 	//* compute *//
 

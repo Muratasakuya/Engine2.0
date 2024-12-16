@@ -102,11 +102,11 @@ void DXShaderCompiler::Compile(DXCommon* dxCommon, const RendererPipelineType& p
 		break;
 	case RendererPipelineType::NormalObject3D:
 		vsShaderPath = L"./Resources/Engine/Shaders/Object3D.VS.hlsl";
-		psShaderPath = L"./Resources/Engine/Shaders/Object3D.PS.hlsl";
+		psShaderPath = L"./Resources/Engine/Shaders/NormalObject3D.PS.hlsl";
 		break;
-	case RendererPipelineType::SkinningObject3D:
-		vsShaderPath = L"./Resources/Engine/Shaders/SkinningObject3D.VS.hlsl";
-		psShaderPath = L"./Resources/Engine/Shaders/Object3D.PS.hlsl";
+	case RendererPipelineType::TargetShadowObject3D:
+		vsShaderPath = L"./Resources/Engine/Shaders/Object3D.VS.hlsl";
+		psShaderPath = L"./Resources/Engine/Shaders/TargetShadowObject3D.PS.hlsl";
 		break;
 	case RendererPipelineType::PrimitiveLine:
 		vsShaderPath = L"./Resources/Engine/Shaders/PrimitiveLine.VS.hlsl";
@@ -128,6 +128,24 @@ void DXShaderCompiler::Compile(DXCommon* dxCommon, const RendererPipelineType& p
 	rendererPSBlob_[pipelineType] = CompileShader(psShaderPath, L"ps_6_0",
 		dxCommon->GetDxcUtils(), dxCommon->GetDxcCompiler(), dxCommon->GetIncludeHandler());
 	assert(rendererPSBlob_[pipelineType] != nullptr);
+
+}
+
+void DXShaderCompiler::Compile(DXCommon* dxCommon, const ShadowPipelineType& pipelineType) {
+
+	const wchar_t* vsShaderPath = nullptr;
+	switch (pipelineType) {
+	case ShadowPipelineType::ShadowDepth:
+		vsShaderPath = L"./Resources/Engine/Shaders/ShadowDepth.VS.hlsl";
+		break;
+	default:
+		assert(false && "Unsupported pipeline type");
+		return;
+	}
+
+	shadowVSBlob_[pipelineType] = CompileShader(vsShaderPath, L"vs_6_0",
+		dxCommon->GetDxcUtils(), dxCommon->GetDxcCompiler(), dxCommon->GetIncludeHandler());
+	assert(shadowVSBlob_[pipelineType] != nullptr);
 
 }
 

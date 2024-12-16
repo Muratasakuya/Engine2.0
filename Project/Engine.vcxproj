@@ -117,6 +117,18 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <FxCompile Include="Resources\Engine\Shaders\NormalObject3D.PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\Engine\Shaders\ShadowDepth.VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
     <FxCompile Include="Resources\Shaders\BoxFilter.PS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -333,6 +345,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Object\Field.cpp" />
     <ClCompile Include="Game\Editor\Manager\EditorManager.cpp" />
     <ClCompile Include="Game\Editor\Base\BaseEditor.cpp" />
     <ClCompile Include="Lib\Adapter\Easing.cpp" />
@@ -404,8 +417,11 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\CBuffer\ParticleBuffer.cpp" />
     <ClCompile Include="Engine\Renderer\ParticleRenderer.cpp" />
     <ClCompile Include="Game\Scenes\TitleScene.cpp" />
+    <ClCompile Include="Engine\Renderer\ShadowMapRenderer.cpp" />
+    <ClCompile Include="Game\Camera\SunLightCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Object\Field.h" />
     <ClInclude Include="Game\Editor\Manager\EditorManager.h" />
     <ClInclude Include="Game\Editor\Base\BaseEditor.h" />
     <ClInclude Include="Lib\Adapter\Easing.h" />
@@ -486,6 +502,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\CBuffer\ParticleBuffer.h" />
     <ClInclude Include="Engine\Renderer\ParticleRenderer.h" />
     <ClInclude Include="Game\Scenes\TitleScene.h" />
+    <ClInclude Include="Engine\Renderer\ShadowMapRenderer.h" />
+    <ClInclude Include="Game\Camera\SunLightCamera.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -24,6 +24,14 @@ void EnvironmentSystem::Update() {
 
 }
 
+void EnvironmentSystem::DrawDebug() {
+#ifdef _DEBUG
+
+	cameraManager_->DrawDebug();
+
+#endif // _DEBUG
+}
+
 void EnvironmentSystem::Inforamtion() {
 
 	cameraManager_->ImGui();
@@ -53,4 +61,9 @@ ViewProjectionBuffer EnvironmentSystem::GetViewProBuffer() {
 LightBuffer EnvironmentSystem::GetLightBuffer() {
 
 	return lightManager_->GetLightBuffer();
+}
+
+LightViewProjectionBuffer EnvironmentSystem::GetLightVPBuffer() {
+
+	return cameraManager_->GetSunLightCamera()->GetLightVPBuffer();
 }

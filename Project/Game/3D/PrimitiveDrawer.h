@@ -22,6 +22,7 @@
 enum class LineColor {
 
 	White, // 白
+	Black, // 黒
 	Red,   // 赤
 	Green, // 緑
 	Blue,  // 青
@@ -48,12 +49,12 @@ public:
 
 	static PrimitiveDrawer* GetInstance();
 
-	void Init(const ViewProjectionBuffer& viewProBuffer);
+	void Init();
 
 	void Update();
 
-	void DrawLine2D(const Vector2& pointA, const Vector2& pointB, const LineColor& color);
-	void DrawLine3D(const Vector3& pointA, const Vector3& pointB, const LineColor& color);
+	void DrawLine2D(const Vector2& pointA, const Vector2& pointB, const LineColor& color = LineColor::White);
+	void DrawLine3D(const Vector3& pointA, const Vector3& pointB, const LineColor& color = LineColor::White);
 
 	void DrawGrid();
 
@@ -76,8 +77,6 @@ private:
 	PrimitiveVertexBuffer vertexBuffer_;
 
 	std::unordered_map<LineColor, PrimitiveMaterial> lineMaterials_;
-
-	ViewProjectionBuffer viewProBuffer_;
 
 	// 線分使用インデックス
 	uint32_t indexLine_;

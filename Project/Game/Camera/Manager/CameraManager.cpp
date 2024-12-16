@@ -20,6 +20,10 @@ void CameraManager::Init() {
 	// Debug
 	debugCamera_ = std::make_unique<DebugCamera>();
 
+	// Sun
+	sunLightCamera_ = std::make_unique<SunLightCamera>();
+	sunLightCamera_->Init();
+
 }
 
 void CameraManager::Update() {
@@ -32,6 +36,14 @@ void CameraManager::Update() {
 
 		camera3D_->Update();
 	}
+
+	sunLightCamera_->Update();
+
+}
+
+void CameraManager::DrawDebug() {
+
+	sunLightCamera_->DrawDebug();
 
 }
 
@@ -46,5 +58,9 @@ void CameraManager::ImGui() {
 	debugCamera_->SetEnable(debugCameraEnable_);
 
 	camera3D_->ImGui();
+
+	ImGui::Text("sunLightCamera");
+	ImGui::Separator();
+	sunLightCamera_->ImGui();
 
 }

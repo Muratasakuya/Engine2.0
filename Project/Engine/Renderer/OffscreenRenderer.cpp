@@ -43,6 +43,7 @@ void OffscreenRenderer::CreateRenderTextureResource() {
 		&clearValue,
 		IID_PPV_ARGS(&renderTextureResource_));
 	assert(SUCCEEDED(hr));
+	renderTextureResource_->SetName(L"renderTexture");
 
 }
 
@@ -54,8 +55,6 @@ void OffscreenRenderer::Init(SrvManager* srvManager, RtvManager* rtvManager) {
 	// RTVの作成
 	uint32_t rtvIndex = rtvManager->Allocate();
 	rtvManager->Create(rtvIndex, renderTextureResource_.Get());
-
-	renderTextureResource_->SetName(L"renderTexture");
 	
 	// SRVの作成
 	uint32_t srvIndex = srvManager->Allocate();

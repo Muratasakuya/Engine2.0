@@ -15,11 +15,36 @@ std::vector<IBaseGameObject*> MeshRenderer::gameObjects_ = {};
 IBaseGameObject* MeshRenderer::selectedGameObject_ = nullptr;
 int MeshRenderer::currentObjectIndex_ = 0;
 
-void MeshRenderer::Render() {
+void MeshRenderer::RenderShadowDepth() {
 
 	for (const auto& gameObject : gameObjects_) {
 
-		gameObject->Draw();
+		// 深度に書き込むObjectのみ描画
+		if (gameObject->GetDrawShadowEnable()) {
+
+			gameObject->DrawShadowDepth();
+		}
+	}
+
+}
+
+void MeshRenderer::Render() {
+
+	RendererPipelineType pipeline;
+
+	for (const auto& gameObject : gameObjects_) {
+
+		if (gameObject->GetDrawShadowEnable()) {
+
+			// このObjectには影を落とさない
+			pipeline = RendererPipelineType::NormalObject3D;
+		} else {
+
+			// このObjectに影を落とす
+			pipeline = RendererPipelineType::TargetShadowObject3D;
+		}
+
+		gameObject->Draw(pipeline);
 	}
 
 }

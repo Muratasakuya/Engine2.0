@@ -4,6 +4,7 @@
 //	include
 //============================================================================*/
 #include <Engine/Base/GraphicsEngine.h>
+#include <Game/System/EnvironmentSystem.h>
 
 //============================================================================*/
 //	PrimitiveDrawer classMethods
@@ -15,14 +16,15 @@ PrimitiveDrawer* PrimitiveDrawer::GetInstance() {
 	return &instance;
 }
 
-void PrimitiveDrawer::Init(const ViewProjectionBuffer& viewProBuffer) {
-
-	viewProBuffer_ = viewProBuffer;
+void PrimitiveDrawer::Init() {
 
 	vertexBuffer_.CreateVertexBuffer(GraphicsEngine::Device()->Get(), kMaxLineCount_ * kVertexCountLine_);
 
 	lineMaterials_[LineColor::White].Init();
 	lineMaterials_[LineColor::White].color = Color::White();
+
+	lineMaterials_[LineColor::Black].Init();
+	lineMaterials_[LineColor::Black].color = Color::Black();
 
 	lineMaterials_[LineColor::Red].Init();
 	lineMaterials_[LineColor::Red].color = Color::Red();
@@ -65,7 +67,7 @@ void PrimitiveDrawer::DrawLine2D(const Vector2& pointA, const Vector2& pointB, c
 	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
 	commandList->IASetVertexBuffers(0, 1, &vertexBuffer_.GetVertexBuffer());
 	material.SetCommand(commandList);
-	viewProBuffer_.SetCommand(commandList);
+	EnvironmentSystem::GetViewProBuffer().SetCommand(commandList);
 	commandList->DrawInstanced(kVertexCountLine_, 1, indexLine_ - kVertexCountLine_, 0);
 }
 
@@ -81,10 +83,11 @@ void PrimitiveDrawer::DrawLine3D(const Vector3& pointA, const Vector3& pointB, c
 	vertexBuffer_.pos[indexLine_] = { pointB.x,pointB.y,pointB.z,1.0f };
 	indexLine_++;
 
+	GraphicsEngine::SetRendererPipeline(commandList, PrimitiveLine, kBlendModeNormal);
 	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
 	commandList->IASetVertexBuffers(0, 1, &vertexBuffer_.GetVertexBuffer());
 	material.SetCommand(commandList);
-	viewProBuffer_.SetCommand(commandList);
+	EnvironmentSystem::GetViewProBuffer().SetCommand(commandList);
 	commandList->DrawInstanced(kVertexCountLine_, 1, indexLine_ - kVertexCountLine_, 0);
 }
 
