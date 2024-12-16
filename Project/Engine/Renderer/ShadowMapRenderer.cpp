@@ -14,11 +14,11 @@ void ShadowMapRenderer::CreateShadowMapResource() {
 
 	D3D12_RESOURCE_DESC resourceDesc{};
 	resourceDesc.Width = kShadowMapWidth;                         // シャドウマップの幅
-	resourceDesc.Height = kShadowMaoHeight;                       // シャドウマップの高さ
-	resourceDesc.Format = DXGI_FORMAT_D32_FLOAT;                  // 深度テクスチャ用フォーマット
-	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL; // 深度用リソース
-	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;  // 2Dテクスチャ
-	resourceDesc.SampleDesc.Count = 1;                            // サンプリング数
+	resourceDesc.Height = kShadowMapHeight;                       // シャドウマップの高さ
+	resourceDesc.Format = DXGI_FORMAT_R32_TYPELESS;
+	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
+	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+	resourceDesc.SampleDesc.Count = 1;
 	resourceDesc.DepthOrArraySize = 1;
 	resourceDesc.MipLevels = 1;
 

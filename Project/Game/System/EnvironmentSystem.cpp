@@ -24,6 +24,14 @@ void EnvironmentSystem::Update() {
 
 }
 
+void EnvironmentSystem::DrawDebug() {
+#ifdef _DEBUG
+
+	cameraManager_->DrawDebug();
+
+#endif // _DEBUG
+}
+
 void EnvironmentSystem::Inforamtion() {
 
 	cameraManager_->ImGui();

@@ -9,6 +9,7 @@
 #include <Engine/Renderer/MeshRenderer.h>
 #include <Engine/Renderer/ParticleRenderer.h>
 #include <Engine/Process/Input.h>
+#include <Game/System/EnvironmentSystem.h>
 
 //============================================================================*/
 //	GraphicsEngine classMethods
@@ -62,6 +63,11 @@ void GraphicsEngine::SetShadowPipeline(ID3D12GraphicsCommandList* commandList, S
 void GraphicsEngine::SetComputePipeline(ID3D12GraphicsCommandList* commandList, ComputePipelineType pipelineType) {
 
 	pipelineManager_->SetComputePipeline(commandList, pipelineType);
+}
+
+void GraphicsEngine::SetShadowTextureCommand(ID3D12GraphicsCommandList* commandList) {
+
+	commandList->SetGraphicsRootDescriptorTable(6, shadowMapRenderer_->GetShadowGPUHandle());
 }
 
 void GraphicsEngine::Init() {
@@ -173,6 +179,7 @@ void GraphicsEngine::Render() {
 	// RenderTexture
 	BeginPreOffscreen();
 	MeshRenderer::Render();
+	EnvironmentSystem::DrawDebug();
 	EndPostOffscreen();
 
 	// SwapChain
@@ -187,7 +194,7 @@ void GraphicsEngine::BeginPreShadowDepth() {
 
 	commandList->OMSetRenderTargets(0, nullptr, FALSE, &dsvCPUHandle);
 	dsvManager_->ClearShadowDepthStencilView(commandList);
-	dxCommon_->SetViewportAndScissor(kShadowMapWidth, kShadowMaoHeight);
+	dxCommon_->SetViewportAndScissor(kShadowMapWidth, kShadowMapHeight);
 
 }
 

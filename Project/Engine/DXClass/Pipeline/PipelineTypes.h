@@ -68,8 +68,8 @@ enum RendererPipelineType
 	: uint32_t {
 
 	Object2D,
-	NormalObject3D,
-	SkinningObject3D, //* 必要ないので今度消す
+	NormalObject3D,       //* 影になるObject
+	TargetShadowObject3D, //* 影を落としたいObject
 	PrimitiveLine,
 	NormalParticle,
 

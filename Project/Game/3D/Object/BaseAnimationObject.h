@@ -25,7 +25,7 @@ public:
 
 	virtual void Update();
 
-	virtual void Draw() override;
+	virtual void Draw(RendererPipelineType pipeline) override;
 	virtual void DrawShadowDepth() override;
 
 	//* imgui *//

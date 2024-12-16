@@ -102,11 +102,11 @@ void DXShaderCompiler::Compile(DXCommon* dxCommon, const RendererPipelineType& p
 		break;
 	case RendererPipelineType::NormalObject3D:
 		vsShaderPath = L"./Resources/Engine/Shaders/Object3D.VS.hlsl";
-		psShaderPath = L"./Resources/Engine/Shaders/Object3D.PS.hlsl";
+		psShaderPath = L"./Resources/Engine/Shaders/NormalObject3D.PS.hlsl";
 		break;
-	case RendererPipelineType::SkinningObject3D:
-		vsShaderPath = L"./Resources/Engine/Shaders/SkinningObject3D.VS.hlsl";
-		psShaderPath = L"./Resources/Engine/Shaders/Object3D.PS.hlsl";
+	case RendererPipelineType::TargetShadowObject3D:
+		vsShaderPath = L"./Resources/Engine/Shaders/Object3D.VS.hlsl";
+		psShaderPath = L"./Resources/Engine/Shaders/TargetShadowObject3D.PS.hlsl";
 		break;
 	case RendererPipelineType::PrimitiveLine:
 		vsShaderPath = L"./Resources/Engine/Shaders/PrimitiveLine.VS.hlsl";

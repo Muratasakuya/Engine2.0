@@ -61,6 +61,8 @@ public:
 
 	static void SetComputePipeline(ID3D12GraphicsCommandList* commandList, ComputePipelineType pipelineType);
 
+	static void SetShadowTextureCommand(ID3D12GraphicsCommandList* commandList);
+
 	//* getter *//
 
 	static DXDevice* Device() { return device_.get(); };

@@ -19,16 +19,32 @@ void MeshRenderer::RenderShadowDepth() {
 
 	for (const auto& gameObject : gameObjects_) {
 
-		gameObject->DrawShadowDepth();
+		// 深度に書き込むObjectのみ描画
+		if (gameObject->GetDrawShadowEnable()) {
+
+			gameObject->DrawShadowDepth();
+		}
 	}
 
 }
 
 void MeshRenderer::Render() {
 
+	RendererPipelineType pipeline;
+
 	for (const auto& gameObject : gameObjects_) {
 
-		gameObject->Draw();
+		if (gameObject->GetDrawShadowEnable()) {
+
+			// このObjectには影を落とさない
+			pipeline = RendererPipelineType::NormalObject3D;
+		} else {
+
+			// このObjectに影を落とす
+			pipeline = RendererPipelineType::TargetShadowObject3D;
+		}
+
+		gameObject->Draw(pipeline);
 	}
 
 }

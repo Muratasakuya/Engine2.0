@@ -44,7 +44,9 @@ private:
 
 	const std::string& baseModelDirectory_ = "./Resources/Model/Obj";
 
-	std::unique_ptr<Test> test_;
+	std::unique_ptr<Test> teapot_;
+
+	std::unique_ptr<Test> sphere_;
 
 	std::unique_ptr<Field> field_;
 

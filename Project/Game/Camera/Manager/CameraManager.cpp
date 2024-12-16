@@ -41,6 +41,12 @@ void CameraManager::Update() {
 
 }
 
+void CameraManager::DrawDebug() {
+
+	sunLightCamera_->DrawDebug();
+
+}
+
 void CameraManager::ImGui() {
 
 	ImGui::Checkbox("debugCameraEnable", &debugCameraEnable_);
@@ -52,5 +58,9 @@ void CameraManager::ImGui() {
 	debugCamera_->SetEnable(debugCameraEnable_);
 
 	camera3D_->ImGui();
+
+	ImGui::Text("sunLightCamera");
+	ImGui::Separator();
+	sunLightCamera_->ImGui();
 
 }

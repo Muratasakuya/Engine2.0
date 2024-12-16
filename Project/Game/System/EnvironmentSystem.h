@@ -25,6 +25,8 @@ public:
 
 	static void Update();
 
+	static void DrawDebug();
+
 	static void Inforamtion();
 
 	//* getter *//

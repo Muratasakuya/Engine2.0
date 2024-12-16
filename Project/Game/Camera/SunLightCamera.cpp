@@ -4,6 +4,7 @@
 //	include
 //============================================================================*/
 #include <Engine/Utility/Environment.h>
+#include <Game/3D/PrimitiveDrawer.h>
 
 // directX
 #include <DirectXMath.h>
@@ -17,14 +18,16 @@
 
 void SunLightCamera::Init() {
 
-	translation_ = Vector3(0.0f, 480.0f, 0.0f);
+	translation_ = Vector3(0.0f, 14.0f, 0.0f);
 
 	target_ = Vector3(0.0f, 0.0f, 0.0f);
 
-	upDirection_ = Direction::Right();
+	upDirection_ = Vector3(0.0f, 0.0f, -1.0f);
+
+	orthoSize_ = 32.0f;
 
 	nearPlane_ = 1.0f;
-	farPlane_ = 1000.0f;
+	farPlane_ = 640.0f;
 
 	Update();
 
@@ -36,8 +39,8 @@ void SunLightCamera::Init() {
 void SunLightCamera::Update() {
 
 	DirectX::XMMATRIX dxProjectionMatrix = DirectX::XMMatrixOrthographicLH(
-		static_cast<float>(kShadowMapWidth),
-		static_cast<float>(kShadowMaoHeight),
+		orthoSize_,
+		orthoSize_,
 		nearPlane_,
 		farPlane_
 	);
@@ -61,10 +64,40 @@ void SunLightCamera::Update() {
 
 }
 
+void SunLightCamera::DrawDebug() {
+
+	Vector3 frustumPoint[4] = {};
+
+	Matrix4x4 clipMatrix = projectionMatrix_.Inverse(projectionMatrix_);
+	Matrix4x4 worldMatrix = viewMatrix_.Inverse(viewMatrix_);
+
+	frustumPoint[0] = Vector3::Transform(Vector3::Transform({ -1.0f, -1.0f, 1.0f }, clipMatrix), worldMatrix);
+	frustumPoint[1] = Vector3::Transform(Vector3::Transform({ -1.0f,  1.0f, 1.0f }, clipMatrix), worldMatrix);
+	frustumPoint[2] = Vector3::Transform(Vector3::Transform({ 1.0f,  1.0f, 1.0f }, clipMatrix), worldMatrix);
+	frustumPoint[3] = Vector3::Transform(Vector3::Transform({ 1.0f, -1.0f, 1.0f }, clipMatrix), worldMatrix);
+
+	for (int i = 0; i < 4; ++i) {
+
+		Vector3 direction = frustumPoint[i] - translation_;
+		frustumPoint[i] = translation_ + direction.Normalize() * 2.0f;
+	}
+
+	for (int i = 0; i < 4; ++i) {
+
+		PrimitiveDrawer::GetInstance()->DrawLine3D(
+			frustumPoint[i], frustumPoint[(i + 1) % 4]);
+		PrimitiveDrawer::GetInstance()->DrawLine3D(
+			frustumPoint[i], translation_);
+	}
+}
+
 void SunLightCamera::ImGui() {
 
+	ImGui::DragFloat("orthoSize", &orthoSize_, 1.0f);
 	ImGui::DragFloat("nearPlane", &nearPlane_, 0.01f);
-	ImGui::DragFloat("farPlane", &farPlane_, 0.01f);
+	ImGui::DragFloat("farPlane", &farPlane_);
+	ImGui::DragFloat3("translation", &translation_.x, 0.01f, 0.0f, 1000.0f);
 	ImGui::DragFloat3("target", &target_.x, 0.01f);
+	ImGui::DragFloat3("upDirection", &upDirection_.x, 0.01f);
 
 }

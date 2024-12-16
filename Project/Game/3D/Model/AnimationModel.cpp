@@ -24,7 +24,7 @@ void AnimationModel::Init(const std::string& modelName, const std::string& anima
 	skinningInfoDates_.Init(static_cast<UINT>(inputAssembler_.GetVertexData().data.size()));
 }
 
-void AnimationModel::Draw(AnimationTransform transform, MaterialBuffer material) {
+void AnimationModel::Draw(AnimationTransform transform, MaterialBuffer material, RendererPipelineType pipeline) {
 
 	auto commandList = GraphicsEngine::GetCommandList();
 
@@ -36,7 +36,7 @@ void AnimationModel::Draw(AnimationTransform transform, MaterialBuffer material)
 		D3D12_RESOURCE_STATE_UNORDERED_ACCESS,
 		D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER);
 
-	GraphicsEngine::SetRendererPipeline(commandList, NormalObject3D, kBlendModeNormal);
+	GraphicsEngine::SetRendererPipeline(commandList, pipeline, kBlendModeNormal);
 	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	commandList->IASetVertexBuffers(0, 1, &outputVertices_.GetVertexBuffer());
 	commandList->IASetIndexBuffer(&inputAssembler_.GetIndexData().GetIndexBuffer());
@@ -46,6 +46,14 @@ void AnimationModel::Draw(AnimationTransform transform, MaterialBuffer material)
 	EnvironmentSystem::GetCameraBuffer().SetCommand(commandList);
 	D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle = AssetManager::GetTextureGPUHandle(modelData_.meshes.front().textureName.value());
 	commandList->SetGraphicsRootDescriptorTable(2, gpuHandle);
+	commandList->SetGraphicsRootConstantBufferView(5,
+		EnvironmentSystem::GetLightVPBuffer().GetResource()->GetGPUVirtualAddress());
+
+	// 影を落とすときのみ
+	if (pipeline == RendererPipelineType::TargetShadowObject3D) {
+
+		GraphicsEngine::SetShadowTextureCommand(commandList);
+	}
 	inputAssembler_.DrawCall(commandList, 0);
 
 	// D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER -> D3D12_RESOURCE_STATE_UNORDERED_ACCESS
@@ -56,7 +64,7 @@ void AnimationModel::Draw(AnimationTransform transform, MaterialBuffer material)
 
 }
 
-void AnimationModel::DrawShadowDepth() {
+void AnimationModel::DrawShadowDepth(AnimationTransform transform) {
 
 	auto commandList = GraphicsEngine::GetCommandList();
 
@@ -73,6 +81,7 @@ void AnimationModel::DrawShadowDepth() {
 	commandList->IASetVertexBuffers(0, 1, &outputVertices_.GetVertexBuffer());
 	commandList->IASetIndexBuffer(&inputAssembler_.GetIndexData().GetIndexBuffer());
 	EnvironmentSystem::GetLightVPBuffer().SetCommand(commandList);
+	transform.SetCommand(commandList);
 	inputAssembler_.DrawCall(commandList, 0);
 
 	// D3D12_RESOURCE_STATE_VERTEX_AND_CONSTANT_BUFFER -> D3D12_RESOURCE_STATE_UNORDERED_ACCESS

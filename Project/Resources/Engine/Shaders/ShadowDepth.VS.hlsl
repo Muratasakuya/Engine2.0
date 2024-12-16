@@ -4,6 +4,13 @@ struct LightMatrix {
 	float4x4 lightViewProjection;
 };
 
+struct TransformationMatrix {
+
+	float4x4 World;
+	float4x4 WVP;
+	float4x4 WorldInverseTranspose;
+};
+
 struct VertexShaderInput {
 	
 	float3 position : POSITION;
@@ -19,11 +26,13 @@ struct VertexShaderOutput {
 };
 
 ConstantBuffer<LightMatrix> gLightMatrix : register(b0);
+ConstantBuffer<TransformationMatrix> gTransformationMatirx : register(b1);
 
 VertexShaderOutput main(VertexShaderInput input) {
 	
 	VertexShaderOutput output;
-	output.position = mul(float4(input.position, 1.0f), gLightMatrix.lightViewProjection);
+	float4 worldPos = float4(input.position, 1.0f);
+	output.position = mul(mul(worldPos, gTransformationMatirx.World), gLightMatrix.lightViewProjection);
 	
 	return output;
 }

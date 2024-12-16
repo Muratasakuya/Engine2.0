@@ -40,14 +40,14 @@ void BaseGameObject::Update() {
 	}
 }
 
-void BaseGameObject::Draw() {
+void BaseGameObject::Draw(RendererPipelineType pipeline) {
 
-	model_->Draw(transform_, materials_);
+	model_->Draw(transform_, materials_, pipeline);
 }
 
 void BaseGameObject::DrawShadowDepth() {
 
-	model_->DrawShadowDepth();
+	model_->DrawShadowDepth(transform_);
 }
 
 void BaseGameObject::TransformImGui() {

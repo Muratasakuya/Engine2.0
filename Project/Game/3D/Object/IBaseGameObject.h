@@ -5,6 +5,7 @@
 //============================================================================*/
 #include <Game/3D/Model/Model.h>
 #include <Game/3D/Model/AnimationModel.h>
+#include <Engine/DXClass/Pipeline/PipelineTypes.h>
 
 //============================================================================*/
 //	IBaseGameObject class
@@ -18,7 +19,7 @@ public:
 	IBaseGameObject() = default;
 	virtual ~IBaseGameObject();
 
-	virtual void Draw() = 0;
+	virtual void Draw(RendererPipelineType pipeline) = 0;
 	virtual void DrawShadowDepth() = 0;
 
 	//* imgui *//
@@ -50,10 +51,13 @@ public:
 		const std::optional<Vector3>& translate = std::nullopt);
 
 	void SetLightingEnable(bool enable);
+	void SetDrawDepthShadowEnable(bool enable) { drawDepthShadowEnable_ = enable; }
 
 	//* getter *//
 
 	std::string GetName() const { return name_; };
+
+	bool GetDrawShadowEnable() const { return drawDepthShadowEnable_; };
 
 protected:
 	//===================================================================*/
@@ -66,6 +70,8 @@ protected:
 	std::optional<std::string> parentFolderName_;
 
 	std::vector<MaterialBuffer> materials_;
+
+	bool drawDepthShadowEnable_ = true; //* 深度に書き込むかどうか
 
 private:
 	//===================================================================*/

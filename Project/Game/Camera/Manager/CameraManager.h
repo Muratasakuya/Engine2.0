@@ -26,6 +26,8 @@ public:
 
 	void Update();
 
+	void DrawDebug();
+
 	void ImGui();
 
 	//* getter *//

@@ -34,6 +34,8 @@ public:
 
 	ID3D12Resource* GetShadowResource() const { return shadowMapResource_.Get(); }
 
+	D3D12_GPU_DESCRIPTOR_HANDLE GetShadowGPUHandle() const { return shadowMapGpuHandle_; }
+
 private:
 	//========================================================================*/
 	//	private Methods

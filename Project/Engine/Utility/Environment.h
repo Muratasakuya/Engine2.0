@@ -17,7 +17,7 @@ const constexpr uint32_t kWindowWidth = 1280;
 const constexpr uint32_t kWindowHeight = 720;
 
 // windowTitle
-const constexpr wchar_t* kWindowTitle = L"Engine2.0";
+const constexpr wchar_t* kWindowTitle = L"Engine";
 
 // doubleBuffer
 const constexpr uint32_t kBufferCount = 2;
@@ -27,4 +27,4 @@ const Color kWindowClearColor = Color(0.016f, 0.016f, 0.016f, 1.0f);
 
 // shadowMapSize
 const constexpr uint32_t kShadowMapWidth = 1024;
-const constexpr uint32_t kShadowMaoHeight = 1024;
+const constexpr uint32_t kShadowMapHeight = 1024;

@@ -3,6 +3,7 @@
 //============================================================================*/
 //	include
 //============================================================================*/
+#include <Lib/MathUtils/Vector2.h>
 #include <Lib/MathUtils/Vector3.h>
 #include <Lib/MathUtils/Matrix4x4.h>
 #include <Game/Utility/Direction.h>
@@ -24,6 +25,8 @@ public:
 
 	void Update();
 
+	void DrawDebug();
+
 	void ImGui();
 
 	//* getter *//
@@ -43,6 +46,8 @@ private:
 	Vector3 target_;      //* 注視点
 
 	Vector3 upDirection_; //* 上方向
+
+	float orthoSize_;
 
 	float nearPlane_;
 	float farPlane_;
