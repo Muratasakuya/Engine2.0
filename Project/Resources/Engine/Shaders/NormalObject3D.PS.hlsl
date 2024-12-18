@@ -189,7 +189,7 @@ PixelShaderOutput main(VertexShaderOutput input) {
 
 			// ƒ¿
 			output.color.a = gMaterial.color.a * textureColor.a;
-			
+						
 		} else if (gMaterial.enableBlinnPhongReflection == 1) {
 			
 			if (textureColor.a <= 0.5f) {
@@ -279,6 +279,7 @@ PixelShaderOutput main(VertexShaderOutput input) {
 
 			// ƒ¿
 			output.color.a = gMaterial.color.a * textureColor.a;
+			
 		}
 	} else {
 
@@ -287,8 +288,9 @@ PixelShaderOutput main(VertexShaderOutput input) {
 		}
 
 		output.color = gMaterial.color * textureColor;
-		output.color = pow(output.color, 2.2f);
 	}
+	
+	output.color = pow(output.color, 2.2f);
 
 	return output;
 }

@@ -34,6 +34,8 @@ public:
 
 	static D3D12_GPU_DESCRIPTOR_HANDLE& GetTextureGPUHandle(const std::string textureName);
 
+	static const DirectX::TexMetadata& GetMetaData(const std::string textureName);
+
 	static ModelManager* GetModel();
 
 private:

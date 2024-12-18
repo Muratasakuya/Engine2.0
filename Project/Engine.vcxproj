@@ -87,7 +87,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -345,6 +345,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Camera\Camera2D.cpp" />
     <ClCompile Include="Game\Object\Field.cpp" />
     <ClCompile Include="Game\Editor\Manager\EditorManager.cpp" />
     <ClCompile Include="Game\Editor\Base\BaseEditor.cpp" />
@@ -419,8 +420,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\Scenes\TitleScene.cpp" />
     <ClCompile Include="Engine\Renderer\ShadowMapRenderer.cpp" />
     <ClCompile Include="Game\Camera\SunLightCamera.cpp" />
+    <ClCompile Include="Game\2D\Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Camera\Camera2D.h" />
     <ClInclude Include="Game\Object\Field.h" />
     <ClInclude Include="Game\Editor\Manager\EditorManager.h" />
     <ClInclude Include="Game\Editor\Base\BaseEditor.h" />
@@ -504,6 +507,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Game\Scenes\TitleScene.h" />
     <ClInclude Include="Engine\Renderer\ShadowMapRenderer.h" />
     <ClInclude Include="Game\Camera\SunLightCamera.h" />
+    <ClInclude Include="Game\2D\Sprite.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -29,8 +29,10 @@ public:
 	//* getter *//
 
 	ID3D12Resource* GetRenderTexture() const { return renderTextureResource_.Get(); }
+	ID3D12Resource* GetGuiTexture() const { return guiTextureResource_.Get(); }
 
 	D3D12_GPU_DESCRIPTOR_HANDLE GetRenderTextureGPUHandle() const { return renderTextureGpuHandle_; }
+	D3D12_GPU_DESCRIPTOR_HANDLE GetGuiGPUHandle() const { return guiTextureGpuHandle_; }
 
 private:
 	//========================================================================*/
@@ -43,9 +45,12 @@ private:
 	ComPtr<ID3D12Resource> renderTextureResource_;
 	D3D12_GPU_DESCRIPTOR_HANDLE renderTextureGpuHandle_;
 
+	ComPtr<ID3D12Resource> guiTextureResource_;
+	D3D12_GPU_DESCRIPTOR_HANDLE guiTextureGpuHandle_;
+
 	//========================================================================*/
 	//* function
 
-	void CreateRenderTextureResource();
+	ComPtr<ID3D12Resource> CreateTextureResource();
 
 };

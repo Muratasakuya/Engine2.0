@@ -196,3 +196,16 @@ D3D12_GPU_DESCRIPTOR_HANDLE& TextureManager::GetTextureGPUHandle(const std::stri
 
 	return textureData.gpuHandle;
 }
+
+const DirectX::TexMetadata& TextureManager::GetMetaData(const std::string textureName) {
+
+	auto it = textures_.find(textureName);
+	if (it == textures_.end()) {
+
+		throw std::runtime_error("Texture not found: " + textureName);
+	}
+
+	TextureData& textureData = it->second;
+
+	return textureData.metadata;
+}

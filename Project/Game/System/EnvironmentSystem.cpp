@@ -43,6 +43,11 @@ Matrix4x4 EnvironmentSystem::GetCameraViewProjection() {
 	return cameraManager_->GetCamera3D()->GetViewProjectionMatrix();
 }
 
+Matrix4x4 EnvironmentSystem::GetViewOrthoMatrix() {
+
+	return cameraManager_->GetCamera2D()->GetViewOrthoMatrix();
+}
+
 Matrix4x4 EnvironmentSystem::GetCameraMatrix() {
 
 	return cameraManager_->GetCamera3D()->GetCameraMatrix();

@@ -124,3 +124,29 @@ void AnimationTransform::SetNewAnimationData(const std::string& animationName) {
 	skinCluster_[animationName] = AssetManager::GetModel()->GetSkinClusterData(animationName);
 
 }
+
+//============================================================================*/
+//	SpriteTransformBuffer classMethod
+//============================================================================*/
+
+void SpriteTransformBuffer::Init() {
+
+	rootParameterIndex = 1;
+
+	DXConstBuffer::CreateConstBuffer(GraphicsEngine::Device()->Get());
+
+}
+
+void SpriteTransformBuffer::Update(const Transform2D& transform) {
+
+	Vector3 scale = { transform.size.x,transform.size.y,1.0f };
+	Vector3 rotate = { 0.0f,0.0f,transform.rotate };
+	Vector3 translate = { transform.pos.x,transform.pos.y,0.0f };
+
+	Matrix4x4 worldMatrix =
+		Matrix4x4::MakeAffineMatrix(scale, rotate, translate);
+	Matrix4x4 wvpMatrix = worldMatrix * GameCamera::GetViewOrthoMatrix();
+
+	DXConstBuffer::TransferData(wvpMatrix);
+
+}

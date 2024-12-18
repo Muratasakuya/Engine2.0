@@ -134,7 +134,7 @@ void GraphicsEngine::Init() {
 #ifdef _DEBUG
 
 	// ImGuiRendererの初期化
-	ImGuiRenderer::Init(offscreenRenderer_->GetRenderTextureGPUHandle());
+	ImGuiRenderer::Init(offscreenRenderer_->GetGuiGPUHandle());
 #endif
 
 	// Inputの初期化
@@ -252,11 +252,41 @@ void GraphicsEngine::RenderOffscreen() {
 
 }
 
+void GraphicsEngine::CopyRenderTexture(
+	ID3D12Resource* dstResource, D3D12_RESOURCE_STATES dstState,
+	ID3D12Resource* srcResource, D3D12_RESOURCE_STATES srcState) {
+
+	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
+
+	// 状態遷移
+	TransitionBarrier(srcResource, srcState, D3D12_RESOURCE_STATE_COPY_SOURCE);
+	TransitionBarrier(dstResource, dstState, D3D12_RESOURCE_STATE_COPY_DEST);
+
+	commandList->CopyResource(dstResource, srcResource);
+
+	// 元の状態に戻す
+	TransitionBarrier(srcResource, D3D12_RESOURCE_STATE_COPY_SOURCE, srcState);
+	TransitionBarrier(dstResource, D3D12_RESOURCE_STATE_COPY_DEST, dstState);
+
+}
+
 void GraphicsEngine::EndRenderFrame() {
 
 #ifdef _DEBUG
+	CopyRenderTexture(
+		offscreenRenderer_->GetGuiTexture(), D3D12_RESOURCE_STATE_RENDER_TARGET,
+		swapChain_->GetResource(backBufferIndex_), D3D12_RESOURCE_STATE_RENDER_TARGET);
+
+	// D3D12_RESOURCE_STATE_RENDER_TARGET -> D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE
+	TransitionBarrier(offscreenRenderer_->GetGuiTexture(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+
 	imguiManager_->End();
 	imguiManager_->Draw(dxCommon_->GetCommandList());
+
+	// D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE -> D3D12_RESOURCE_STATE_RENDER_TARGET
+	TransitionBarrier(offscreenRenderer_->GetGuiTexture(),
+		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+		D3D12_RESOURCE_STATE_RENDER_TARGET);
 #endif
 
 	// D3D12_RESOURCE_STATE_COPY_SOURCE -> D3D12_RESOURCE_STATE_RENDER_TARGET

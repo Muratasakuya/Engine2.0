@@ -3,6 +3,7 @@
 //============================================================================*/
 //	include
 //============================================================================*/
+#include <Game/Camera/Camera2D.h>
 #include <Game/Camera/Camera3D.h>
 #include <Game/Camera/DebugCamera.h>
 #include <Game/Camera/SunLightCamera.h>
@@ -32,6 +33,8 @@ public:
 
 	//* getter *//
 
+	Camera2D* GetCamera2D() const { return camera2D_.get(); }
+
 	Camera3D* GetCamera3D() const { return camera3D_.get(); }
 
 	SunLightCamera* GetSunLightCamera() const { return sunLightCamera_.get(); }
@@ -43,6 +46,8 @@ private:
 
 	//========================================================================*/
 	//* variables
+
+	std::unique_ptr<Camera2D> camera2D_;
 
 	std::unique_ptr<Camera3D> camera3D_;
 

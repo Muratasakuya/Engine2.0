@@ -33,6 +33,8 @@ public:
 
 	static Matrix4x4 GetCameraViewProjection();
 
+	static Matrix4x4 GetViewOrthoMatrix();
+
 	static Matrix4x4 GetCameraMatrix();
 
 	static CameraBuffer GetCameraBuffer();
@@ -65,6 +67,10 @@ namespace GameCamera {
 
 	inline Matrix4x4 GetViewProjection() {
 		return EnvironmentSystem::GetCameraViewProjection();
+	}
+
+	inline Matrix4x4 GetViewOrthoMatrix() {
+		return EnvironmentSystem::GetViewOrthoMatrix();
 	}
 
 	inline Matrix4x4 GetCameraMatrix() {

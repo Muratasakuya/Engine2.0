@@ -10,7 +10,7 @@
 //	OffscreenRenderer classMethods
 //============================================================================*/
 
-void OffscreenRenderer::CreateRenderTextureResource() {
+ComPtr<ID3D12Resource> OffscreenRenderer::CreateTextureResource() {
 
 	// RenderTargetで設定
 	D3D12_RESOURCE_DESC resourceDesc{};
@@ -35,30 +35,45 @@ void OffscreenRenderer::CreateRenderTextureResource() {
 	clearValue.Color[2] = kWindowClearColor.b;
 	clearValue.Color[3] = kWindowClearColor.a;
 
+	ComPtr<ID3D12Resource> resource = nullptr;
 	HRESULT hr = GraphicsEngine::Device()->Get()->CreateCommittedResource(
 		&heapProperties,
 		D3D12_HEAP_FLAG_NONE,
 		&resourceDesc,
 		D3D12_RESOURCE_STATE_RENDER_TARGET,
 		&clearValue,
-		IID_PPV_ARGS(&renderTextureResource_));
+		IID_PPV_ARGS(&resource));
 	assert(SUCCEEDED(hr));
-	renderTextureResource_->SetName(L"renderTexture");
 
+	return resource;
 }
 
 void OffscreenRenderer::Init(SrvManager* srvManager, RtvManager* rtvManager) {
 
 	// renderTexture作成
-	CreateRenderTextureResource();
+	renderTextureResource_ = CreateTextureResource();
+	renderTextureResource_->SetName(L"renderTexture");
 
 	// RTVの作成
 	uint32_t rtvIndex = rtvManager->Allocate();
 	rtvManager->Create(rtvIndex, renderTextureResource_.Get());
-	
+
 	// SRVの作成
 	uint32_t srvIndex = srvManager->Allocate();
 	renderTextureGpuHandle_ = srvManager->GetGPUHandle(srvIndex);
 	srvManager->CreateSRVForTexture2D(srvIndex, renderTextureResource_.Get(), DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, 1);
+
+#ifdef _DEBUG
+
+	// guiTexture作成
+	guiTextureResource_ = CreateTextureResource();
+	guiTextureResource_->SetName(L"guiRenderTexture");
+
+	// SRV作成
+	srvIndex = srvManager->Allocate();
+	guiTextureGpuHandle_ = srvManager->GetGPUHandle(srvIndex);
+	srvManager->CreateSRVForTexture2D(srvIndex, guiTextureResource_.Get(), DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, 1);
+
+#endif // DEBUG
 
 }

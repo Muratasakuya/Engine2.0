@@ -110,6 +110,9 @@ private:
 
 	static void RenderOffscreen();
 
+	static void CopyRenderTexture(ID3D12Resource* dstResource, D3D12_RESOURCE_STATES dstState,
+		ID3D12Resource* srcResource, D3D12_RESOURCE_STATES srcState);
+
 	//============================================================================*/
 	// LeakChecker
 	//============================================================================*/

@@ -3,37 +3,35 @@
 //============================================================================*/
 //	include
 //============================================================================*/
-#include <Game/Scenes/Methods/IScene.h>
-
-//* test *//
-#include <Game/Object/Test.h>
-#include <Game/Object/Field.h>
-#include <Game/2D/Sprite.h>
+#include <Engine/DXClass/Pipeline/PipelineTypes.h>
+#include <Engine/CBuffer/VertexBuffer.h>
+#include <Engine/CBuffer/MaterialBuffer.h>
+#include <Engine/CBuffer/Transform.h>
+#include <Lib/MathUtils/Vector2.h>
 
 // c++
 #include <string>
-#include <memory>
+
+// 頂点数 Vertex
+const constexpr UINT kSpriteVertexNum = 4;
+// 頂点数 Index
+const constexpr UINT kSpriteIndexNum = 6;
 
 //============================================================================*/
-//	GameScene class
+//	Sprite class
 //============================================================================*/
-class GameScene :
-	public IScene {
+class Sprite {
 public:
 	//========================================================================*/
 	//	public Methods
 	//========================================================================*/
 
-	GameScene() = default;
-	~GameScene() = default;
+	Sprite(const std::string& textureName);
+	~Sprite() = default;
 
-	void Run() override;
+	void Update();
 
-	void Init() override;
-
-	void Update() override;
-
-	void Finalize() override;
+	void Draw(BlendMode blendMode = BlendMode::kBlendModeNormal);
 
 private:
 	//========================================================================*/
@@ -43,19 +41,22 @@ private:
 	//========================================================================*/
 	//* variables
 
-	const std::string& baseModelDirectory_ = "./Resources/Model/Obj";
+	std::string textureName_;
 
-	std::unique_ptr<Sprite> sprite_;
+	Transform2D transform_;
 
-	std::unique_ptr<Test> teapot_;
+	//* buffer *//
 
-	std::unique_ptr<Test> sphere_;
+	VertexBuffer<SpriteVertexData> vertexBuffer_;
+	IndexBuffer indexBuffer_;
 
-	std::unique_ptr<Field> field_;
+	SpriteMaterialBuffer materialBuffer_;
+	SpriteTransformBuffer transformBuffer_;
 
 	//========================================================================*/
 	//* function
 
-	void Draw2D();
+	void SetMetaDataTextureSize();
+	void VertexUpdate();
 
 };

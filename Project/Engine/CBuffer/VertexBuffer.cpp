@@ -10,9 +10,17 @@
 //============================================================================*/
 
 template class VertexBuffer<ModelVertexData>;
+template class VertexBuffer<SpriteVertexData>;
 
 template<>
 void VertexBuffer<ModelVertexData>::Update() {
+
+	DXConstBuffer::TransferVectorData(data);
+
+}
+
+template<>
+void VertexBuffer<SpriteVertexData>::Update() {
 
 	DXConstBuffer::TransferVectorData(data);
 

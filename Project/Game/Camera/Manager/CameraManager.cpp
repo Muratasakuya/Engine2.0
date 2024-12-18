@@ -13,6 +13,10 @@ void CameraManager::Init() {
 
 	debugCameraEnable_ = false;
 
+	// 2D
+	camera2D_ = std::make_unique<Camera2D>();
+	camera2D_->Init();
+
 	// 3D
 	camera3D_ = std::make_unique<Camera3D>();
 	camera3D_->Init();

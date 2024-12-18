@@ -118,6 +118,8 @@
     <ClCompile Include="Engine\Renderer\ShadowMapRenderer.cpp" />
     <ClCompile Include="Game\Camera\SunLightCamera.cpp" />
     <ClCompile Include="Game\Object\Field.cpp" />
+    <ClCompile Include="Game\2D\Sprite.cpp" />
+    <ClCompile Include="Game\Camera\Camera2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Utility\Environment.h" />
@@ -203,5 +205,7 @@
     <ClInclude Include="Engine\Renderer\ShadowMapRenderer.h" />
     <ClInclude Include="Game\Camera\SunLightCamera.h" />
     <ClInclude Include="Game\Object\Field.h" />
+    <ClInclude Include="Game\2D\Sprite.h" />
+    <ClInclude Include="Game\Camera\Camera2D.h" />
   </ItemGroup>
 </Project>

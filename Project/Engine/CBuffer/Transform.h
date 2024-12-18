@@ -6,6 +6,7 @@
 #include <Engine/CBuffer/Base/DXConstBuffer.h>
 #include <Lib/MathUtils/Matrix4x4.h>
 #include <Lib/MathUtils/Vector3.h>
+#include <Lib/MathUtils/Vector2.h>
 #include <Lib/MathUtils/Quaternion.h>
 #include <Engine/Utility/AssetStructure.h>
 
@@ -16,13 +17,38 @@
 #include <optional>
 
 //============================================================================*/
-//	bufferSize
+//	bufferSize Transform
 //============================================================================*/
 struct TransformationMatrix {
 
 	Matrix4x4 world;
 	Matrix4x4 wvp;
 	Matrix4x4 worldInverseTranspose;
+};
+
+struct Transform2D {
+
+	Vector2 pos;            // 座標
+	float rotate;           // 回転
+	Vector2 size;           // 大きさ
+	Vector2 anchorPoint;    // アンカーポイント /* {0.5f,0.5f}で真ん中 */
+	Vector2 textureLeftTop; // テクスチャ左上座標
+	Vector2 textureSize;    // テクスチャ切り出しサイズ
+	bool isFlipX;           // 左右反転
+	bool isFlipY;           // 上下反転
+
+	void Init() {
+
+		pos = { 0.0f,0.0f };
+		rotate = 0.0f;
+		size = { 0.0f,0.0f };
+		anchorPoint = { 0.0f,0.0f };
+		textureLeftTop = { 0.0f,0.0f };
+		textureSize = { 0.0f,0.0f };
+		isFlipX = false;
+		isFlipY = false;
+	}
+
 };
 
 //============================================================================*/
@@ -118,5 +144,24 @@ private:
 
 	std::pair<bool, std::string> animationController_;
 	float animationTime_;
+
+};
+
+//============================================================================*/
+//	SpriteTransformBuffer class
+//============================================================================*/
+class SpriteTransformBuffer :
+	public DXConstBuffer<Matrix4x4> {
+public:
+	//========================================================================*/
+	//	public Methods
+	//========================================================================*/
+
+	SpriteTransformBuffer() = default;
+	~SpriteTransformBuffer() = default;
+
+	void Init();
+
+	void Update(const Transform2D& transform);
 
 };
