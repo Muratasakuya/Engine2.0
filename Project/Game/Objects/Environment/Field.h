@@ -3,36 +3,28 @@
 //============================================================================*/
 //	include
 //============================================================================*/
-#include <Game/Scenes/Methods/IScene.h>
-
-// object
-#include <Game/Objects/Environment/Field.h>
-#include <Game/Objects/Player/Player.h>
-
-// c++
-#include <string>
-#include <memory>
+#include <Game/3D/Object/BaseGameObject.h>
 
 //============================================================================*/
-//	GameScene class
+//	Field class
 //============================================================================*/
-class GameScene :
-	public IScene {
+class Field :
+	public BaseGameObject {
 public:
 	//========================================================================*/
 	//	public Methods
 	//========================================================================*/
 
-	GameScene() = default;
-	~GameScene() = default;
+	Field() = default;
+	~Field() = default;
 
-	void Run() override;
+	void Init();
 
-	void Init() override;
+	void Update();
 
-	void Update() override;
+	//* imgui *//
 
-	void Finalize() override;
+	void DerivedImGui() override;
 
 private:
 	//========================================================================*/
@@ -42,15 +34,12 @@ private:
 	//========================================================================*/
 	//* variables
 
-	std::unique_ptr<Field> field_;
-
-	std::unique_ptr<Player> player_;
-
 	//========================================================================*/
-	//* function
+	//* functions
 
-	void LoadAssets();
+	void CreateModel(int division);
 
-	void Draw2D();
+	void ApplyJson() override;
+	void SaveJson() override;
 
 };

@@ -8,6 +8,16 @@
 #include <Engine/DXClass/Pipeline/PipelineTypes.h>
 
 //============================================================================*/
+//	Structure
+//============================================================================*/
+struct UVTransform {
+
+	Vector3 scale;
+	Vector3 rotate;
+	Vector3 translate;
+};
+
+//============================================================================*/
 //	IBaseGameObject class
 //============================================================================*/
 class IBaseGameObject {
@@ -45,17 +55,15 @@ public:
 
 	void SetMeshRenderer(const std::string& name, uint32_t index = 0);
 
-	void SetUVTransform(
-		const std::optional<Vector3>& scale = std::nullopt,
-		const std::optional<Vector3>& rotate = std::nullopt,
-		const std::optional<Vector3>& translate = std::nullopt);
+	void SetUVTransform(const UVTransform& uvTransform);
 
 	void SetLightingEnable(bool enable);
-	void SetDrawDepthShadowEnable(bool enable) { drawDepthShadowEnable_ = enable; }
 
 	//* getter *//
 
 	std::string GetName() const { return name_; };
+
+	bool GetDrawEnable() const { return drawEnable_; };
 
 	bool GetDrawShadowEnable() const { return drawDepthShadowEnable_; };
 
@@ -71,6 +79,7 @@ protected:
 
 	std::vector<MaterialBuffer> materials_;
 
+	bool drawEnable_ = true;            //* 描画を行うかどうか
 	bool drawDepthShadowEnable_ = true; //* 深度に書き込むかどうか
 
 private:

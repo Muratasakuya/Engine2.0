@@ -14,8 +14,8 @@
 
 void Camera3D::Init() {
 
-	rotation_ = { 0.13f,0.0f,0.0f };
-	translation_ = Vector3(0.0f, 5.4f, -35.0f);
+	rotation_ = { 0.26f,0.0f,0.0f };
+	translation_ = Vector3(0.0f, 4.2f, -10.0f);
 
 	matrix_ =
 		Matrix4x4::MakeAffineMatrix(Vector3(1.0f, 1.0f, 1.0f), rotation_, translation_);
@@ -57,6 +57,8 @@ void Camera3D::ImGui() {
 void Camera3D::SetCamera(const Matrix4x4& viewProMatrix, const Vector3& translate) {
 
 	viewProjectionMatrix_ = viewProMatrix;
+
+	translation_ = translate;
 
 	cameraBuffer_.Update(translate);
 	viewProBuffer_.Update(viewProjectionMatrix_);

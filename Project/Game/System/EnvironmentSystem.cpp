@@ -38,6 +38,11 @@ void EnvironmentSystem::Inforamtion() {
 
 }
 
+void EnvironmentSystem::Reset() {
+
+	cameraManager_->GetFollowCamera()->Reset();
+}
+
 Matrix4x4 EnvironmentSystem::GetCameraViewProjection() {
 
 	return cameraManager_->GetCamera3D()->GetViewProjectionMatrix();
@@ -51,6 +56,16 @@ Matrix4x4 EnvironmentSystem::GetViewOrthoMatrix() {
 Matrix4x4 EnvironmentSystem::GetCameraMatrix() {
 
 	return cameraManager_->GetCamera3D()->GetCameraMatrix();
+}
+
+Matrix4x4 EnvironmentSystem::GetProjection() {
+
+	return cameraManager_->GetCamera3D()->GetProjectionMatrix();
+}
+
+Vector3 EnvironmentSystem::GetFollowCameraRotate() {
+
+	return cameraManager_->GetFollowCamera()->GetRotate();
 }
 
 CameraBuffer EnvironmentSystem::GetCameraBuffer() {
@@ -71,4 +86,14 @@ LightBuffer EnvironmentSystem::GetLightBuffer() {
 LightViewProjectionBuffer EnvironmentSystem::GetLightVPBuffer() {
 
 	return cameraManager_->GetSunLightCamera()->GetLightVPBuffer();
+}
+
+void EnvironmentSystem::SetTarget(const WorldTransform* target) {
+
+	cameraManager_->GetFollowCamera()->SetTarget(target);
+}
+
+void EnvironmentSystem::SetSunLightTranslate(const Vector3& translate) {
+
+	cameraManager_->GetSunLightCamera()->SetTranslate(translate);
 }

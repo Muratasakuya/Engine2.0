@@ -6,6 +6,7 @@
 
 // c++
 #include <vector>
+#include <numbers>
 #include <algorithm>
 
 // front
@@ -43,6 +44,8 @@ public:
 
 	static Quaternion EulerToQuaternion(const Vector3& euler);
 
+	static Vector3 ToEulerAngles(const Quaternion& quaternion);
+
 	static Quaternion Multiply(const Quaternion& lhs, const Quaternion& rhs);
 
 	static Quaternion IdentityQuaternion();
@@ -68,5 +71,9 @@ public:
 	static Quaternion CalculateValue(const std::vector<Keyframe<Quaternion>>& keyframes, float time);
 
 	static Quaternion LookRotation(const Vector3& forward, const Vector3& up);
+
+	static Quaternion LookAt(const Vector3& from, const Vector3& to, const Vector3& up);
+
+	static Quaternion FromRotationMatrix(const Matrix4x4& m);
 
 };

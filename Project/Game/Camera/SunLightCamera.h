@@ -33,6 +33,10 @@ public:
 
 	LightViewProjectionBuffer GetLightVPBuffer() const { return buffer_; }
 
+	//* setter *//
+
+	void SetTranslate(const Vector3& translate);
+
 private:
 	//========================================================================*/
 	//	private Methods

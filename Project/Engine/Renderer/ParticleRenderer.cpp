@@ -46,6 +46,13 @@ void ParticleRenderer::Clear() {
 
 void ParticleRenderer::SelectParticle(const ImVec2& mainWindowPos) {
 
+	if (ImGuiRenderer::cameraInfoEnable_ ||
+		MeshRenderer::GetSelectedObject() ||
+		EditorManager::GetSelectedEditor()) {
+
+		selectedParticle_ = nullptr;
+	}
+
 	if (!particles.empty()) {
 		ImGui::SetCursorPos(ImVec2(6.0f, mainWindowPos.y + 69.0f));
 		ImGui::SetNextItemWidth(144.0f);
@@ -75,13 +82,6 @@ void ParticleRenderer::SelectParticle(const ImVec2& mainWindowPos) {
 
 		ImGui::SetCursorPos(ImVec2(6.0f, mainWindowPos.y + 69.0f));
 		ImGui::Text("No Particle");
-	}
-
-	if (ImGuiRenderer::cameraInfoEnable_ ||
-		MeshRenderer::GetSelectedObject() ||
-		EditorManager::GetSelectedEditor()) {
-
-		selectedParticle_ = nullptr;
 	}
 
 }

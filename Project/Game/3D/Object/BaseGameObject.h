@@ -7,6 +7,7 @@
 
 // c++
 #include <memory>
+#include <numbers>
 
 //============================================================================*/
 //	BaseGameObject class
@@ -33,6 +34,8 @@ public:
 	void TransformImGui() override;
 	virtual void DerivedImGui() override {}
 
+	void KeyRotate(); //* QuaternionがGuiで操作できないのでこれだけKeyで行う
+
 	//* utility *//
 
 	virtual void ApplyJson() override {};
@@ -44,9 +47,16 @@ public:
 
 	Vector3 GetWorldPos() const { return transform_.GetWorldPos(); };
 
+	Vector3 GetTranslation() const { return transform_.translation; };
+	Quaternion GetRotation() const { return transform_.rotation; };
+
 	//* setter *//
 
 	void SetWorldTransform(const WorldTransform& transform);
+	void SetParent(const WorldTransform& transform);
+
+	void SetTranslate(const Vector3& translate);
+	void SetRotate(const Quaternion& rotate);
 
 protected:
 	//===================================================================*/
@@ -59,5 +69,9 @@ protected:
 	std::unique_ptr<Model> model_;
 
 	WorldTransform transform_;
+
+	//* uv *//
+
+	UVTransform uvTransform;
 
 };

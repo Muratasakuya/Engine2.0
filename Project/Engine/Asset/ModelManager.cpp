@@ -100,6 +100,22 @@ void ModelManager::LoadAniamation(const std::string& directoryPath, const std::s
 	skinClusters_[animationName] = CreateSkinCluster(modelName, animationName);
 }
 
+void ModelManager::MakeOriginalModel(
+	const std::string& modelName, const std::vector<ModelVertexData>& vertexData, const std::vector<uint32_t>& indexData) {
+
+	ModelData modelData{};
+	MeshModelData meshData{};
+
+	// 頂点情報設定
+	meshData.vertices = vertexData;
+	meshData.indices = indexData;
+
+	meshData.textureName = std::nullopt;
+	modelData.meshes.push_back(meshData);
+
+	models_[modelName] = modelData;
+}
+
 ModelData ModelManager::LoadModelFile(const std::string& directoryPath, const std::string& filename) {
 
 	ModelData modelData;            // 構築するModelData

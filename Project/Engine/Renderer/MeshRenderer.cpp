@@ -20,7 +20,8 @@ void MeshRenderer::RenderShadowDepth() {
 	for (const auto& gameObject : gameObjects_) {
 
 		// 深度に書き込むObjectのみ描画
-		if (gameObject->GetDrawShadowEnable()) {
+		if (gameObject->GetDrawShadowEnable() &&
+			gameObject->GetDrawEnable()) {
 
 			gameObject->DrawShadowDepth();
 		}
@@ -44,7 +45,10 @@ void MeshRenderer::Render() {
 			pipeline = RendererPipelineType::TargetShadowObject3D;
 		}
 
-		gameObject->Draw(pipeline);
+		if (gameObject->GetDrawEnable()) {
+
+			gameObject->Draw(pipeline);
+		}
 	}
 
 }
@@ -70,6 +74,13 @@ void MeshRenderer::Clear() {
 }
 
 void MeshRenderer::SelectGameObject(const ImVec2& mainWindowPos) {
+
+	if (ImGuiRenderer::cameraInfoEnable_ ||
+		ParticleRenderer::GetSelectedParticle() ||
+		EditorManager::GetSelectedEditor()) {
+
+		selectedGameObject_ = nullptr;
+	}
 
 	if (!gameObjects_.empty()) {
 		ImGui::SetCursorPos(ImVec2(6.0f, mainWindowPos.y + 2.0f));
@@ -100,13 +111,6 @@ void MeshRenderer::SelectGameObject(const ImVec2& mainWindowPos) {
 
 		ImGui::SetCursorPos(ImVec2(6.0f, mainWindowPos.y + 2.0f));
 		ImGui::Text("No GameObject");
-	}
-
-	if (ImGuiRenderer::cameraInfoEnable_ ||
-		ParticleRenderer::GetSelectedParticle() ||
-		EditorManager::GetSelectedEditor()) {
-
-		selectedGameObject_ = nullptr;
 	}
 
 }

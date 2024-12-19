@@ -102,7 +102,6 @@
     <ClCompile Include="Engine\DXClass\Pipeline\DXInputLayout.cpp" />
     <ClCompile Include="Engine\DXClass\Pipeline\DXBlendState.cpp" />
     <ClCompile Include="Engine\Renderer\MeshRenderer.cpp" />
-    <ClCompile Include="Game\Object\Test.cpp" />
     <ClCompile Include="Game\3D\Particle\BaseParticle.cpp" />
     <ClCompile Include="Game\3D\Particle\IBaseParticle.cpp" />
     <ClCompile Include="Game\3D\Particle\ParticleBehavior.cpp" />
@@ -117,9 +116,12 @@
     <ClCompile Include="Game\Editor\Manager\EditorManager.cpp" />
     <ClCompile Include="Engine\Renderer\ShadowMapRenderer.cpp" />
     <ClCompile Include="Game\Camera\SunLightCamera.cpp" />
-    <ClCompile Include="Game\Object\Field.cpp" />
+    <ClCompile Include="Game\Objects\Environment\Field.cpp" />
     <ClCompile Include="Game\2D\Sprite.cpp" />
     <ClCompile Include="Game\Camera\Camera2D.cpp" />
+    <ClCompile Include="Game\Objects\Player\Player.cpp" />
+    <ClCompile Include="Game\Objects\Player\Parts\PlayerBody.cpp" />
+    <ClCompile Include="Game\Objects\Player\Parts\PlayerHead.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Utility\Environment.h" />
@@ -186,7 +188,6 @@
     <ClInclude Include="Engine\DXClass\Pipeline\DXInputLayout.h" />
     <ClInclude Include="Engine\DXClass\Pipeline\DXBlendState.h" />
     <ClInclude Include="Engine\Renderer\MeshRenderer.h" />
-    <ClInclude Include="Game\Object\Test.h" />
     <ClInclude Include="Game\3D\Particle\ParticleVisitor.h" />
     <ClInclude Include="Game\3D\Particle\BaseParticle.h" />
     <ClInclude Include="Game\3D\Particle\IBaseParticle.h" />
@@ -204,8 +205,11 @@
     <ClInclude Include="Game\Editor\Manager\EditorManager.h" />
     <ClInclude Include="Engine\Renderer\ShadowMapRenderer.h" />
     <ClInclude Include="Game\Camera\SunLightCamera.h" />
-    <ClInclude Include="Game\Object\Field.h" />
+    <ClInclude Include="Game\Objects\Environment\Field.h" />
     <ClInclude Include="Game\2D\Sprite.h" />
     <ClInclude Include="Game\Camera\Camera2D.h" />
+    <ClInclude Include="Game\Objects\Player\Player.h" />
+    <ClInclude Include="Game\Objects\Player\Parts\PlayerBody.h" />
+    <ClInclude Include="Game\Objects\Player\Parts\PlayerHead.h" />
   </ItemGroup>
 </Project>

@@ -5,6 +5,7 @@
 //============================================================================*/
 #include <Game/Camera/Camera2D.h>
 #include <Game/Camera/Camera3D.h>
+#include <Game/Camera/FollowCamera.h>
 #include <Game/Camera/DebugCamera.h>
 #include <Game/Camera/SunLightCamera.h>
 
@@ -37,6 +38,8 @@ public:
 
 	Camera3D* GetCamera3D() const { return camera3D_.get(); }
 
+	FollowCamera* GetFollowCamera() const { return followCamera_.get(); }
+
 	SunLightCamera* GetSunLightCamera() const { return sunLightCamera_.get(); }
 
 private:
@@ -50,6 +53,8 @@ private:
 	std::unique_ptr<Camera2D> camera2D_;
 
 	std::unique_ptr<Camera3D> camera3D_;
+
+	std::unique_ptr<FollowCamera> followCamera_;
 
 	std::unique_ptr<DebugCamera> debugCamera_;
 

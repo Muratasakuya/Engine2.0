@@ -3,6 +3,8 @@
 //============================================================================*/
 //	include
 //============================================================================*/
+#include <Engine/Process/Input.h>
+#include <Game/Utility/Direction.h>
 
 // imgui
 #include <imgui.h>
@@ -18,7 +20,7 @@ void BaseGameObject::Init(const std::string& modelName) {
 
 	transform_.Init();
 
-	IBaseGameObject::SetMeshRenderer(modelName);
+	uvTransform.scale = Vector3(1.0f, 1.0f, 1.0f);
 
 	materials_.resize(model_->GetMeshNum());
 	for (auto& material : materials_) {
@@ -60,9 +62,50 @@ void BaseGameObject::TransformImGui() {
 
 		ImGui::DragFloat3("Scale", &transform_.scale.x, 0.01f);
 		ImGui::DragFloat3("Translate", &transform_.translation.x, 0.01f);
+		if (ImGui::Button("Reset Rotation")) {
+			transform_.rotation.Init();
+		}
 
 		ImGui::TreePop();
 	}
+
+	KeyRotate();
+}
+
+void BaseGameObject::KeyRotate() {
+
+	// ないよりはまし
+
+	const float rotationSpeed = 2.0f * std::numbers::pi_v<float> / 180.0f;
+
+	if (Input::GetInstance()->PushKey(DIK_UP)) {
+
+		Quaternion rotation = Quaternion::MakeRotateAxisAngleQuaternion(Direction::Right(), rotationSpeed);
+		transform_.rotation = transform_.rotation * rotation;
+	} else if (Input::GetInstance()->PushKey(DIK_DOWN)) {
+
+		Quaternion rotation = Quaternion::MakeRotateAxisAngleQuaternion(Direction::Right(), -rotationSpeed);
+		transform_.rotation = transform_.rotation * rotation;
+	}
+	if (Input::GetInstance()->PushKey(DIK_LEFT)) {
+
+		Quaternion rotation = Quaternion::MakeRotateAxisAngleQuaternion(Direction::Up(), rotationSpeed);
+		transform_.rotation = transform_.rotation * rotation;
+	} else if (Input::GetInstance()->PushKey(DIK_RIGHT)) {
+
+		Quaternion rotation = Quaternion::MakeRotateAxisAngleQuaternion(Direction::Up(), -rotationSpeed);
+		transform_.rotation = transform_.rotation * rotation;
+	}
+	if (Input::GetInstance()->PushKey(DIK_Q)) {
+
+		Quaternion rotation = Quaternion::MakeRotateAxisAngleQuaternion(Direction::Forward(), rotationSpeed);
+		transform_.rotation = transform_.rotation * rotation;
+	} else if (Input::GetInstance()->PushKey(DIK_E)) {
+
+		Quaternion rotation = Quaternion::MakeRotateAxisAngleQuaternion(Direction::Forward(), -rotationSpeed);
+		transform_.rotation = transform_.rotation * rotation;
+	}
+
 }
 
 void BaseGameObject::SetWorldTransform(const WorldTransform& transform) {
@@ -70,4 +113,19 @@ void BaseGameObject::SetWorldTransform(const WorldTransform& transform) {
 	transform_.translation = transform.translation;
 	transform_.scale = transform.scale;
 	transform_.rotation = transform.rotation;
+}
+
+void BaseGameObject::SetParent(const WorldTransform& transform) {
+
+	transform_.parent = &transform;
+}
+
+void BaseGameObject::SetTranslate(const Vector3& translate) {
+
+	transform_.translation = translate;
+}
+
+void BaseGameObject::SetRotate(const Quaternion& rotate) {
+
+	transform_.rotation = rotate;
 }

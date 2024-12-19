@@ -37,6 +37,13 @@ void EditorManager::Clear() {
 
 void EditorManager::SelectEditor(const ImVec2& mainWindowPos) {
 
+	if (ImGuiRenderer::cameraInfoEnable_ ||
+		ParticleRenderer::GetSelectedParticle() ||
+		MeshRenderer::GetSelectedObject()) {
+
+		selectedEditor_ = nullptr;
+	}
+
 	if (!editors_.empty()) {
 		ImGui::SetCursorPos(ImVec2(6.0f, mainWindowPos.y + 192.0f));
 		ImGui::SetNextItemWidth(144.0f);
@@ -68,12 +75,6 @@ void EditorManager::SelectEditor(const ImVec2& mainWindowPos) {
 		ImGui::Text("No Editor");
 	}
 
-	if (ImGuiRenderer::cameraInfoEnable_ ||
-		ParticleRenderer::GetSelectedParticle() ||
-		MeshRenderer::GetSelectedObject()) {
-
-		selectedEditor_ = nullptr;
-	}
 }
 
 void EditorManager::SelectedImGui() {

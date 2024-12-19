@@ -41,9 +41,9 @@ void WorldTransform::Update() {
 
 	Matrix4x4 worldMatrix =
 		Matrix4x4::MakeAxisAffineMatrix(scale, rotation, translation);
-	if (parent_) {
+	if (parent) {
 
-		worldMatrix = Matrix4x4::Multiply(worldMatrix, parent_->matrix.world);
+		worldMatrix = Matrix4x4::Multiply(worldMatrix, parent->matrix.world);
 	}
 	Matrix4x4 wvpMatrix = worldMatrix * GameCamera::GetViewProjection();
 	Matrix4x4 worldInverseTranspose = Matrix4x4::Transpose(Matrix4x4::Inverse(worldMatrix));

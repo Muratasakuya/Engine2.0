@@ -24,7 +24,7 @@ void SunLightCamera::Init() {
 
 	upDirection_ = Vector3(0.0f, 0.0f, -1.0f);
 
-	orthoSize_ = 32.0f;
+	orthoSize_ = 32.0f; // ジャギィが目立つがここはShaderで何とかする方が良さそう
 
 	nearPlane_ = 1.0f;
 	farPlane_ = 640.0f;
@@ -65,33 +65,12 @@ void SunLightCamera::Update() {
 }
 
 void SunLightCamera::DrawDebug() {
-
-	Vector3 frustumPoint[4] = {};
-
-	Matrix4x4 clipMatrix = projectionMatrix_.Inverse(projectionMatrix_);
-	Matrix4x4 worldMatrix = viewMatrix_.Inverse(viewMatrix_);
-
-	frustumPoint[0] = Vector3::Transform(Vector3::Transform({ -1.0f, -1.0f, 1.0f }, clipMatrix), worldMatrix);
-	frustumPoint[1] = Vector3::Transform(Vector3::Transform({ -1.0f,  1.0f, 1.0f }, clipMatrix), worldMatrix);
-	frustumPoint[2] = Vector3::Transform(Vector3::Transform({ 1.0f,  1.0f, 1.0f }, clipMatrix), worldMatrix);
-	frustumPoint[3] = Vector3::Transform(Vector3::Transform({ 1.0f, -1.0f, 1.0f }, clipMatrix), worldMatrix);
-
-	for (int i = 0; i < 4; ++i) {
-
-		Vector3 direction = frustumPoint[i] - translation_;
-		frustumPoint[i] = translation_ + direction.Normalize() * 2.0f;
-	}
-
-	for (int i = 0; i < 4; ++i) {
-
-		PrimitiveDrawer::GetInstance()->DrawLine3D(
-			frustumPoint[i], frustumPoint[(i + 1) % 4]);
-		PrimitiveDrawer::GetInstance()->DrawLine3D(
-			frustumPoint[i], translation_);
-	}
 }
 
 void SunLightCamera::ImGui() {
+
+	ImGui::Separator();
+	ImGui::Text("sunLightCamera");
 
 	ImGui::DragFloat("orthoSize", &orthoSize_, 1.0f);
 	ImGui::DragFloat("nearPlane", &nearPlane_, 0.01f);
@@ -100,4 +79,13 @@ void SunLightCamera::ImGui() {
 	ImGui::DragFloat3("target", &target_.x, 0.01f);
 	ImGui::DragFloat3("upDirection", &upDirection_.x, 0.01f);
 
+}
+
+void SunLightCamera::SetTranslate(const Vector3& translate) {
+
+	translation_.x = translate.x;
+	translation_.z = translate.z;
+
+	target_.x = translate.x;
+	target_.z = translate.z;
 }
