@@ -3,60 +3,51 @@
 //============================================================================*/
 //	include
 //============================================================================*/
-#include <Game/Scenes/Methods/IScene.h>
 
-// object
-#include <Game/Objects/Environment/Field.h>
-#include <PG3/Cube.h>
-#include <PG3/Command.h>
-#include <PG3/InputHandler.h>
-
-// c++
-#include <string>
-#include <memory>
+// front
+class Cube;
 
 //============================================================================*/
-//	GameScene class
+//	Command class
 //============================================================================*/
-class GameScene :
-	public IScene {
+
+class ICommand {
 public:
 	//========================================================================*/
 	//	public Methods
 	//========================================================================*/
 
-	GameScene() = default;
-	~GameScene() = default;
+	ICommand() = default;
+	virtual ~ICommand() = default;
 
-	void Run() override;
+	virtual void Exec(Cube& cube) = 0;
 
-	void Init() override;
+};
 
-	void Update() override;
-
-	void Finalize() override;
-
-private:
+class MoveRightCommand :
+	public ICommand {
+public:
 	//========================================================================*/
-	//	private Methods
+	//	public Methods
 	//========================================================================*/
 
+	MoveRightCommand() = default;
+	~MoveRightCommand() = default;
+
+	void Exec(Cube& cube) override;
+
+};
+
+class MoveLeftCommand :
+	public ICommand {
+public:
 	//========================================================================*/
-	//* variables
-
-	std::unique_ptr<Field> field_;
-
-	InputHandler* inputHandler_;
-
-	ICommand* iCommand_;
-
-	std::unique_ptr<Cube> cube_;
-
+	//	public Methods
 	//========================================================================*/
-	//* function
 
-	void LoadAssets();
+	MoveLeftCommand() = default;
+	~MoveLeftCommand() = default;
 
-	void Draw2D();
+	void Exec(Cube& cube) override;
 
 };

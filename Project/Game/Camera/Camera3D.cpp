@@ -15,7 +15,7 @@
 void Camera3D::Init() {
 
 	rotation_ = { 0.26f,0.0f,0.0f };
-	translation_ = Vector3(0.0f, 4.2f, -10.0f);
+	translation_ = Vector3(0.0f, 8.4f, -24.0f);
 
 	matrix_ =
 		Matrix4x4::MakeAffineMatrix(Vector3(1.0f, 1.0f, 1.0f), rotation_, translation_);

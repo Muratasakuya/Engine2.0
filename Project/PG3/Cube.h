@@ -3,38 +3,28 @@
 //============================================================================*/
 //	include
 //============================================================================*/
-#include <Game/Scenes/Methods/IScene.h>
-
-// object
-#include <Game/Objects/Environment/Field.h>
-#include <PG3/Cube.h>
-#include <PG3/Command.h>
-#include <PG3/InputHandler.h>
-
-// c++
-#include <string>
-#include <memory>
+#include <Game/3D/Object/BaseGameObject.h>
 
 //============================================================================*/
-//	GameScene class
+//	Cube class
 //============================================================================*/
-class GameScene :
-	public IScene {
+class Cube :
+	public BaseGameObject {
 public:
 	//========================================================================*/
 	//	public Methods
 	//========================================================================*/
 
-	GameScene() = default;
-	~GameScene() = default;
+	Cube() = default;
+	~Cube() = default;
 
-	void Run() override;
+	void Init();
 
-	void Init() override;
+	void Update();
 
-	void Update() override;
-
-	void Finalize() override;
+	/// 移動関数
+	void MoveRight();
+	void MoveLeft();
 
 private:
 	//========================================================================*/
@@ -44,19 +34,6 @@ private:
 	//========================================================================*/
 	//* variables
 
-	std::unique_ptr<Field> field_;
-
-	InputHandler* inputHandler_;
-
-	ICommand* iCommand_;
-
-	std::unique_ptr<Cube> cube_;
-
-	//========================================================================*/
-	//* function
-
-	void LoadAssets();
-
-	void Draw2D();
+	float speed_; //* 移動速度
 
 };

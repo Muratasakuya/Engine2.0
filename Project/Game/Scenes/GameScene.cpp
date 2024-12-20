@@ -65,20 +65,29 @@ void GameScene::Init() {
 	field_ = std::make_unique<Field>();
 	field_->Init();
 
-	player_ = std::make_unique<Player>();
-	player_->Init();
+	inputHandler_ = new InputHandler();
+	// AssignCommand
+	inputHandler_->AssignMoveLeftCommand2PressKeyA();
+	inputHandler_->AssignMoveRightCommand2PressKeyD();
 
-	GameCamera::SetTarget(&player_->GetTargetTransform());
+	cube_ = std::make_unique<Cube>();
+	cube_->Init();
 
 }
 
 void GameScene::Update() {
 
-	EnvironmentSystem::SetSunLightTranslate(player_->GetCenterTranslate());
-
 	field_->Update();
 
-	player_->Update();
+	iCommand_ = inputHandler_->HandleInput();
+
+	// setCommand
+	if (this->iCommand_) {
+
+		iCommand_->Exec(*cube_.get());
+	}
+
+	cube_->Update();
 
 }
 

@@ -345,6 +345,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="PG3\InputHandler.cpp" />
+    <ClCompile Include="PG3\Command.cpp" />
+    <ClCompile Include="PG3\Cube.cpp" />
     <ClCompile Include="Game\Camera\Camera2D.cpp" />
     <ClCompile Include="Game\Objects\Environment\Field.cpp" />
     <ClCompile Include="Game\Editor\Manager\EditorManager.cpp" />
@@ -425,6 +428,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\Objects\Player\Parts\PlayerHead.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PG3\InputHandler.h" />
+    <ClInclude Include="PG3\Command.h" />
+    <ClInclude Include="PG3\Cube.h" />
     <ClInclude Include="Game\Camera\Camera2D.h" />
     <ClInclude Include="Game\Objects\Environment\Field.h" />
     <ClInclude Include="Game\Editor\Manager\EditorManager.h" />

@@ -36,15 +36,12 @@ void CameraManager::Init() {
 
 void CameraManager::Update() {
 
+	camera3D_->Update();
+
 	debugCamera_->Update(camera3D_->GetTranslate(), camera3D_->GetRotate(), camera3D_->GetProjectionMatrix());
 	if (debugCamera_->Enable()) {
 
 		camera3D_->SetCamera(debugCamera_->GetViewProjectionMatrix(), debugCamera_->GetTranslate());
-	} else {
-
-		followCamera_->Update();
-		camera3D_->SetCamera(followCamera_->GetViewProjectionMatrix(), followCamera_->GetTranslate());
-
 	}
 
 	sunLightCamera_->Update();

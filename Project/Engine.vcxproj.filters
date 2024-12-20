@@ -122,6 +122,9 @@
     <ClCompile Include="Game\Objects\Player\Player.cpp" />
     <ClCompile Include="Game\Objects\Player\Parts\PlayerBody.cpp" />
     <ClCompile Include="Game\Objects\Player\Parts\PlayerHead.cpp" />
+    <ClCompile Include="PG3\Cube.cpp" />
+    <ClCompile Include="PG3\Command.cpp" />
+    <ClCompile Include="PG3\InputHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Utility\Environment.h" />
@@ -211,5 +214,8 @@
     <ClInclude Include="Game\Objects\Player\Player.h" />
     <ClInclude Include="Game\Objects\Player\Parts\PlayerBody.h" />
     <ClInclude Include="Game\Objects\Player\Parts\PlayerHead.h" />
+    <ClInclude Include="PG3\Cube.h" />
+    <ClInclude Include="PG3\Command.h" />
+    <ClInclude Include="PG3\InputHandler.h" />
   </ItemGroup>
 </Project>
