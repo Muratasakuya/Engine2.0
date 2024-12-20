@@ -116,9 +116,11 @@ void Player::ImGui() {
 		SaveJson();
 	}
 
+	ImGui::PushItemWidth(144.0f);
 	ImGui::DragFloat("headYOffset", &headYOffset_, 0.01f);
 	ImGui::DragFloat("rotationLerpRate", &rotationLerpRate_, 0.01f);
 	ImGui::DragFloat3("moveVelocity", &velocity_.x, 0.01f);
+	ImGui::PopItemWidth();
 
 }
 

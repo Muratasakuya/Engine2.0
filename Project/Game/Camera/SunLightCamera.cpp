@@ -86,6 +86,6 @@ void SunLightCamera::SetTranslate(const Vector3& translate) {
 	translation_.x = translate.x;
 	translation_.z = translate.z;
 
-	target_.x = translate.x;
-	target_.z = translate.z;
+	target_ = translate;
+
 }
