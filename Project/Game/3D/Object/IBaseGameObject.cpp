@@ -20,6 +20,10 @@ IBaseGameObject::~IBaseGameObject() {
 void IBaseGameObject::ImGui() {
 #ifdef _DEBUG
 
+	ImGui::Checkbox("drawEnable", &drawEnable_);
+
+	ImGui::Separator();
+
 	std::string materialHeader;
 	if (materials_.size() == 1) {
 		materialHeader = "Material";
@@ -109,12 +113,11 @@ void IBaseGameObject::SetMeshRenderer(const std::string& name, uint32_t index) {
 
 }
 
-void IBaseGameObject::SetUVTransform(
-	const std::optional<Vector3>& scale, const std::optional<Vector3>& rotate, const std::optional<Vector3>& translate) {
+void IBaseGameObject::SetUVTransform(const UVTransform& uvTransform) {
 
 	for (auto& material : materials_) {
 
-		material.properties.SetUVTransform(scale, rotate, translate);
+		material.properties.SetUVTransform(uvTransform.scale, uvTransform.rotate, uvTransform.translate);
 	}
 }
 

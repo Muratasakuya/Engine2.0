@@ -21,6 +21,10 @@ void CameraManager::Init() {
 	camera3D_ = std::make_unique<Camera3D>();
 	camera3D_->Init();
 
+	// Follow
+	followCamera_ = std::make_unique<FollowCamera>();
+	followCamera_->Init();
+
 	// Debug
 	debugCamera_ = std::make_unique<DebugCamera>();
 
@@ -38,7 +42,9 @@ void CameraManager::Update() {
 		camera3D_->SetCamera(debugCamera_->GetViewProjectionMatrix(), debugCamera_->GetTranslate());
 	} else {
 
-		camera3D_->Update();
+		followCamera_->Update();
+		camera3D_->SetCamera(followCamera_->GetViewProjectionMatrix(), followCamera_->GetTranslate());
+
 	}
 
 	sunLightCamera_->Update();
@@ -63,8 +69,8 @@ void CameraManager::ImGui() {
 
 	camera3D_->ImGui();
 
-	ImGui::Text("sunLightCamera");
-	ImGui::Separator();
+	followCamera_->ImGui();
+
 	sunLightCamera_->ImGui();
 
 }

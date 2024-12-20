@@ -35,6 +35,9 @@ public:
 	void LoadModel(const std::string& directoryPath, const std::string& modelName);
 	void LoadAniamation(const std::string& directoryPath, const std::string& animationName, const std::string& modelName);
 
+	void MakeOriginalModel(const std::string& modelName,
+		const std::vector<ModelVertexData>& vertexData, const std::vector<uint32_t>& indexData);
+
 	void SkeletonUpdate(const std::string& animationName);
 
 	void ApplyAnimation(const std::string& animationName, float animationTime);

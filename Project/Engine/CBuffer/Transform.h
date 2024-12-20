@@ -101,7 +101,7 @@ public:
 	//========================================================================*/
 	//* variables
 
-	const WorldTransform* parent_ = nullptr;
+	const WorldTransform* parent = nullptr;
 
 };
 

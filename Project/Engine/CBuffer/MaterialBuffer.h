@@ -21,8 +21,7 @@ struct Material {
 	int32_t enablePhongReflection;
 	int32_t enableBlinnPhongReflection;
 	float phongRefShininess;
-	Color specularColor;
-	float padding[4];
+	Vector3 specularColor;
 	Matrix4x4 uvTransform;
 
 	void Init() {
@@ -33,7 +32,7 @@ struct Material {
 		enablePhongReflection = false;
 		enableBlinnPhongReflection = false;
 		phongRefShininess = 1.0f;
-		specularColor = Color::White();
+		specularColor = Vector3(1.0f, 1.0f, 1.0f);
 		uvTransform = Matrix4x4::MakeIdentity4x4();
 	}
 

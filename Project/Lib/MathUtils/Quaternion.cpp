@@ -75,6 +75,30 @@ Quaternion Quaternion::EulerToQuaternion(const Vector3& euler) {
 	return q;
 }
 
+Vector3 Quaternion::ToEulerAngles(const Quaternion& quaternion) {
+
+	Vector3 angles;
+
+	// ロール（X軸回転）
+	float sinr_cosp = 2.0f * (quaternion.w * quaternion.x + quaternion.y * quaternion.z);
+	float cosr_cosp = 1.0f - 2.0f * (quaternion.x * quaternion.x + quaternion.y * quaternion.y);
+	angles.x = std::atan2(sinr_cosp, cosr_cosp);
+
+	// ピッチ（Y軸回転）
+	float sinp = 2.0f * (quaternion.w * quaternion.y - quaternion.z * quaternion.x);
+	if (std::abs(sinp) >= 1.0f)
+		angles.y = std::copysign(std::numbers::pi_v<float> / 2.0f, sinp);
+	else
+		angles.y = std::asin(sinp);
+
+	// ヨー（Z軸回転）
+	float siny_cosp = 2.0f * (quaternion.w * quaternion.z + quaternion.x * quaternion.y);
+	float cosy_cosp = 1.0f - 2.0f * (quaternion.y * quaternion.y + quaternion.z * quaternion.z);
+	angles.z = std::atan2(siny_cosp, cosy_cosp);
+
+	return angles;
+}
+
 Quaternion Quaternion::Multiply(const Quaternion& lhs, const Quaternion& rhs) {
 
 	Quaternion result;
@@ -279,4 +303,54 @@ Quaternion Quaternion::LookRotation(const Vector3& forward, const Vector3& up) {
 	float s = std::sqrt(1.0f + m22 - m00 - m11) * 0.5f;
 	float invS = 0.25f / s;
 	return { invS * (m02 + m20), invS * (m12 + m21), s, invS * (m10 - m01) };
+}
+
+Quaternion Quaternion::LookAt(const Vector3& from, const Vector3& to, const Vector3& up) {
+
+	Vector3 forward = (to - from).Normalize();
+	Vector3 right = Vector3::Cross(up, forward).Normalize();
+	Vector3 correctedUp = Vector3::Cross(forward, right);
+
+	Matrix4x4 rotationMatrix = {
+		right.x,      right.y,      right.z,      0.0f,
+		correctedUp.x,correctedUp.y,correctedUp.z,0.0f,
+		forward.x,    forward.y,    forward.z,    0.0f,
+		0.0f,         0.0f,         0.0f,         1.0f
+	};
+
+	return Quaternion::FromRotationMatrix(rotationMatrix);
+}
+
+Quaternion Quaternion::FromRotationMatrix(const Matrix4x4& m) {
+
+	Quaternion q;
+
+	float trace = m.m[0][0] + m.m[1][1] + m.m[2][2];
+	if (trace > 0.0f) {
+		float s = sqrt(trace + 1.0f) * 2.0f; // 4 * q.w
+		q.w = 0.25f * s;
+		q.x = (m.m[2][1] - m.m[1][2]) / s;
+		q.y = (m.m[0][2] - m.m[2][0]) / s;
+		q.z = (m.m[1][0] - m.m[0][1]) / s;
+	} else if ((m.m[0][0] > m.m[1][1]) && (m.m[0][0] > m.m[2][2])) {
+		float s = sqrt(1.0f + m.m[0][0] - m.m[1][1] - m.m[2][2]) * 2.0f; // 4 * q.x
+		q.w = (m.m[2][1] - m.m[1][2]) / s;
+		q.x = 0.25f * s;
+		q.y = (m.m[0][1] + m.m[1][0]) / s;
+		q.z = (m.m[0][2] + m.m[2][0]) / s;
+	} else if (m.m[1][1] > m.m[2][2]) {
+		float s = sqrt(1.0f + m.m[1][1] - m.m[0][0] - m.m[2][2]) * 2.0f; // 4 * q.y
+		q.w = (m.m[0][2] - m.m[2][0]) / s;
+		q.x = (m.m[0][1] + m.m[1][0]) / s;
+		q.y = 0.25f * s;
+		q.z = (m.m[1][2] + m.m[2][1]) / s;
+	} else {
+		float s = sqrt(1.0f + m.m[2][2] - m.m[0][0] - m.m[1][1]) * 2.0f; // 4 * q.z
+		q.w = (m.m[1][0] - m.m[0][1]) / s;
+		q.x = (m.m[0][2] + m.m[2][0]) / s;
+		q.y = (m.m[1][2] + m.m[2][1]) / s;
+		q.z = 0.25f * s;
+	}
+
+	return q;
 }

@@ -99,7 +99,7 @@ PixelShaderOutput main(VertexShaderOutput input) {
 		if (zInLVp > zInShadowMap) {
 			
 			// ‰B•Á‚³‚ê‚Ä‚¢‚é
-			textureColor.xyz *= 0.5f;
+			textureColor.xyz *= 0.25f;
 		}
 	}
 	

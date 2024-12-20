@@ -23,7 +23,7 @@ const constexpr wchar_t* kWindowTitle = L"Engine";
 const constexpr uint32_t kBufferCount = 2;
 
 // windowClearColor
-const Color kWindowClearColor = Color(0.016f, 0.016f, 0.016f, 1.0f);
+const Color kWindowClearColor = Color(0.032f, 0.032f, 0.032f, 1.0f);
 
 // shadowMapSize
 const constexpr uint32_t kShadowMapWidth = 1024;

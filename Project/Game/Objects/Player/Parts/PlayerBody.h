@@ -3,36 +3,24 @@
 //============================================================================*/
 //	include
 //============================================================================*/
-#include <Game/Scenes/Methods/IScene.h>
-
-// object
-#include <Game/Objects/Environment/Field.h>
-#include <Game/Objects/Player/Player.h>
-
-// c++
-#include <string>
-#include <memory>
+#include <Game/3D/Object/BaseGameObject.h>
 
 //============================================================================*/
-//	GameScene class
+//	PlayerBody class
 //============================================================================*/
-class GameScene :
-	public IScene {
+class PlayerBody :
+	public BaseGameObject {
 public:
 	//========================================================================*/
 	//	public Methods
 	//========================================================================*/
 
-	GameScene() = default;
-	~GameScene() = default;
+	PlayerBody() = default;
+	~PlayerBody() = default;
 
-	void Run() override;
+	void Init();
 
-	void Init() override;
-
-	void Update() override;
-
-	void Finalize() override;
+	void Update();
 
 private:
 	//========================================================================*/
@@ -41,16 +29,10 @@ private:
 
 	//========================================================================*/
 	//* variables
+	
 
-	std::unique_ptr<Field> field_;
-
-	std::unique_ptr<Player> player_;
 
 	//========================================================================*/
-	//* function
-
-	void LoadAssets();
-
-	void Draw2D();
+	//* functions
 
 };

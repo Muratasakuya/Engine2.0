@@ -38,7 +38,7 @@ void DXDepthRaster::Create(const RendererPipelineType& pipelineType) {
 		depthStencilDesc_.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
 	} else if (pipelineType == NormalObject3D || pipelineType == TargetShadowObject3D) {
 
-		rasterizerDesc_.CullMode = D3D12_CULL_MODE_BACK;
+		rasterizerDesc_.CullMode = D3D12_CULL_MODE_NONE;
 		rasterizerDesc_.FillMode = D3D12_FILL_MODE_SOLID;
 
 		// Depth機能有効
