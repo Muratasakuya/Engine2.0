@@ -63,6 +63,10 @@ public:
 	static Vector3 Cross(const Vector3& v0, const Vector3& v1);
 	static float Dot(const Vector3& v0, const Vector3& v1);
 
+	static float Length(const Vector3& v);
+
+	static Vector3 Normalize(const Vector3& v);
+
 	static Vector3 CalculateValue(const std::vector<Keyframe<Vector3>>& keyframes, float time);
 
 	static Vector3 Lerp(const Vector3& v0, const Vector3& v1, float t);

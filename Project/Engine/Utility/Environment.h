@@ -28,3 +28,9 @@ const Color kWindowClearColor = Color(0.032f, 0.032f, 0.032f, 1.0f);
 // shadowMapSize
 const constexpr uint32_t kShadowMapWidth = 1024;
 const constexpr uint32_t kShadowMapHeight = 1024;
+
+// gravity
+const constexpr float gravity = -9.8f;
+
+// groundY
+const constexpr float groundY = 0.0f;

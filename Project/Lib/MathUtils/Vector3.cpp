@@ -98,6 +98,20 @@ float Vector3::Dot(const Vector3& v0, const Vector3& v1) {
 	return v0.x * v1.x + v0.y * v1.y + v0.z * v1.z;
 }
 
+float Vector3::Length(const Vector3& v) {
+
+	return std::sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
+}
+
+Vector3 Vector3::Normalize(const Vector3& v) {
+
+	float length = Length(v);
+	if (length == 0.0f) {
+		return Vector3(0.0f, 0.0f, 0.0f);
+	}
+	return Vector3(v.x / length, v.y / length, v.z / length);
+}
+
 Vector3 Vector3::CalculateValue(const std::vector<Keyframe<Vector3>>& keyframes, float time) {
 
 	//// キーがないものは返す値が分からないのでアウト

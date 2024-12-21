@@ -14,7 +14,7 @@
 #include <memory>
 #include <optional>
 #include <initializer_list>
-#include <bitset>
+#include <unordered_set>
 
 //============================================================================*/
 //	Player class
@@ -51,24 +51,33 @@ private:
 	//========================================================================*/
 	//* structures
 
-	// 移動
-	enum class MoveBehaviour :
-		std::size_t {
+	// 補間
+	struct LerpValue {
 
-		Dash = 0, // ダッシュ
-		Jump = 1, // ジャンプ
+		// value
+		float start;
+		float end;
+		float current;
 
-		Count
+		// timer
+		float lerpTime;
+		float lerpTimer;
 	};
-	using MoveBehaviourBitset = std::bitset<static_cast<std::size_t>(MoveBehaviour::Count)>;
+
+	// 移動
+	enum class MoveBehaviour {
+
+		Dash, // ダッシュ
+		Jump, // ジャンプ
+	};
 
 	//========================================================================*/
 	//* variables
 
 	Input* input_ = nullptr;
 
-	std::optional<MoveBehaviour> moveBehaviour_; //* 依頼移動ビヘイビア
-	MoveBehaviourBitset currentMoveBehaviour_;   //* 現在の移動ビヘイビア
+	std::optional<MoveBehaviour> moveBehaviour_;              //* 依頼移動ビヘイビア
+	std::unordered_set<MoveBehaviour> currentMoveBehaviours_; //* 現在の移動ビヘイビア
 
 	//* base *//
 
@@ -78,6 +87,20 @@ private:
 	Vector3 move_;     //* 移動量
 
 	float rotationLerpRate_; //* 回転補間割合
+	float moveDecay_;        //* 速度減衰率
+
+	//* dash *//
+
+	LerpValue dashSpeed_; //* ダッシュ速度
+
+	//* jump *//
+
+	float jumpStrength; //* ジャンプ力
+
+	//* bool *//
+
+	bool isDashing_;  //* ダッシュしたかどうか
+	bool isOnGround_; //* 地面に着いているかどうか
 
 	//* parts *//
 
@@ -100,16 +123,15 @@ private:
 	//====================================*/
 	//* move
 
-	void Move(); //* 全体の移動を管理
-
-	void RotateToDirection(); //* 回転の向きを移動に合わせる
+	void Move();        //* 全体の移動を管理
+	void MoveRequest(); //* 移動依頼
 
 	void MoveWalk(); //* 通常移動、歩きに該当する
+	void MoveDash(); //* ダッシュ、Rを押している間はダッシュ
+	void MoveJump(); //* ジャンプ
 
 	//====================================*/
 	//* attack
-
-	void Attack(); // 全体の攻撃を管理
 
 	//====================================*/
 	//* other
@@ -119,6 +141,7 @@ private:
 	void SaveJson();
 
 	// helper
+	void RotateToDirection();
 	bool CheckCurrentMoveBehaviour(std::initializer_list<MoveBehaviour> states);
 
 };

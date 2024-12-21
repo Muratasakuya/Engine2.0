@@ -124,7 +124,7 @@ private:
 	float rightThumbY_;
 
 	// デッドゾーンの閾値
-	float deadZone_ = 2000.0f;
+	float deadZone_ = 4800.0f;
 
 	//* mouse *//
 
