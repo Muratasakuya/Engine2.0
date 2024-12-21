@@ -84,8 +84,6 @@ void AnimationTransform::Update() {
 		animationTime_ += 0.016f;
 		animationTime_ = std::fmod(animationTime_, animationData_[animationController_.second].duration);
 
-		ImGui::Text("animationDuration: %f", animationTime_);
-
 		// スケルトンが存在する場合
 		if (skeleton_[animationController_.second]) {
 

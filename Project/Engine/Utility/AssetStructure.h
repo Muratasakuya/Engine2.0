@@ -20,7 +20,7 @@
 #include <optional>
 #include <utility>
 #include <span>
-#include <unordered_map>
+#include <map>
 
 //============================================================================*/
 //	AssetStructure
@@ -70,7 +70,7 @@ struct JointWeightData {
 struct ModelData {
 
 	std::vector<MeshModelData> meshes;
-	std::unordered_map<std::string, JointWeightData> skinClusterData;
+	std::map<std::string, JointWeightData> skinClusterData;
 	Node rootNode;
 };
 
@@ -98,7 +98,7 @@ struct NodeAnimation {
 struct AnimationData {
 
 	float duration;                                                // アニメーション全体の尺
-	std::unordered_map<std::string, NodeAnimation> nodeAnimations; // NodeAnimationの集合、Node名で引けるようにしておく
+	std::map<std::string, NodeAnimation> nodeAnimations; // NodeAnimationの集合、Node名で引けるようにしておく
 };
 struct Joint {
 
@@ -112,9 +112,9 @@ struct Joint {
 };
 struct Skeleton {
 
-	int32_t root;                                      // RootJointのIndex
-	std::unordered_map<std::string, int32_t> jointMap; // joint名とIndexの辞書
-	std::vector<Joint> joints;                         // 所属しているジョイント
+	int32_t root;                            // RootJointのIndex
+	std::map<std::string, int32_t> jointMap; // joint名とIndexの辞書
+	std::vector<Joint> joints;               // 所属しているジョイント
 	std::string name;
 };
 

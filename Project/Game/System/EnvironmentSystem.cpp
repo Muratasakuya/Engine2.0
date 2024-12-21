@@ -88,7 +88,7 @@ LightViewProjectionBuffer EnvironmentSystem::GetLightVPBuffer() {
 	return cameraManager_->GetSunLightCamera()->GetLightVPBuffer();
 }
 
-void EnvironmentSystem::SetTarget(const WorldTransform* target) {
+void EnvironmentSystem::SetTarget(const AnimationTransform* target) {
 
 	cameraManager_->GetFollowCamera()->SetTarget(target);
 }

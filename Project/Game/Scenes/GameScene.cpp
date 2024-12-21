@@ -53,9 +53,8 @@ void GameScene::LoadAssets() {
 
 	AssetManager::LoadModel("./Resources/Model/Obj/CG", "cube.obj");
 
-	AssetManager::LoadModel("./Resources/Model/Obj/Player", "playerBody.obj");
-	AssetManager::LoadModel("./Resources/Model/Obj/Player", "playerHead.obj");
-	AssetManager::LoadModel("./Resources/Model/Obj/Player", "playerArm.obj");
+	AssetManager::LoadModel("./Resources/Model/Gltf/", "player.gltf");
+	AssetManager::LoadAnimation("./Resources/Model/Gltf/", "player.gltf","player.gltf");
 
 }
 
@@ -69,13 +68,13 @@ void GameScene::Init() {
 	player_ = std::make_unique<Player>();
 	player_->Init();
 
-	GameCamera::SetTarget(&player_->GetTargetTransform());
+	GameCamera::SetTarget(&player_->GetWorldTransform());
 
 }
 
 void GameScene::Update() {
 
-	EnvironmentSystem::SetSunLightTranslate(player_->GetCenterTranslate());
+	EnvironmentSystem::SetSunLightTranslate(player_->GetWorldPos());
 
 	field_->Update();
 

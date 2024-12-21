@@ -26,7 +26,11 @@ public:
 	void Draw(AnimationTransform transform, MaterialBuffer material, RendererPipelineType pipeline);
 	void DrawShadowDepth(AnimationTransform transform);
 
+	//* setter *//
+
 	void SetAnimationName(const std::string& animationName) { animationName_ = animationName; }
+
+	void SetTexture(const std::string& textureName);
 
 private:
 	//========================================================================*/

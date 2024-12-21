@@ -4,13 +4,7 @@
 //	include
 //============================================================================*/
 #include <Engine/Process/Input.h>
-#include <Game/Editor/Base/BaseEditor.h>
-
-// parts
-#include <Game/Objects/Player/Parts/PlayerHead.h>
-#include <Game/Objects/Player/Parts/PlayerBody.h>
-#include <Game/Objects/Player/Parts/PlayerLeftArm.h>
-#include <Game/Objects/Player/Parts/PlayerRightArm.h>
+#include <Game/3D/Object/BaseAnimationObject.h>
 
 // c++
 #include <memory>
@@ -22,7 +16,7 @@
 //	Player class
 //============================================================================*/
 class Player :
-	public BaseEditor {
+	public BaseAnimationObject {
 public:
 	//========================================================================*/
 	//	public Methods
@@ -37,13 +31,9 @@ public:
 
 	//* imgui *//
 
-	void ImGui() override;
+	void DerivedImGui() override;
 
 	//* getter *//
-
-	const Vector3& GetCenterTranslate() const { return baseTranslation_; }
-
-	const WorldTransform& GetTargetTransform() const { return body_->GetWorldTransform(); }
 
 private:
 	//========================================================================*/
@@ -83,8 +73,6 @@ private:
 
 	//* base *//
 
-	Vector3 baseTranslation_; //* 親の移動座標
-
 	Vector3 velocity_; //* 移動速度
 	Vector3 move_;     //* 移動量
 
@@ -104,34 +92,8 @@ private:
 	bool isDashing_;  //* ダッシュしたかどうか
 	bool isOnGround_; //* 地面に着いているかどうか
 
-	//* parts *//
-
-	std::unique_ptr<PlayerHead> head_;
-
-	std::unique_ptr<PlayerBody> body_;
-
-	std::unique_ptr<PlayerLeftArm> leftArm_;
-	std::unique_ptr<PlayerRightArm> rightArm_;
-
-	//* headParameter *//
-
-	float headYOffset_; //* bodyからの距離
-
-	//* bodyParameter *//
-
-	//* leftArmParameter *//
-
-	Vector3 leftArmOffset_; //* bodyからの距離
-
-	//* rightArmParameter *//
-
-	Vector3 rightArmOffset_; //* bodyからの距離
-
 	//========================================================================*/
 	//* functions
-
-	void InitParts();   //* 各部位の初期化
-	void UpdateParts(); //* 各部位の更新処理
 
 	//====================================*/
 	//* move

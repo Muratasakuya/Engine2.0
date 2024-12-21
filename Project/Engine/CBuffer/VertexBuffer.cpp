@@ -61,7 +61,7 @@ void InputVertexBuffer::Init(UINT vertexNum, ID3D12Resource* vertexResource) {
 	inputVertex.srvHandle.second = GraphicsEngine::SRV()->GetGPUHandle(inputVertex.srvIndex);
 	// SRV生成
 	GraphicsEngine::SRV()->CreateSRVForStructureBuffer(
-		inputVertex.srvIndex, vertexResource, vertexNum, static_cast<UINT>(sizeof(MeshModelData)));
+		inputVertex.srvIndex, vertexResource, vertexNum, static_cast<UINT>(sizeof(ModelVertexData)));
 }
 
 //============================================================================*/
@@ -70,14 +70,14 @@ void InputVertexBuffer::Init(UINT vertexNum, ID3D12Resource* vertexResource) {
 
 void OutputVertexBuffer::Init(UINT vertexNum) {
 
+	DXConstBuffer::CreateUavVertexBuffer(GraphicsEngine::Device()->Get(), vertexNum);
+
 	// UAV確保
 	outputVertex.uavIndex = GraphicsEngine::SRV()->Allocate();
 	outputVertex.uavHandle.first = GraphicsEngine::SRV()->GetCPUHandle(outputVertex.uavIndex);
 	outputVertex.uavHandle.second = GraphicsEngine::SRV()->GetGPUHandle(outputVertex.uavIndex);
 	// UAV生成
 	GraphicsEngine::SRV()->CreateUAVForStructureBuffer(
-		outputVertex.uavIndex, this->GetResource(), vertexNum, static_cast<UINT>(sizeof(MeshModelData)));
-
-	DXConstBuffer::CreateUavVertexBuffer(GraphicsEngine::Device()->Get(), vertexNum);
+		outputVertex.uavIndex, this->GetResource(), vertexNum, static_cast<UINT>(sizeof(ModelVertexData)));
 
 }

@@ -16,40 +16,6 @@
 //	Player classMethods
 //============================================================================*/
 
-void Player::InitParts() {
-
-	head_ = std::make_unique<PlayerHead>();
-	head_->Init();
-
-	body_ = std::make_unique<PlayerBody>();
-	body_->Init();
-
-	leftArm_ = std::make_unique<PlayerLeftArm>();
-	leftArm_->Init();
-
-	rightArm_ = std::make_unique<PlayerRightArm>();
-	rightArm_->Init();
-
-	//========================================================================*/
-	//* parent *//
-
-	head_->SetParent(body_->GetWorldTransform()); // parent -> body
-	leftArm_->SetParent(body_->GetWorldTransform()); // parent -> body
-	rightArm_->SetParent(body_->GetWorldTransform()); // parent -> body
-
-	//========================================================================*/
-	//* json *//
-
-	ApplyJson();
-
-	head_->SetYOffset(headYOffset_);
-
-	leftArm_->SetOffset(leftArmOffset_);
-
-	rightArm_->SetOffset(rightArmOffset_);
-
-}
-
 void Player::Init() {
 
 	input_ = Input::GetInstance();
@@ -57,11 +23,15 @@ void Player::Init() {
 	//========================================================================*/
 	//* model *//
 
-	BaseEditor::SetEditor("player");
-
+	BaseAnimationObject::Init("player.gltf", "player.gltf");
+	BaseAnimationObject::SetMeshRenderer("player");
 	parentFolderName_ = "Player/";
 
-	InitParts();
+	model_->SetTexture("white");
+
+	transform_.SetPlayAnimation(true, "player.gltf");
+
+	ApplyJson();
 
 	isDashing_ = false;
 	isOnGround_ = true;
@@ -70,24 +40,9 @@ void Player::Init() {
 
 void Player::Update() {
 
-	UpdateParts();
-
-}
-
-void Player::UpdateParts() {
-
 	Move(); //* 移動処理
 
-	//========================================================================*/
-	//* parentを先に更新 *//
-
-	body_->Update();
-
-	head_->Update();
-
-	leftArm_->Update();
-
-	rightArm_->Update();
+	BaseAnimationObject::Update();
 
 }
 
@@ -105,8 +60,6 @@ void Player::Move() {
 		MoveJump();
 	}
 
-	// 最終的な座標、回転を入れる
-	body_->SetTranslate(baseTranslation_);
 	RotateToDirection();
 
 }
@@ -173,8 +126,8 @@ void Player::MoveWalk() {
 		}
 	}
 
-	baseTranslation_.x += move_.x;
-	baseTranslation_.z += move_.z;
+	transform_.translation.x += move_.x;
+	transform_.translation.z += move_.z;
 
 }
 
@@ -217,8 +170,8 @@ void Player::MoveDash() {
 		move_ *= 1.0f;
 	}
 
-	baseTranslation_.x += move_.x;
-	baseTranslation_.z += move_.z;
+	transform_.translation.x += move_.x;
+	transform_.translation.z += move_.z;
 
 }
 
@@ -234,12 +187,12 @@ void Player::MoveJump() {
 	if (!isOnGround_) {
 
 		velocity_.y += gravity * GameSystem::GetScaledDeltaTime();
-		baseTranslation_.y += velocity_.y * GameSystem::GetScaledDeltaTime();
+		transform_.translation.y += velocity_.y * GameSystem::GetScaledDeltaTime();
 
-		if (baseTranslation_.y <= groundY) {
+		if (transform_.translation.y <= groundY) {
 
 			// ここでジャンプ終了
-			baseTranslation_.y = 0.0f;
+			transform_.translation.y = 0.0f;
 			velocity_.y = 0.0f;
 			isOnGround_ = true;
 
@@ -249,21 +202,13 @@ void Player::MoveJump() {
 
 }
 
-void Player::ImGui() {
+void Player::DerivedImGui() {
 
 	if (ImGui::Button("Save")) {
 		SaveJson();
 	}
 
 	ImGui::Separator();
-
-	if (ImGui::CollapsingHeader("Parts Parameters")) {
-		ImGui::PushItemWidth(144.0f);
-		ImGui::DragFloat("headYOffset", &headYOffset_, 0.01f);
-		ImGui::DragFloat3("leftArmOffset", &leftArmOffset_.x, 0.01f);
-		ImGui::DragFloat3("rightArmOffset", &rightArmOffset_.x, 0.01f);
-		ImGui::PopItemWidth();
-	}
 
 	if (ImGui::CollapsingHeader("Movement Parameters")) {
 		ImGui::PushItemWidth(144.0f);
@@ -304,11 +249,8 @@ void Player::ImGui() {
 
 void Player::ApplyJson() {
 
-	Json data = JsonAdapter::Load(parentFolderName_ + GetName() + "EditParameter.json");
+	Json data = JsonAdapter::Load(parentFolderName_.value() + GetName() + "EditParameter.json");
 
-	headYOffset_ = data["headYOffset"];
-	leftArmOffset_ = JsonAdapter::ToVector3(data["leftArmOffset"]);
-	rightArmOffset_ = JsonAdapter::ToVector3(data["rightArmOffset"]);
 	rotationLerpRate_ = data["rotationLerpRate"];
 	moveDecay_ = data["moveDecay"];
 	velocity_ = JsonAdapter::ToVector3(data["moveVelocity"]);
@@ -323,9 +265,6 @@ void Player::SaveJson() {
 
 	Json data;
 
-	data["headYOffset"] = headYOffset_;
-	data["leftArmOffset"] = JsonAdapter::FromVector3(leftArmOffset_);
-	data["rightArmOffset"] = JsonAdapter::FromVector3(rightArmOffset_);
 	data["rotationLerpRate"] = rotationLerpRate_;
 	data["moveDecay"] = moveDecay_;
 	data["moveVelocity"] = JsonAdapter::FromVector3(velocity_);
@@ -334,7 +273,7 @@ void Player::SaveJson() {
 	data["dashSpeed_lerpTime"] = dashSpeed_.lerpTime;
 	data["jumpStrength"] = jumpStrength;
 
-	JsonAdapter::Save(parentFolderName_ + GetName() + "EditParameter.json", data);
+	JsonAdapter::Save(parentFolderName_.value() + GetName() + "EditParameter.json", data);
 
 }
 
@@ -347,10 +286,7 @@ void Player::RotateToDirection() {
 	}
 
 	Quaternion targetRotation = Quaternion::LookRotation(direction, Direction::Up());
-	Quaternion rotation = Quaternion::Slerp(body_->GetRotation(), targetRotation, rotationLerpRate_);
-
-	body_->SetRotate(rotation);
-
+	transform_.rotation = Quaternion::Slerp(transform_.rotation, targetRotation, rotationLerpRate_);
 }
 
 bool Player::CheckCurrentMoveBehaviour(std::initializer_list<MoveBehaviour> states) {

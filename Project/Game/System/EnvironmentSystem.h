@@ -53,7 +53,7 @@ public:
 
 	//* setter *//
 
-	static void SetTarget(const WorldTransform* target);
+	static void SetTarget(const AnimationTransform* target);
 
 	static void SetSunLightTranslate(const Vector3& translate);
 
@@ -101,7 +101,7 @@ namespace GameCamera {
 		return EnvironmentSystem::GetViewProBuffer();
 	}
 
-	inline void SetTarget(const WorldTransform* target) {
+	inline void SetTarget(const AnimationTransform* target) {
 		EnvironmentSystem::SetTarget(target);
 	}
 }

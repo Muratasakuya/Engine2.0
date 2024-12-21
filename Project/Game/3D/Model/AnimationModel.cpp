@@ -107,3 +107,11 @@ void AnimationModel::SetComputeCommands(const std::string& animationName) {
 	// Compute起動
 	commandList->Dispatch(static_cast<UINT>(modelData_.meshes.front().vertices.size() + 1023) / 1024, 1, 1);
 }
+
+void AnimationModel::SetTexture(const std::string& textureName) {
+
+	for (uint32_t meshIndex = 0; meshIndex < meshNum_; ++meshIndex) {
+
+		modelData_.meshes[meshIndex].textureName = textureName;
+	}
+}

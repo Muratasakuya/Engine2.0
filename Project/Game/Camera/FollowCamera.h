@@ -35,7 +35,7 @@ public:
 
 	//* setter *//
 
-	void SetTarget(const WorldTransform* target) { target_ = target; };
+	void SetTarget(const AnimationTransform* target) { target_ = target; };
 
 private:
 	//========================================================================*/
@@ -47,7 +47,7 @@ private:
 
 	const std::string parentFolderName_ = "Camera/";
 
-	const WorldTransform* target_;
+	const AnimationTransform* target_;
 
 	WorldTransform transform_;
 

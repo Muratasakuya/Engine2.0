@@ -5,6 +5,7 @@
 //============================================================================*/
 #include <Lib/MathUtils/Vector3.h>
 #include <Lib/MathUtils/Matrix4x4.h>
+#include <Engine/Utility/AssetStructure.h>
 
 //============================================================================*/
 //	Quaternion classMethods
@@ -237,37 +238,32 @@ float Quaternion::Dot(const Quaternion& q0, const Quaternion& q1) {
 
 Quaternion Quaternion::CalculateValue(const std::vector<Keyframe<Quaternion>>& keyframes, float time) {
 
-	//// キーがないものは返す値が分からないのでアウト
-	//assert(!keyframes.empty());
+	// キーがないものは返す値が分からないのでアウト
+	assert(!keyframes.empty());
 
-	//// キーが1つか、時刻がキーフレーム前なら最初の値とする
-	//if (keyframes.size() == 1 || time <= keyframes[0].time) {
+	// キーが1つか、時刻がキーフレーム前なら最初の値とする
+	if (keyframes.size() == 1 || time <= keyframes[0].time) {
 
-	//	return keyframes[0].value;
-	//}
+		return keyframes[0].value;
+	}
 
-	//for (size_t index = 0; index < keyframes.size(); ++index) {
+	for (size_t index = 0; index < keyframes.size(); ++index) {
 
-	//	size_t nextIndex = index + 1;
+		size_t nextIndex = index + 1;
 
-	//	// indexとnextIndexの2つのkeyframeを取得して範囲内に時刻があるかを判定
-	//	if (keyframes[index].time <= time && time <= keyframes[nextIndex].time) {
+		// indexとnextIndexの2つのkeyframeを取得して範囲内に時刻があるかを判定
+		if (keyframes[index].time <= time && time <= keyframes[nextIndex].time) {
 
-	//		// 範囲内を補完する
-	//		float t =
-	//			(time - keyframes[index].time) / (keyframes[nextIndex].time - keyframes[index].time);
+			// 範囲内を補完する
+			float t =
+				(time - keyframes[index].time) / (keyframes[nextIndex].time - keyframes[index].time);
 
-	//		return Slerp(keyframes[index].value, keyframes[nextIndex].value, t);
-	//	}
-	//}
+			return Slerp(keyframes[index].value, keyframes[nextIndex].value, t);
+		}
+	}
 
-	//// ここまで来た場合は1番後の時刻よりも後ろなので最後の値を返す
-	//return (*keyframes.rbegin()).value;
-
-	keyframes;
-	time;
-
-	return { 0.0f,0.0f,0.0f,0.0f };
+	// ここまで来た場合は1番後の時刻よりも後ろなので最後の値を返す
+	return (*keyframes.rbegin()).value;
 }
 
 Quaternion Quaternion::LookRotation(const Vector3& forward, const Vector3& up) {

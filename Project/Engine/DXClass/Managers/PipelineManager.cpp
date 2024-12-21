@@ -223,6 +223,6 @@ void PipelineManager::SetShadowPipeline(ID3D12GraphicsCommandList* commandList, 
 
 void PipelineManager::SetComputePipeline(ID3D12GraphicsCommandList* commandList, ComputePipelineType pipelineType) {
 
-	commandList->SetGraphicsRootSignature(rootSignature_->GetCompute(pipelineType));
+	commandList->SetComputeRootSignature(rootSignature_->GetCompute(pipelineType));
 	commandList->SetPipelineState(computePipeline_[pipelineType].Get());
 }
