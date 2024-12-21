@@ -24,10 +24,18 @@ void Player::InitParts() {
 	body_ = std::make_unique<PlayerBody>();
 	body_->Init();
 
+	leftArm_ = std::make_unique<PlayerLeftArm>();
+	leftArm_->Init();
+
+	rightArm_ = std::make_unique<PlayerRightArm>();
+	rightArm_->Init();
+
 	//========================================================================*/
 	//* parent *//
 
 	head_->SetParent(body_->GetWorldTransform()); // parent -> body
+	leftArm_->SetParent(body_->GetWorldTransform()); // parent -> body
+	rightArm_->SetParent(body_->GetWorldTransform()); // parent -> body
 
 	//========================================================================*/
 	//* json *//
@@ -35,6 +43,10 @@ void Player::InitParts() {
 	ApplyJson();
 
 	head_->SetYOffset(headYOffset_);
+
+	leftArm_->SetOffset(leftArmOffset_);
+
+	rightArm_->SetOffset(rightArmOffset_);
 
 }
 
@@ -72,6 +84,10 @@ void Player::UpdateParts() {
 	body_->Update();
 
 	head_->Update();
+
+	leftArm_->Update();
+
+	rightArm_->Update();
 
 }
 
@@ -241,6 +257,14 @@ void Player::ImGui() {
 
 	ImGui::Separator();
 
+	if (ImGui::CollapsingHeader("Parts Parameters")) {
+		ImGui::PushItemWidth(144.0f);
+		ImGui::DragFloat("headYOffset", &headYOffset_, 0.01f);
+		ImGui::DragFloat3("leftArmOffset", &leftArmOffset_.x, 0.01f);
+		ImGui::DragFloat3("rightArmOffset", &rightArmOffset_.x, 0.01f);
+		ImGui::PopItemWidth();
+	}
+
 	if (ImGui::CollapsingHeader("Movement Parameters")) {
 		ImGui::PushItemWidth(144.0f);
 		ImGui::DragFloat("rotationLerpRate", &rotationLerpRate_, 0.01f);
@@ -283,6 +307,8 @@ void Player::ApplyJson() {
 	Json data = JsonAdapter::Load(parentFolderName_ + GetName() + "EditParameter.json");
 
 	headYOffset_ = data["headYOffset"];
+	leftArmOffset_ = JsonAdapter::ToVector3(data["leftArmOffset"]);
+	rightArmOffset_ = JsonAdapter::ToVector3(data["rightArmOffset"]);
 	rotationLerpRate_ = data["rotationLerpRate"];
 	moveDecay_ = data["moveDecay"];
 	velocity_ = JsonAdapter::ToVector3(data["moveVelocity"]);
@@ -298,6 +324,8 @@ void Player::SaveJson() {
 	Json data;
 
 	data["headYOffset"] = headYOffset_;
+	data["leftArmOffset"] = JsonAdapter::FromVector3(leftArmOffset_);
+	data["rightArmOffset"] = JsonAdapter::FromVector3(rightArmOffset_);
 	data["rotationLerpRate"] = rotationLerpRate_;
 	data["moveDecay"] = moveDecay_;
 	data["moveVelocity"] = JsonAdapter::FromVector3(velocity_);

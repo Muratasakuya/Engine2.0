@@ -122,6 +122,8 @@
     <ClCompile Include="Game\Objects\Player\Player.cpp" />
     <ClCompile Include="Game\Objects\Player\Parts\PlayerBody.cpp" />
     <ClCompile Include="Game\Objects\Player\Parts\PlayerHead.cpp" />
+    <ClCompile Include="Game\Objects\Player\Parts\PlayerLeftArm.cpp" />
+    <ClCompile Include="Game\Objects\Player\Parts\PlayerRightArm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Utility\Environment.h" />
@@ -211,5 +213,7 @@
     <ClInclude Include="Game\Objects\Player\Player.h" />
     <ClInclude Include="Game\Objects\Player\Parts\PlayerBody.h" />
     <ClInclude Include="Game\Objects\Player\Parts\PlayerHead.h" />
+    <ClInclude Include="Game\Objects\Player\Parts\PlayerLeftArm.h" />
+    <ClInclude Include="Game\Objects\Player\Parts\PlayerRightArm.h" />
   </ItemGroup>
 </Project>

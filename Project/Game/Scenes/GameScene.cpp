@@ -55,6 +55,7 @@ void GameScene::LoadAssets() {
 
 	AssetManager::LoadModel("./Resources/Model/Obj/Player", "playerBody.obj");
 	AssetManager::LoadModel("./Resources/Model/Obj/Player", "playerHead.obj");
+	AssetManager::LoadModel("./Resources/Model/Obj/Player", "playerArm.obj");
 
 }
 

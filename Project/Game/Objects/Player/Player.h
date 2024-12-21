@@ -9,6 +9,8 @@
 // parts
 #include <Game/Objects/Player/Parts/PlayerHead.h>
 #include <Game/Objects/Player/Parts/PlayerBody.h>
+#include <Game/Objects/Player/Parts/PlayerLeftArm.h>
+#include <Game/Objects/Player/Parts/PlayerRightArm.h>
 
 // c++
 #include <memory>
@@ -108,11 +110,22 @@ private:
 
 	std::unique_ptr<PlayerBody> body_;
 
+	std::unique_ptr<PlayerLeftArm> leftArm_;
+	std::unique_ptr<PlayerRightArm> rightArm_;
+
 	//* headParameter *//
 
 	float headYOffset_; //* bodyからの距離
 
 	//* bodyParameter *//
+
+	//* leftArmParameter *//
+
+	Vector3 leftArmOffset_; //* bodyからの距離
+
+	//* rightArmParameter *//
+
+	Vector3 rightArmOffset_; //* bodyからの距離
 
 	//========================================================================*/
 	//* functions
