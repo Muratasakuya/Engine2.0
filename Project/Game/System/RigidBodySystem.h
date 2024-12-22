@@ -26,6 +26,9 @@ public:
 
 	static void Inforamtion();
 
+	static void AddCollider(Collider* collider);
+	static void RemoveCollider(Collider* collider);
+
 private:
 	//========================================================================*/
 	//	private Methods

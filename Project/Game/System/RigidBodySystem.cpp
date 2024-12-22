@@ -22,3 +22,13 @@ void RigidBodySystem::Inforamtion() {
 
 	collisionManager_->DisplayCollisionLogs();
 }
+
+void RigidBodySystem::AddCollider(Collider* collider) {
+
+	collisionManager_->AddCollider(collider);
+}
+
+void RigidBodySystem::RemoveCollider(Collider* collider) {
+
+	collisionManager_->RemoveCollider(collider);
+}

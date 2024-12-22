@@ -3,7 +3,8 @@
 //============================================================================*/
 //	include
 //============================================================================*/
-#include <Game/Scenes/GameScene.h>
+#include <Game/Scenes/ClearScene.h>
+#include <Game/Scenes/StageScene.h>
 #include <Game/Scenes/TitleScene.h>
 
 //============================================================================*/
@@ -12,12 +13,15 @@
 
 std::unique_ptr<IScene> SceneFactory::CreateScene(const std::string& sceneName) {
 
-	if (sceneName == "Game") {
-
-		return std::make_unique<GameScene>();
-	} else if (sceneName == "Title") {
+	if (sceneName == "Title") {
 
 		return std::make_unique<TitleScene>();
+	} else if (sceneName == "Stage") {
+
+		return std::make_unique<StageScene>();
+	} else if (sceneName == "Clear") {
+
+		return std::make_unique<ClearScene>();
 	}
 
 	assert(false && "input scene Name does not Create Methods");

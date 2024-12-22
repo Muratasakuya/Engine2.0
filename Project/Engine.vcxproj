@@ -345,8 +345,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PG3\InputHandler.cpp" />
-    <ClCompile Include="PG3\Command.cpp" />
+    <ClCompile Include="Game\Scenes\ClearScene.cpp" />
+    <ClCompile Include="PG3\Enemy.cpp" />
+    <ClCompile Include="PG3\Bullet.cpp" />
     <ClCompile Include="PG3\Cube.cpp" />
     <ClCompile Include="Game\Camera\Camera2D.cpp" />
     <ClCompile Include="Game\Objects\Environment\Field.cpp" />
@@ -426,10 +427,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Game\Objects\Player\Player.cpp" />
     <ClCompile Include="Game\Objects\Player\Parts\PlayerBody.cpp" />
     <ClCompile Include="Game\Objects\Player\Parts\PlayerHead.cpp" />
+    <ClCompile Include="Game\Scenes\StageScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PG3\InputHandler.h" />
-    <ClInclude Include="PG3\Command.h" />
+    <ClInclude Include="Game\Scenes\ClearScene.h" />
+    <ClInclude Include="PG3\Enemy.h" />
+    <ClInclude Include="PG3\Bullet.h" />
     <ClInclude Include="PG3\Cube.h" />
     <ClInclude Include="Game\Camera\Camera2D.h" />
     <ClInclude Include="Game\Objects\Environment\Field.h" />
@@ -518,6 +521,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Game\Objects\Player\Player.h" />
     <ClInclude Include="Game\Objects\Player\Parts\PlayerBody.h" />
     <ClInclude Include="Game\Objects\Player\Parts\PlayerHead.h" />
+    <ClInclude Include="Game\Scenes\StageScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

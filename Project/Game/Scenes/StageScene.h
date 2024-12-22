@@ -8,23 +8,24 @@
 // object
 #include <Game/Objects/Environment/Field.h>
 #include <PG3/Cube.h>
+#include <PG3/Enemy.h>
 
 // c++
 #include <string>
 #include <memory>
 
 //============================================================================*/
-//	GameScene class
+//	StageScene class
 //============================================================================*/
-class GameScene :
+class StageScene :
 	public IScene {
 public:
 	//========================================================================*/
 	//	public Methods
 	//========================================================================*/
 
-	GameScene() = default;
-	~GameScene() = default;
+	StageScene() = default;
+	~StageScene() = default;
 
 	void Run() override;
 
@@ -41,6 +42,13 @@ private:
 
 	//========================================================================*/
 	//* variables
+
+	std::unique_ptr<Field> field_;
+
+	std::unique_ptr<Cube> cube_;
+
+	std::unique_ptr<Enemy> enemy_;
+	float clearTimer_;
 
 	//========================================================================*/
 	//* function

@@ -3,36 +3,31 @@
 //============================================================================*/
 //	include
 //============================================================================*/
-#include <Game/Scenes/Methods/IScene.h>
-
-// object
-#include <Game/Objects/Environment/Field.h>
-#include <PG3/Cube.h>
-
-// c++
-#include <string>
-#include <memory>
+#include <Game/3D/Object/BaseGameObject.h>
+#include <Game/3D/Collision/Collider.h>
 
 //============================================================================*/
-//	GameScene class
+//	Enemy class
 //============================================================================*/
-class GameScene :
-	public IScene {
+class Enemy :
+	public BaseGameObject, public Collider {
 public:
 	//========================================================================*/
 	//	public Methods
 	//========================================================================*/
 
-	GameScene() = default;
-	~GameScene() = default;
+	Enemy() = default;
+	~Enemy() = default;
 
-	void Run() override;
+	void Init();
 
-	void Init() override;
+	void Update();
 
-	void Update() override;
+	void OnCollisionEnter(Collider* other) override;
 
-	void Finalize() override;
+	//* getter *//
+
+	bool IsAlive() const { return isAlive_; };
 
 private:
 	//========================================================================*/
@@ -42,11 +37,6 @@ private:
 	//========================================================================*/
 	//* variables
 
-	//========================================================================*/
-	//* function
-
-	void LoadAssets();
-
-	void Draw2D();
+	bool isAlive_;    //* 生存フラグ
 
 };

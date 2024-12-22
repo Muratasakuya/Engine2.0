@@ -25,8 +25,6 @@ void GameScene::Run() {
 
 		GraphicsEngine::Render();
 
-		Draw2D();
-
 		GameSystem::Reset();
 		GraphicsEngine::EndRenderFrame();
 
@@ -41,60 +39,22 @@ void GameScene::Run() {
 }
 
 void GameScene::LoadAssets() {
-
-	//========================================================================*/
-	//* textures
-
-	AssetManager::LoadTexture("field");
-	AssetManager::LoadTexture("white");
-
-	//========================================================================*/
-	//* models
-
-	AssetManager::LoadModel("./Resources/Model/Obj/CG", "cube.obj");
-
-	AssetManager::LoadModel("./Resources/Model/Obj/Player", "playerBody.obj");
-	AssetManager::LoadModel("./Resources/Model/Obj/Player", "playerHead.obj");
-
 }
 
 void GameScene::Init() {
 
+	sceneName_ = "Stage";
+
 	LoadAssets();
-
-	field_ = std::make_unique<Field>();
-	field_->Init();
-
-	inputHandler_ = new InputHandler();
-	// AssignCommand
-	inputHandler_->AssignMoveLeftCommand2PressKeyA();
-	inputHandler_->AssignMoveRightCommand2PressKeyD();
-
-	cube_ = std::make_unique<Cube>();
-	cube_->Init();
 
 }
 
 void GameScene::Update() {
-
-	field_->Update();
-
-	iCommand_ = inputHandler_->HandleInput();
-
-	// setCommand
-	if (this->iCommand_) {
-
-		iCommand_->Exec(*cube_.get());
-	}
-
-	cube_->Update();
-
 }
 
 void GameScene::Draw2D() {
 }
 
 void GameScene::Finalize() {
-
 	EnvironmentSystem::Reset();
 }

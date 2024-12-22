@@ -1,4 +1,4 @@
-#include "TitleScene.h"
+#include "ClearScene.h"
 
 //============================================================================*/
 //	include
@@ -9,10 +9,10 @@
 #include <Game/Scenes/Manager/SceneManager.h>
 
 //============================================================================*/
-//	TitleScene classMethods
+//	ClearScene classMethods
 //============================================================================*/
 
-void TitleScene::Run() {
+void ClearScene::Run() {
 
 	Init();
 
@@ -37,15 +37,15 @@ void TitleScene::Run() {
 
 }
 
-void TitleScene::Init() {
+void ClearScene::Init() {
 
-	sceneName_ = "Title";
-
-}
-
-void TitleScene::Update() {
+	sceneName_ = "Clear";
 
 }
 
-void TitleScene::Finalize() {
+void ClearScene::Update() {
+
+}
+
+void ClearScene::Finalize() {
 }

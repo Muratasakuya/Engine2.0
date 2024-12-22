@@ -41,11 +41,11 @@ void GameSystem::Update() {
 
 	Input::GetInstance()->Update();
 
-	RigidBodySystem::Update();
-
 	EnvironmentSystem::Update();
 
 	PrimitiveDrawer::GetInstance()->Update();
+
+	RigidBodySystem::Update();
 
 }
 

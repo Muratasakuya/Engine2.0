@@ -3,51 +3,35 @@
 //============================================================================*/
 //	include
 //============================================================================*/
-
-// front
-class Cube;
+#include <Game/Scenes/Methods/IScene.h>
 
 //============================================================================*/
-//	Command class
+//	ClearScene class
 //============================================================================*/
-
-class ICommand {
+class ClearScene :
+	public IScene {
 public:
 	//========================================================================*/
 	//	public Methods
 	//========================================================================*/
 
-	ICommand() = default;
-	virtual ~ICommand() = default;
+	ClearScene() = default;
+	~ClearScene() = default;
 
-	virtual void Exec(Cube& cube) = 0;
+	void Run() override;
 
-};
+	void Init() override;
 
-class MoveRightCommand :
-	public ICommand {
-public:
+	void Update() override;
+
+	void Finalize() override;
+
+private:
 	//========================================================================*/
-	//	public Methods
-	//========================================================================*/
-
-	MoveRightCommand() = default;
-	~MoveRightCommand() = default;
-
-	void Exec(Cube& cube) override;
-
-};
-
-class MoveLeftCommand :
-	public ICommand {
-public:
-	//========================================================================*/
-	//	public Methods
+	//	private Methods
 	//========================================================================*/
 
-	MoveLeftCommand() = default;
-	~MoveLeftCommand() = default;
-
-	void Exec(Cube& cube) override;
+	//========================================================================*/
+	//* variables
 
 };

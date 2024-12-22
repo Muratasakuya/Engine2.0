@@ -21,7 +21,7 @@ void SceneManager::Init() {
 	isSceneSwitching_ = false;
 	gameLoop_ = true;
 
-	LoadScene("Game");
+	LoadScene("Title");
 
 }
 
@@ -78,7 +78,7 @@ void SceneManager::ImGui() {
 	std::string currentSceneText = "CurrentScene: " + currentScene_->GetSceneName();
 	ImGui::Text("%s", currentSceneText.c_str());
 
-	std::vector<std::string> sceneList = { "Title", "Game" };
+	std::vector<std::string> sceneList = { "Title", "Stage","Clear" };
 	sceneList.erase(std::remove(sceneList.begin(), sceneList.end(), currentScene_->GetSceneName()), sceneList.end());
 
 	ImGui::SetNextItemWidth(162.0f);

@@ -4,21 +4,42 @@
 //	include
 //============================================================================*/
 #include <Game/3D/PrimitiveDrawer.h>
+#include <Game/System/RigidBodySystem.h>
 
 //============================================================================*/
 //	Collider classMethods
 //============================================================================*/
 
-void Collider::SetCollisionShapeSphere() {
-
-	shape_ = CollisionShapes::Sphere::Default();
-	shapeType_ = ShapeType::Type_Sphere;
+Collider::~Collider() {
+	RigidBodySystem::RemoveCollider(this);
 }
 
-void Collider::SetCollisionShapeOBB() {
+void Collider::SetCollisionShapeSphere(const CollisionShapes::Sphere& sphere) {
 
-	shape_ = CollisionShapes::OBB::Default();;
+	shape_ = sphere;
+	shapeType_ = ShapeType::Type_Sphere;
+
+	RigidBodySystem::AddCollider(this);
+}
+
+void Collider::SetCollisionShapeOBB(const CollisionShapes::OBB& obb) {
+
+	shape_ = obb;
 	shapeType_ = ShapeType::Type_OBB;
+
+	RigidBodySystem::AddCollider(this);
+}
+
+void Collider::SphereUpdate() {
+
+	if (shape_ && std::holds_alternative <CollisionShapes::Sphere>(*shape_)) {
+		CollisionShapes::Sphere& sphere = std::get<CollisionShapes::Sphere>(*shape_);
+
+		sphere.radius = radius_;
+
+	} else {
+		assert(false && "collisionShape is not OBB");
+	}
 }
 
 void Collider::OBBUpdate() {
