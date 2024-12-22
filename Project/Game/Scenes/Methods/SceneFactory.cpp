@@ -4,7 +4,7 @@
 //	include
 //============================================================================*/
 #include <Game/Scenes/ClearScene.h>
-#include <Game/Scenes/StageScene.h>
+#include <Game/Scenes/GameScene.h>
 #include <Game/Scenes/TitleScene.h>
 
 //============================================================================*/
@@ -16,9 +16,9 @@ std::unique_ptr<IScene> SceneFactory::CreateScene(const std::string& sceneName) 
 	if (sceneName == "Title") {
 
 		return std::make_unique<TitleScene>();
-	} else if (sceneName == "Stage") {
+	} else if (sceneName == "Game") {
 
-		return std::make_unique<StageScene>();
+		return std::make_unique<GameScene>();
 	} else if (sceneName == "Clear") {
 
 		return std::make_unique<ClearScene>();

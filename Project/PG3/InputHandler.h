@@ -3,28 +3,24 @@
 //============================================================================*/
 //	include
 //============================================================================*/
-#include <Game/3D/Object/BaseGameObject.h>
+#include <PG3/Command.h>
 
 //============================================================================*/
-//	Cube class
+//	InputHandler class
 //============================================================================*/
-class Cube :
-	public BaseGameObject {
+class InputHandler {
 public:
 	//========================================================================*/
 	//	public Methods
 	//========================================================================*/
 
-	Cube() = default;
-	~Cube() = default;
+	InputHandler() = default;
+	~InputHandler() = default;
 
-	void Init();
+	ICommand* HandleInput();
 
-	void Update();
-
-	/// 移動関数
-	void MoveRight();
-	void MoveLeft();
+	void AssignMoveLeftCommand2PressKeyA();
+	void AssignMoveRightCommand2PressKeyD();
 
 private:
 	//========================================================================*/
@@ -34,6 +30,7 @@ private:
 	//========================================================================*/
 	//* variables
 
-	float speed_; //* 移動速度
+	ICommand* pressKeyD_;
+	ICommand* pressKeyA_;
 
 };

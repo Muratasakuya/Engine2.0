@@ -3,37 +3,51 @@
 //============================================================================*/
 //	include
 //============================================================================*/
-#include <Game/3D/Object/BaseGameObject.h>
+
+// front
+class Cube;
 
 //============================================================================*/
-//	Cube class
+//	Command class
 //============================================================================*/
-class Cube :
-	public BaseGameObject {
+
+class ICommand {
 public:
 	//========================================================================*/
 	//	public Methods
 	//========================================================================*/
 
-	Cube() = default;
-	~Cube() = default;
+	ICommand() = default;
+	virtual ~ICommand() = default;
 
-	void Init();
+	virtual void Exec(Cube& cube) = 0;
 
-	void Update();
+};
 
-	/// 移動関数
-	void MoveRight();
-	void MoveLeft();
-
-private:
+class MoveRightCommand :
+	public ICommand {
+public:
 	//========================================================================*/
-	//	private Methods
+	//	public Methods
 	//========================================================================*/
 
-	//========================================================================*/
-	//* variables
+	MoveRightCommand() = default;
+	~MoveRightCommand() = default;
 
-	float speed_; //* 移動速度
+	void Exec(Cube& cube) override;
+
+};
+
+class MoveLeftCommand :
+	public ICommand {
+public:
+	//========================================================================*/
+	//	public Methods
+	//========================================================================*/
+
+	MoveLeftCommand() = default;
+	~MoveLeftCommand() = default;
+
+	void Exec(Cube& cube) override;
 
 };

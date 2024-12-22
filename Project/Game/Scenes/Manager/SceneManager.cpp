@@ -21,7 +21,7 @@ void SceneManager::Init() {
 	isSceneSwitching_ = false;
 	gameLoop_ = true;
 
-	LoadScene("Title");
+	LoadScene("Game");
 
 }
 
