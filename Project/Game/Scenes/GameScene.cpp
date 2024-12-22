@@ -62,32 +62,9 @@ void GameScene::Init() {
 
 	LoadAssets();
 
-	field_ = std::make_unique<Field>();
-	field_->Init();
-
-	inputHandler_ = new InputHandler();
-	// AssignCommand
-	inputHandler_->AssignMoveLeftCommand2PressKeyA();
-	inputHandler_->AssignMoveRightCommand2PressKeyD();
-
-	cube_ = std::make_unique<Cube>();
-	cube_->Init();
-
 }
 
 void GameScene::Update() {
-
-	field_->Update();
-
-	iCommand_ = inputHandler_->HandleInput();
-
-	// setCommand
-	if (this->iCommand_) {
-
-		iCommand_->Exec(*cube_.get());
-	}
-
-	cube_->Update();
 
 }
 

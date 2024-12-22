@@ -1,6 +1,11 @@
 #include "Cube.h"
 
 //============================================================================*/
+//	include
+//============================================================================*/
+#include <Engine/Process/Input.h>
+
+//============================================================================*/
 //	Cube classMethods
 //============================================================================*/
 
@@ -12,22 +17,35 @@ void Cube::Init() {
 
 	transform_.translation.y += 2.0f;
 
-	speed_ = 0.25f;
+	bulletIndex_ = 0;
 
 }
 
 void Cube::Update() {
 
+	Shoot();
+
+	bullets_.remove_if([](const std::unique_ptr<Bullet>& bullet) {
+		return !bullet->IsAlive(); });
+
+	for (const auto& bullet : bullets_) {
+
+		bullet->Update();
+	}
+
 	BaseGameObject::Update();
 
 }
 
-void Cube::MoveRight() {
+void Cube::Shoot() {
 
-	this->transform_.translation.x += this->speed_;
-}
+	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
 
-void Cube::MoveLeft() {
+		auto newBullet = std::make_unique<Bullet>();
+		newBullet->Init(transform_.GetWorldPos(), bulletIndex_);
 
-	this->transform_.translation.x -= this->speed_;
+		bullets_.emplace_back(std::move(newBullet));
+
+		++bulletIndex_;
+	}
 }
