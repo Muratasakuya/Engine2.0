@@ -31,73 +31,81 @@ void ModelManager::LoadModel(const std::string& directoryPath, const std::string
 
 }
 
-void ModelManager::LoadAniamation(const std::string& directoryPath, const std::string& animationName, const std::string& modelName) {
+std::string ModelManager::RemoveFileExtension(const std::string& fileName) {
 
-	AnimationData animation;
+	size_t lastDot = fileName.find_last_of('.');
+	if (lastDot != std::string::npos) {
+		return fileName.substr(0, lastDot);
+	}
+	return fileName;
+}
+
+void ModelManager::LoadAniamation(const std::string& directoryPath, const std::string& animationFileName, const std::string& modelName) {
+
 	Assimp::Importer importer;
-	std::string filePath = directoryPath + "/" + animationName;
+	std::string filePath = directoryPath + "/" + animationFileName;
 	const aiScene* scene = importer.ReadFile(filePath.c_str(), 0);
 
-	// アニメーションがない
+	// アニメーションがない場合はエラー
 	assert(scene->mNumAnimations != 0);
 
-	// 最初のアニメーションだけ採用、複数対応も可
-	aiAnimation* animationAssimp = scene->mAnimations[0];
-	// 時間の単位を秒に変換
-	animation.duration = static_cast<float>(animationAssimp->mDuration / animationAssimp->mTicksPerSecond);
+	// すべてのアニメーションを処理
+	for (uint32_t animationIndex = 0; animationIndex < scene->mNumAnimations; ++animationIndex) {
+		aiAnimation* animationAssimp = scene->mAnimations[animationIndex];
+		AnimationData animation;
 
-	// assimpでは個々のNodeのAnimationをchannelと読んでいるのでchannelを回してNodeAnimationの情報をとってくる
-	for (uint32_t channelIndex = 0; channelIndex < animationAssimp->mNumChannels; ++channelIndex) {
+		// アニメーション名を設定
+		std::string animationName = animationAssimp->mName.C_Str();
+		if (animationName.empty()) {
 
-		aiNodeAnim* nodeAnimationAssimp = animationAssimp->mChannels[channelIndex];
-		NodeAnimation& nodeAnimation = animation.nodeAnimations[nodeAnimationAssimp->mNodeName.C_Str()];
+			animationName = "Animation_" + std::to_string(animationIndex);
+		} else {
 
-		// Translation Keys
-		for (uint32_t keyIndex = 0; keyIndex < nodeAnimationAssimp->mNumPositionKeys; ++keyIndex) {
-
-			aiVectorKey& keyAssimp = nodeAnimationAssimp->mPositionKeys[keyIndex];
-			KeyframeVector3 keyframe;
-
-			// ここも秒に変換
-			keyframe.time = static_cast<float>(keyAssimp.mTime / animationAssimp->mTicksPerSecond);
-			// 右手->左手
-			keyframe.value = { -keyAssimp.mValue.x,keyAssimp.mValue.y,keyAssimp.mValue.z };
-			nodeAnimation.translate.keyframes.push_back(keyframe);
+			std::string cleanedFileName = RemoveFileExtension(animationFileName);
+			animationName = cleanedFileName + "_" + animationName;
 		}
 
-		// Rotation Keys
-		for (uint32_t keyIndex = 0; keyIndex < nodeAnimationAssimp->mNumRotationKeys; ++keyIndex) {
+		// 時間の単位を秒に変換
+		animation.duration = static_cast<float>(animationAssimp->mDuration / animationAssimp->mTicksPerSecond);
 
-			aiQuatKey& keyAssimp = nodeAnimationAssimp->mRotationKeys[keyIndex];
-			KeyframeQuaternion keyframe;
+		// チャンネルごとに処理
+		for (uint32_t channelIndex = 0; channelIndex < animationAssimp->mNumChannels; ++channelIndex) {
 
-			// 秒に変換
-			keyframe.time = static_cast<float>(keyAssimp.mTime / animationAssimp->mTicksPerSecond);
-			// 右手->左手 (yとzの符号を反転)
-			keyframe.value = { keyAssimp.mValue.x, -keyAssimp.mValue.y, -keyAssimp.mValue.z, keyAssimp.mValue.w };
-			nodeAnimation.rotate.keyframes.push_back(keyframe);
+			aiNodeAnim* nodeAnimationAssimp = animationAssimp->mChannels[channelIndex];
+			NodeAnimation& nodeAnimation = animation.nodeAnimations[nodeAnimationAssimp->mNodeName.C_Str()];
+
+			// Translation Keys
+			for (uint32_t keyIndex = 0; keyIndex < nodeAnimationAssimp->mNumPositionKeys; ++keyIndex) {
+				aiVectorKey& keyAssimp = nodeAnimationAssimp->mPositionKeys[keyIndex];
+				KeyframeVector3 keyframe;
+				keyframe.time = static_cast<float>(keyAssimp.mTime / animationAssimp->mTicksPerSecond);
+				keyframe.value = { -keyAssimp.mValue.x, keyAssimp.mValue.y, keyAssimp.mValue.z }; // 右手→左手
+				nodeAnimation.translate.keyframes.push_back(keyframe);
+			}
+
+			// Rotation Keys
+			for (uint32_t keyIndex = 0; keyIndex < nodeAnimationAssimp->mNumRotationKeys; ++keyIndex) {
+				aiQuatKey& keyAssimp = nodeAnimationAssimp->mRotationKeys[keyIndex];
+				KeyframeQuaternion keyframe;
+				keyframe.time = static_cast<float>(keyAssimp.mTime / animationAssimp->mTicksPerSecond);
+				keyframe.value = { keyAssimp.mValue.x, -keyAssimp.mValue.y, -keyAssimp.mValue.z, keyAssimp.mValue.w }; // 右手→左手
+				nodeAnimation.rotate.keyframes.push_back(keyframe);
+			}
+
+			// Scaling Keys
+			for (uint32_t keyIndex = 0; keyIndex < nodeAnimationAssimp->mNumScalingKeys; ++keyIndex) {
+				aiVectorKey& keyAssimp = nodeAnimationAssimp->mScalingKeys[keyIndex];
+				KeyframeVector3 keyframe;
+				keyframe.time = static_cast<float>(keyAssimp.mTime / animationAssimp->mTicksPerSecond);
+				keyframe.value = { keyAssimp.mValue.x, keyAssimp.mValue.y, keyAssimp.mValue.z }; // スケールはそのまま
+				nodeAnimation.scale.keyframes.push_back(keyframe);
+			}
 		}
 
-		// Scaling Keys
-		for (uint32_t keyIndex = 0; keyIndex < nodeAnimationAssimp->mNumScalingKeys; ++keyIndex) {
-
-			aiVectorKey& keyAssimp = nodeAnimationAssimp->mScalingKeys[keyIndex];
-			KeyframeVector3 keyframe;
-
-			// 秒に変換
-			keyframe.time = static_cast<float>(keyAssimp.mTime / animationAssimp->mTicksPerSecond);
-			// Scaleはそのまま
-			keyframe.value = { keyAssimp.mValue.x, keyAssimp.mValue.y, keyAssimp.mValue.z };
-			nodeAnimation.scale.keyframes.push_back(keyframe);
-		}
+		animations_[animationName] = animation;
+		skeletons_[animationName] = CreateSkeleton(models_[modelName].rootNode, animationName);
+		skinClusters_[animationName] = CreateSkinCluster(modelName, animationName);
 	}
-
-	// アニメーション情報を代入
-	animations_[animationName] = animation;
-	// スケルトンの作成
-	skeletons_[animationName] = CreateSkeleton(models_[modelName].rootNode, animationName);
-	// スキンクラスターの作成
-	skinClusters_[animationName] = CreateSkinCluster(modelName, animationName);
 }
 
 void ModelManager::MakeOriginalModel(

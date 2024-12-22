@@ -23,13 +23,14 @@ void Player::Init() {
 	//========================================================================*/
 	//* model *//
 
-	BaseAnimationObject::Init("player.gltf", "player.gltf");
+	const std::string modelName = "player.gltf";
+	const std::string animationName = "player_wait";
+
+	BaseAnimationObject::Init(modelName, animationName);
 	BaseAnimationObject::SetMeshRenderer("player");
 	parentFolderName_ = "Player/";
 
 	model_->SetTexture("white");
-
-	transform_.SetPlayAnimation(true, "player.gltf");
 
 	ApplyJson();
 
@@ -105,7 +106,7 @@ void Player::MoveWalk() {
 
 	Vector2 leftStickVal = input_->GetLeftStickVal();
 
-	if (fabs(leftStickVal.x) > FLT_EPSILON || fabs(leftStickVal.y) > FLT_EPSILON) {
+	if (std::fabs(leftStickVal.x) > FLT_EPSILON || std::fabs(leftStickVal.y) > FLT_EPSILON) {
 
 		// 入力がある場合のみ速度を計算する
 		Vector3 inputDirection(leftStickVal.x, 0.0f, leftStickVal.y);

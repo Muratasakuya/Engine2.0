@@ -14,6 +14,8 @@
 #include <cstdint>
 #include <filesystem>
 #include <unordered_map>
+#include <codecvt>
+#include <locale>
 
 // front
 class SrvManager;
@@ -33,7 +35,7 @@ public:
 	void Init(SrvManager* srvManager);
 
 	void LoadModel(const std::string& directoryPath, const std::string& modelName);
-	void LoadAniamation(const std::string& directoryPath, const std::string& animationName, const std::string& modelName);
+	void LoadAniamation(const std::string& directoryPath, const std::string& animationFileName, const std::string& modelName);
 
 	void MakeOriginalModel(const std::string& modelName,
 		const std::vector<ModelVertexData>& vertexData, const std::vector<uint32_t>& indexData);
@@ -81,5 +83,7 @@ private:
 	SkinCluster CreateSkinCluster(const std::string& modelName, const std::string& animationName);
 
 	ComPtr<ID3D12Resource> CreateBufferResource(ID3D12Device* device, size_t sizeInBytes);
+
+	std::string RemoveFileExtension(const std::string& fileName);
 
 };
